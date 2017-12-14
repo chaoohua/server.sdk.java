@@ -1,0 +1,282 @@
+{
+  "sync": {
+    "docs": "http://rongcloud.cn/docs/server.html#group_sync",
+    "url": "group/sync",
+    "params": {
+      "group": {
+        "userId": {
+          "maxLen": "32",
+          "lenInvalid": "20003"
+        },
+        "groups": {}
+      }
+    },
+    "success": {
+      "code": "200",
+      "msg": "成功返回"
+    },
+    "error": {
+      "20003": {
+        "code": "20003",
+        "msg": "{{name}} 不正确, 长度必须小于等于 {{len}} 且大于等于一个字符"
+      },
+      "1004": {
+        "code": "20000",
+        "msg": "签名不正确"
+      },
+      "1007": {
+        "code": "13002",
+        "msg": "用户加入群组数量超限，同一用户最多加入 500 个群组"
+      },
+      "1008": {
+        "code": "20001",
+        "msg": "调用频率超限，每秒钟限制 100 次"
+      }
+    }
+  },
+  "create": {
+    "docs": "http://rongcloud.cn/docs/server.html#group_create",
+    "url": "group/create",
+    "params": {
+      "group": {
+        "memberIds": {},
+        "id": {
+          "maxLen": "32",
+          "lenInvalid": "20003"
+        },
+        "name": {
+          "maxLen": "128",
+          "lenInvalid": "20003"
+        }
+      }
+    },
+    "success": {
+      "code": "200",
+      "msg": "成功返回"
+    },
+    "error": {
+      "20003": {
+        "code": "20003",
+        "msg": "{{name}} 不正确, 长度必须小于等于 {{len}} 且大于等于一个字符"
+      },
+      "1004": {
+        "code": "20000",
+        "msg": "签名不正确"
+      },
+      "1007": {
+        "code": "13002",
+        "msg": "用户加入群组数量超限，同一用户最多加入 500 个群组"
+      },
+      "1008": {
+        "code": "20001",
+        "msg": "调用频率超限，每秒钟限制 100 次"
+      }
+    }
+  },
+  "join": {
+    "docs": "http://rongcloud.cn/docs/server.html#group_join",
+    "url": "group/join",
+    "params": {
+      "group": {
+        "memberIds": {},
+        "id": {
+          "maxLen": "32",
+          "lenInvalid": "20003"
+        },
+        "name": {
+          "maxLen": "128",
+          "lenInvalid": "20003"
+        }
+      }
+    },
+    "success": {
+      "code": "200",
+      "msg": "成功返回"
+    },
+    "error": {
+      "20003": {
+        "code": "20003",
+        "msg": "{{name}} 不正确, 长度必须小于等于 {{len}} 且大于等于一个字符"
+      },
+      "1004": {
+        "code": "20000",
+        "msg": "签名不正确"
+      },
+      "1007": {
+        "code": "13002",
+        "msg": "用户加入群组数量超限，同一用户最多加入 500 个群组"
+      },
+      "1008": {
+        "code": "20001",
+        "msg": "调用频率超限，每秒钟限制 100 次"
+      }
+    }
+  },
+  "quit": {
+    "docs": "http://rongcloud.cn/docs/server.html#group_quit",
+    "url": "group/quit",
+    "params": {
+      "group": {
+        "id": {
+          "maxLen": "32",
+          "lenInvalid": "20003"
+        },
+        "memberId": {
+          "maxLen": "32",
+          "lenInvalid": "20003"
+        }
+      }
+    },
+    "success": {
+      "code": "200",
+      "msg": "成功返回"
+    },
+    "error": {
+      "20003": {
+        "code": "20003",
+        "msg": "{{name}} 不正确, 长度必须小于等于 {{len}} 且大于等于一个字符"
+      },
+      "1004": {
+        "code": "20000",
+        "msg": "签名不正确"
+      },
+      "1008": {
+        "code": "20001",
+        "msg": "调用频率超限，每秒钟限制 100 次"
+      }
+    }
+  },
+  "kick": {
+    "docs": "http://rongcloud.cn/docs/server.html#group_quit",
+    "url": "group/quit",
+    "params": {
+      "group": {
+        "id": {
+          "maxLen": "32",
+          "lenInvalid": "20003"
+        },
+        "memberIds": {}
+      }
+    },
+    "success": {
+      "code": "200",
+      "msg": "成功返回"
+    },
+    "error": {
+      "20003": {
+        "code": "20003",
+        "msg": "{{name}} 不正确, 长度必须小于等于 {{len}} 且大于等于一个字符"
+      },
+      "1004": {
+        "code": "20000",
+        "msg": "签名不正确"
+      },
+      "1008": {
+        "code": "20001",
+        "msg": "调用频率超限，每秒钟限制 100 次"
+      }
+    }
+  },
+  "dismiss": {
+    "docs": "http://rongcloud.cn/docs/server.html#group_dismiss",
+    "url": "group/dismiss",
+    "params": {
+      "group": {
+        "id": {
+          "maxLen": "32",
+          "lenInvalid": "20003"
+        }
+      }
+    },
+    "success": {
+      "code": "200",
+      "msg": "成功返回"
+    },
+    "error": {
+      "20003": {
+        "code": "20003",
+        "msg": "{{name}} 不正确, 长度必须小于等于 {{len}} 且大于等于一个字符"
+      },
+      "1004": {
+        "code": "20000",
+        "msg": "签名不正确"
+      },
+      "1008": {
+        "code": "20001",
+        "msg": "调用频率超限，每秒钟限制 100 次"
+      }
+    }
+  },
+  "refresh": {
+    "docs": "http://rongcloud.cn/docs/server.html#group_refresh",
+    "url": "group/refresh",
+    "params": {
+      "group": {
+        "id": {
+          "maxLen": "32",
+          "lenInvalid": "20003"
+        },
+        "name": {
+          "maxLen": "128",
+          "lenInvalid": "20003"
+        }
+      }
+    },
+    "success": {
+      "code": "200",
+      "msg": "成功返回"
+    },
+    "error": {
+      "20003": {
+        "code": "20003",
+        "msg": "{{name}} 不正确, 长度必须小于等于 {{len}} 且大于等于一个字符"
+      },
+      "1004": {
+        "code": "20000",
+        "msg": "签名不正确"
+      },
+      "1008": {
+        "code": "20001",
+        "msg": "调用频率超限，每秒钟限制 100 次"
+      }
+    }
+  },
+  "getMemberList": {
+    "docs": "http://rongcloud.cn/docs/server.html#group_user_query",
+    "url": "group/user/query",
+    "params": {
+      "group": {
+        "id": {
+          "maxLen": "32",
+          "lenInvalid": "20003"
+        }
+      }
+    },
+    "success": {
+      "code": "200",
+      "members": [{
+        "id": "10001"
+      }, {
+        "id": "10002"
+      }, {
+        "id": "10000"
+      }, {
+        "id": "10003"
+      }]
+    },
+    "error": {
+      "20003": {
+        "code": "20003",
+        "msg": "{{name}} 不正确, 长度必须小于等于 {{len}} 且大于等于一个字符"
+      },
+      "1004": {
+        "code": "20000",
+        "msg": "签名不正确"
+      },
+      "1008": {
+        "code": "20001",
+        "msg": "调用频率超限，每秒钟限制 100 次"
+      }
+    }
+  }
+}

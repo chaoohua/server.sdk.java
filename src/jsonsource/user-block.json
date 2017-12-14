@@ -1,0 +1,91 @@
+{
+	"add": {
+		"docs": "http://rongcloud.cn/docs/server.html#user_block_add",
+		"url": "user/block",
+		"params": {
+			"user": {
+				"id": {
+					"verify": {
+						"maxLen": "32",
+						"lenInvalid": "10003"
+					}
+				},
+				"minute": {
+					"maxLen": "43200",
+					"lenInvalid": "20004"
+				}
+			}
+		},
+		"success": {
+			"code": "200",
+			"msg": "成功返回"
+		},
+		"error": {
+			"10003": {
+				"code": "10003",
+				"msg": "userId 不正确, 长度必须小于等于 32 且大于等于一个字符"
+			},
+			"20004": {
+				"code": "20004",
+				"msg": "封禁时间超限, 最长不超过 43200 分钟"
+			},
+			"1004": {
+				"code": "20000",
+				"msg": "签名不正确"
+			},
+			"1008": {
+				"code": "20001",
+				"msg": "调用频率超限，每秒钟限制 100 次"
+			}
+		}
+	},
+	"remove": {
+		"docs": "http://rongcloud.cn/docs/server.html#user_unblock",
+		"url": "user/unblock",
+		"params": {
+			"user": {
+				"verify": {
+					"maxLen": "32",
+					"lenInvalid": "10003"
+				}
+			}
+		},
+		"success": {
+			"code": "200",
+			"msg": "成功返回"
+		},
+		"error": {
+			"10003": {
+				"code": "10003",
+				"msg": "userId 不正确, 长度必须小于等于 32 且大于等于一个字符"
+			},
+			"1004": {
+				"code": "20000",
+				"msg": "签名不正确"
+			},
+			"1008": {
+				"code": "20001",
+				"msg": "调用频率超限，每秒钟限制 100 次"
+			}
+		}
+	},
+	"getList": {
+		"docs": "http://rongcloud.cn/docs/server.html#user_block_query",
+		"url": "user/block/query",
+		"params": { },
+		"success": {
+			"code": "200",
+			"msg": "成功返回"
+		},
+		"error": {
+			"1004": {
+				"code": "20000",
+				"msg": "签名不正确"
+			},
+			"1008": {
+				"code": "20001",
+				"msg": "调用频率超限，每秒钟限制 100 次"
+			}
+		}
+	}
+}
