@@ -1,7 +1,6 @@
 package io.rong.models;
 
 import io.rong.messages.ErrorCodeMessage;
-import io.rong.models.user.UserConstrants;
 import io.rong.util.GsonUtil;
 import io.rong.util.RcloudServiceConstrants;
 
@@ -75,28 +74,6 @@ public class QueryBlacklistUserResult {
 
 	@Override
 	public String toString() {
-		switch (this.getCode()) {
-
-			case RcloudServiceConstrants.RCLOUD_PARAM_ERROR:
-				this.setCode(UserConstrants.USER_PARAM_ERROR);
-				break;
-			case RcloudServiceConstrants.RCLOUD_PARAM_LEN_OUT:
-				this.setCode(UserConstrants.USER_PARAM_ERROR);
-				break;
-			case RcloudServiceConstrants.SENSITIVEWORD:
-				break;
-			case RcloudServiceConstrants.SMS:
-				break;
-			case RcloudServiceConstrants.USER:
-				break;
-			case RcloudServiceConstrants.WORDFILTER:
-				break;
-			default:
-				break;
-		}
-		if(this.getCode() != 200 && ErrorCodeMessage.errorCodeMaps.containsKey(this.getCode())){
-			this.setErrorMessage(ErrorCodeMessage.errorCodeMaps.get(this.getCode()));
-		}
 		return GsonUtil.toJson(this, QueryBlacklistUserResult.class);
 	}
 }

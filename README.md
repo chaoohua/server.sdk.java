@@ -13,18 +13,24 @@ Rong Cloud Server SDK in Java.
 * 请参考 Example.java 上面提供了所有的 API 接口的调用用例。
 
 ## 高级API接口
+
 ### User
 - getToken  获取 Token 
 - refresh  刷新用户信息
-- checkOnline  检查用户在线状态 
-- block  封禁用户
-- unBlock  解除用户封禁
-- queryBlock  获取被封禁用户
-- addBlacklist  添加用户到黑名单
-- queryBlacklist  获取某用户的黑名单列表
-- removeBlacklist  从黑名单中移除用户
+  #### black
+  * add 添加用户到黑名单
+  * remove 从黑名单中移除用户
+  * getList 获取某用户的黑名单列表
+  #### block
+  * add 封禁用户
+  * remove 解除用户封禁
+  * getList 获取被封禁用户
+  #### online-status
+  * check 检查用户在线状态 
 
 ### Message
+  #### private
+  
 - publishPrivate  发送单聊消息
 - publishTemplate  发送单聊模板消息
 - PublishSystem  发送系统消息
@@ -36,9 +42,10 @@ Rong Cloud Server SDK in Java.
 - getHistory  消息历史记录下载地址获取 消息历史记录下载地址获取。获取 APP 内指定某天某小时内的所有会话消息记录的下载地址
 - deleteMessage  消息历史记录删除
 
-### Wordfilter
+### SensitiveWord
 - add  添加敏感词
 - delete  移除敏感词
+- batchDelete 批量移除敏感词
 - getList  查询敏感词列表
 
 ### Group
@@ -46,34 +53,58 @@ Rong Cloud Server SDK in Java.
 - sync  同步用户所属群组
 - refresh  刷新群组信息
 - join  将用户加入指定群组，用户将可以收到该群的消息，同一用户最多可加入 500 个群，每个群最大至 3000 人
-- queryUser  查询群成员
+- query  查询群成员
 - quit  退出群组
-- addGagUser  添加禁言群成员
-- lisGagUser  查询被禁言群成员
-- rollBackGagUser  移除禁言群成员
 - dismiss  解散群组。
+  #### gag
+  * addGagUser  添加禁言群成员
+  * lisGagUser  查询被禁言群成员
+  * rollBackGagUser  移除禁言群成员
+
 
 ### Chatroom
 - create  创建聊天室
 - join  加入聊天室
 - query  查询聊天室信息
-- queryUser  查询聊天室内用户
-- stopDistributionMessage  聊天室消息停止分发
-- resumeDistributionMessage  聊天室消息恢复分发
-- addGagUser  添加禁言聊天室成员
-- ListGagUser  查询被禁言聊天室成员
-- rollbackGagUser  移除禁言聊天室成员
-- addBlockUser  添加封禁聊天室成员
-- getListBlockUser  查询被封禁聊天室成员
-- rollbackBlockUser  移除封禁聊天室成员
+- getMembers  查询聊天室内用户
 - destroy  销毁聊天室
-- addWhiteListUser  添加聊天室白名单成员
-
+- stopDistribution  聊天室消息停止分发
+- resumeDistribution  聊天室消息恢复分发
+  #### Gag
+  - 局部禁言与全局禁言
+    ##### Member
+    - add
+    - remove
+    - getList
+    ##### Global
+    - add  添加禁言聊天室成员
+    - getList  查询被禁言聊天室成员
+    - remove  移除禁言聊天室成员
+  #### Block
+    - add  添加封禁聊天室成员
+    - remove  移除封禁聊天室成员
+    - getList  查询被封禁聊天室成员
+  #### WhiteList
+    - add  添加聊天室白名单成员
+    - remove
+    - getList 
+  #### Priority
+    - add
+    - remove
+    - getList
+  #### Keeplive
+    - add
+    - remove
+    - getList
 ### Push
-- setUserPushTag  添加 Push 标签
-- broadcastPush  广播消息
+- setUserTag  添加 Push 标签
+- send  广播消息
 
 ### SMS
-- getImageCode  获取图片验证码
-- sendCode  发送短信验证码
-- verifyCode  验证码验证
+- 验证码和通知类短信
+  ##### Code
+  - getImage  获取图片验证码
+  - send  发送短信验证码
+  - verify  验证码验证
+  ##### Notify
+  - send  发送通知类短信

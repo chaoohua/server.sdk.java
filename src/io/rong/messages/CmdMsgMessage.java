@@ -17,6 +17,7 @@ public class CmdMsgMessage extends BaseMessage {
 		this.data = data;
 	}
 	
+	@Override
 	public String getType() {
 		return TYPE;
 	}

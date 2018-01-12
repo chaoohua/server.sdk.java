@@ -2,6 +2,7 @@ package io.rong;
 
 import io.rong.messages.*;
 import io.rong.models.*;
+import io.rong.models.sms.SmsModel;
 import io.rong.models.user.UserInfo;
 import io.rong.util.GsonUtil;
 
@@ -78,7 +79,7 @@ public class Example {
 		System.out.println("removeBlacklist:  " + userRemoveBlacklistResult.toString());
 		
 		*/
-		
+		/*
 		System.out.println("************************Message********************");
 		// 发送单聊消息方法（一个用户向另外一个用户发送消息，单条消息最大 128k。每分钟最多发送 6000 条信息，每次发送用户上限为 1000 人，如：一次发送 1000 人时，示为 1000 条消息。） 
 		String[] messagePublishPrivateToUserId = {"userId2","userid3","userId4"};
@@ -104,7 +105,7 @@ public class Example {
 		// 发送系统消息方法（一个用户向一个或多个用户发送系统消息，单条消息最大 128k，会话类型为 SYSTEM。每秒钟最多发送 100 条消息，每次最多同时向 100 人发送，如：一次发送 100 人时，示为 100 条消息。） 
 		String[] messagePublishSystemToUserId = {"userId2","userid3","userId4"};
 		TxtMessage messagePublishSystemTxtMessage = new TxtMessage("hello", "helloExtra");
-		CodeSuccessResult messagePublishSystemResult = rongCloud.message.PublishSystem("userId1", messagePublishSystemToUserId, messagePublishSystemTxtMessage, "thisisapush", "{\"pushData\":\"hello\"}", 0, 0);
+		CodeSuccessResult messagePublishSystemResult = rongCloud.message.aPrivate.PublishSystem("userId1", messagePublishSystemToUserId, messagePublishSystemTxtMessage, "thisisapush", "{\"pushData\":\"hello\"}", 0, 0);
 		System.out.println("PublishSystem:  " + messagePublishSystemResult.toString());
 		
 		// 发送系统模板消息方法（一个用户向一个或多个用户发送系统消息，单条消息最大 128k，会话类型为 SYSTEM.每秒钟最多发送 100 条消息，每次最多同时向 100 人发送，如：一次发送 100 人时，示为 100 条消息。） 
@@ -159,7 +160,7 @@ public class Example {
 		CodeSuccessResult messageDeleteMessageResult = rongCloud.message.deleteMessage("2014010101");
 		System.out.println("deleteMessage:  " + messageDeleteMessageResult.toString());
 		
-		
+		*/
 		
 		System.out.println("************************Wordfilter********************");
 		//敏感词服务已升级，Wordfilter为原敏感词服务。 仍然可以使用，但是不再继续更新。
@@ -188,7 +189,7 @@ public class Example {
 		System.out.println("getList:  " + sensitivewordGetListResult.toString());
 		
 		// 移除敏感词方法（从敏感词列表中，移除某一敏感词。） 
-		CodeSuccessResult sensitivewordDeleteResult = rongCloud.sensitiveword.delete("money");
+		CodeSuccessResult sensitivewordDeleteResult = rongCloud.sensitiveword.remove("money");
 		System.out.println("delete:  " + sensitivewordDeleteResult.toString());
 
 
@@ -246,7 +247,7 @@ public class Example {
 		System.out.println("dismiss:  " + groupDismissResult.toString());
 		
 		*/
-		
+		/*
 		System.out.println("************************Chatroom********************");
 		// 创建聊天室方法 
 		ChatRoomInfo[] chatroomCreateChatRoomInfo = {new ChatRoomInfo("chatroomId1","chatroomName1" ), new ChatRoomInfo("chatroomId2","chatroomName2" ), new ChatRoomInfo("chatroomId3","chatroomName3" )};
@@ -254,9 +255,9 @@ public class Example {
 		System.out.println("create:  " + chatroomCreateResult.toString());
 		
 		// 加入聊天室方法 
-		/*String[] chatroomJoinUserId = {"userId2","userid3","userId4"};
+		*//*String[] chatroomJoinUserId = {"userId2","userid3","userId4"};
 		CodeSuccessResult chatroomJoinResult = rongCloud.chatroom.join(chatroomJoinUserId, "chatroomId1");
-		System.out.println("join:  " + chatroomJoinResult.toString());*/
+		System.out.println("join:  " + chatroomJoinResult.toString());*//*
 		
 		// 查询聊天室信息方法 
 		String[] chatroomQueryChatroomId = {"chatroomId1","chatroomId2","chatroomId3"};
@@ -345,22 +346,23 @@ public class Example {
 			if(null != reader){
 				reader.close();
 			}
-		} 
+		} */
 		
 		
 		
-		System.out.println("************************SMS********************");
+		/*System.out.println("************************SMS********************");
 		// 获取图片验证码方法 
 		SMSImageCodeResult sMSGetImageCodeResult = rongCloud.sms.getImageCode("app-key");
 		System.out.println("getImageCode:  " + sMSGetImageCodeResult.toString());
 		
-		// 发送短信验证码方法。 
-		SMSSendCodeResult sMSSendCodeResult = rongCloud.sms.sendCode("13500000000", "dsfdsfd", "86", "1408706337", "1408706337");
+		SmsModel sms = new SmsModel("13500000000", "dsfdsfd", "86", "1408706337", "1408706337");
+		// 发送短信验证码方法。
+		SMSSendCodeResult sMSSendCodeResult = rongCloud.sms.sendCode(sms);
 		System.out.println("sendCode:  " + sMSSendCodeResult.toString());
 		
 		// 验证码验证方法 
 		SMSVerifyCodeResult sMSVerifyCodeResult = rongCloud.sms.verifyCode("2312312", "2312312");
 		System.out.println("verifyCode:  " + sMSVerifyCodeResult.toString());
-		
+		*/
 	 }
 }

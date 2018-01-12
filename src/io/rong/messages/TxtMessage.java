@@ -17,6 +17,7 @@ public class TxtMessage extends BaseMessage {
 		this.extra = extra;
 	}
 	
+	@Override
 	public String getType() {
 		return TYPE;
 	}

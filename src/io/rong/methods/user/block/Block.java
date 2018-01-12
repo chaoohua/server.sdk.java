@@ -1,12 +1,11 @@
 package io.rong.methods.user.block;
 
+import io.rong.RongCloud;
+import io.rong.models.CheckMethod;
 import io.rong.models.QueryBlockUserResult;
 import io.rong.models.ResponseResult;
-import io.rong.models.user.UserConstrants;
-import io.rong.models.user.UserResponseResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
-import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
@@ -14,9 +13,18 @@ import java.net.URLEncoder;
 
 public class Block {
     private static final String UTF8 = "UTF-8";
+    private static final String PATH = "user/block";
+    private static String method = "";
     private String appKey;
     private String appSecret;
+    private RongCloud rongCloud;
 
+    public RongCloud getRongCloud() {
+        return rongCloud;
+    }
+    public void setRongCloud(RongCloud rongCloud) {
+        this.rongCloud = rongCloud;
+    }
     public Block(String appKey, String appSecret) {
         this.appKey = appKey;
         this.appSecret = appSecret;
@@ -28,21 +36,18 @@ public class Block {
      * @param  userId:用户 Id。（必传）
      * @param  minute:封禁时长,单位为分钟，最大值为43200分钟。（必传）
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
     public ResponseResult add(String userId, Integer minute) throws Exception {
-        if (userId == null) {
-            return new UserResponseResult(UserConstrants.USER_ID_NULL,
-                    "userId 长度超限 最大长度 64字节");		}
 
-        if (minute == null) {
-            return new UserResponseResult(UserConstrants.USER_PARAM_ERROR,
-                    "Paramer 'minute' is required");
+        String message = CommonUtil.checkParam("id",userId,"user/block","user", CheckMethod.ADD);
+        if(null != message){
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
-        if(!CommonUtil.validateParams(Integer.valueOf(minute),30*24*60)){
-            return new UserResponseResult(UserConstrants.USER_GAG_TIMEOUT,
-                    "Paramer 'minute' should be less than 30*24*60 (30days)");
+        message = CommonUtil.checkParam("minute",minute,"user/block","user",CheckMethod.ADD);
+        if(null != message){
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -53,11 +58,11 @@ public class Block {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret,
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret,
                 "/user/block.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (UserResponseResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), UserResponseResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 
     /**
@@ -68,9 +73,10 @@ public class Block {
      * @return CodeSuccessResult
      **/
     public ResponseResult remove(String userId) throws Exception {
-        if (userId == null) {
-            return new UserResponseResult(UserConstrants.USER_ID_NULL,
-                    "userId 长度超限 最大长度 64字节");
+        //参数校验
+        String message = CommonUtil.checkParam("id",userId,"user/block","user",CheckMethod.REMOVE);
+        if(null != message){
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -80,11 +86,11 @@ public class Block {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret,
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret,
                 "/user/unblock.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (UserResponseResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), UserResponseResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 
     /**
@@ -100,10 +106,10 @@ public class Block {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret,
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret,
                 "/user/block/query.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (QueryBlockUserResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), QueryBlockUserResult.class);
+        return (QueryBlockUserResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), QueryBlockUserResult.class);
     }
 }

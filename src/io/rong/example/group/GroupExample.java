@@ -20,11 +20,20 @@ public class GroupExample {
 	 */
 	public static void main(String[] args) throws Exception {
 
-		String appKey = "appkey";//替换成您的appkey
+		/*String appKey = "appkey";//替换成您的appkey
 
 		String appSecret = "secret";//替换成匹配上面key的secret
+
+		String api = "http://api.cn.ronghub.com";*/
+
+
+		String appKey = "e0x9wycfx7flq";
+		String appSecret = "STCevzDS6Xy18n";
+		String api = "http://192.168.155.13:9200";
 		
-		RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+		//RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+
+		RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret,api);
 
 		String[] groupCreateUserId = {"userId1","userid2","userId3"};
 		System.out.println("************************Group********************");
@@ -32,32 +41,32 @@ public class GroupExample {
 		/**
 		 *  创建群组
 		 */
-		groupCreate(rongCloud);
+		//groupCreate(rongCloud);
 
 		/**
 		 *  同步用户所属群组方
 		 */
-		groupSync(rongCloud);
+		//groupSync(rongCloud);
 
 		/**
 		 *   刷新群组信息方
 		 */
-		groupRefresh(rongCloud);
+		//groupRefresh(rongCloud);
 
 		/**
 		 *  将用户加入指定群组，
 		 */
-		groupJoin(rongCloud);
+		//groupJoin(rongCloud);
 
 		/**
 		 *  查询群成员方法
 		 */
-		groupQueryUser(rongCloud);
+		//groupQueryUser(rongCloud);
 
 		/**
 		 *  退出群组
 		 */
-		groupQuit(rongCloud);
+		//groupQuit(rongCloud);
 
 		/**
 		 *  添加禁言群成员方
@@ -77,7 +86,7 @@ public class GroupExample {
 		/**
 		 *  解散群组方法
 		 */
-		groupDismissR(rongCloud);
+		//groupDismissR(rongCloud);
 
 	 }
 
@@ -90,7 +99,7 @@ public class GroupExample {
 
 		 String[] groupCreateUserId = {"userId1","userid2","userId3"};
 
-		GroupModel groupUsersParam = new GroupModel("groupId",groupCreateUserId,"groupName1");
+		 GroupModel groupUsersParam = new GroupModel("groupId",groupCreateUserId,"groupName1");
 		 GroupResponse groupCreateResult = (GroupResponse)rongCloud.group.create(groupUsersParam);
 		 System.out.println("create result:  " + groupCreateResult.toString());
 		 return;
@@ -130,8 +139,8 @@ public class GroupExample {
 	 */
 	public static void groupJoin(RongCloud rongCloud) throws Exception {
 		System.out.println("************************Group********************");
-		String[] groupCreateUserId = {"userId1","userid2","userId3"};
-		GroupModel group = new GroupModel("",groupCreateUserId,"groupName1");
+		String[] groupJoinUserId = {"userId1","userid2","userId3"};
+		GroupModel group = new GroupModel("",groupJoinUserId,"groupName1");
 		GroupResponse groupJoinResult = (GroupResponse)rongCloud.group.join(group);
 		System.out.println("join:  " + groupJoinResult.toString());
 	}
@@ -153,17 +162,20 @@ public class GroupExample {
 
 	// 添加禁言群成员方法（在 App 中如果不想让某一用户在群中发言时，可将此用户在群组中禁言，被禁言用户可以接收查看群组中用户聊天信息，但不能发送消息。）
 	public static void groupAddGagUser(RongCloud rongCloud) throws Exception {
-		String[] memberIds = {"userId2","userid3","userId4"};
-		GroupModel group = new GroupModel("",memberIds,null);
+
+		String[] memberIds = {"userId1","userid2","userId3"};
+		GroupModel group = new GroupModel(null,memberIds,null);
+		String munite = "1";
+
 		GroupResponse groupAddGagUserResult = (GroupResponse)rongCloud.group.gag.add(group, "1");
-		System.out.println("addGagUser:  " + groupAddGagUserResult.toString());
+		System.out.println("group.gag.add(:  " + groupAddGagUserResult.toString());
 
 	}
 
 	// 查询被禁言群成员方法
 	public static void groupLisGagUser(RongCloud rongCloud) throws Exception {
-		ListGagGroupUserResult groupLisGagUserResult = rongCloud.group.gag.getList("groupId1");
-		System.out.println("lisGagUser:  " + groupLisGagUserResult.toString());
+		ListGagGroupUserResult groupLisGagUserResult = rongCloud.group.gag.getList("groupId");
+		System.out.println("group.gag.getList:  " + groupLisGagUserResult.toString());
 	}
 
 	// 移除禁言群成员方法
@@ -171,7 +183,7 @@ public class GroupExample {
 		String[] memberIds = {"userId2","userid3","userId4"};
 		GroupModel group = new GroupModel("",memberIds,null);
 		GroupResponse groupRollBackGagUserResult = (GroupResponse)rongCloud.group.gag.remove(group);
-		System.out.println("rollBackGagUser:  " + groupRollBackGagUserResult.toString());
+		System.out.println("group.gag.remove:  " + groupRollBackGagUserResult.toString());
 	}
 
 	// 解散群组方法。（将该群解散，所有用户都无法再接收该群的消息。）

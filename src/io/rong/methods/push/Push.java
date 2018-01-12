@@ -1,8 +1,11 @@
 package io.rong.methods.push;
 
+import io.rong.RongCloud;
+import io.rong.exception.ParamException;
 import io.rong.models.CodeSuccessResult;
 import io.rong.models.PushMessage;
 import io.rong.models.UserTag;
+import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
@@ -10,10 +13,20 @@ import io.rong.util.HttpUtil;
 import java.net.HttpURLConnection;
 
 public class Push {
-
+	private static final String UTF8 = "UTF-8";
+	private static final String PATH = "push";
+	private static String method = "";
 	private String appKey;
 	private String appSecret;
-	
+	private RongCloud rongCloud;
+
+	public RongCloud getRongCloud() {
+		return rongCloud;
+	}
+
+	public void setRongCloud(RongCloud rongCloud) {
+		this.rongCloud = rongCloud;
+	}
 	public Push(String appKey, String appSecret) {
 		this.appKey = appKey;
 		this.appSecret = appSecret;
@@ -30,13 +43,13 @@ public class Push {
 	 **/
 	public CodeSuccessResult setUserTag(UserTag userTag) throws Exception {
 		if (userTag == null) {
-			throw new IllegalArgumentException("Paramer 'userTag' is required");
+			throw new ParamException("Paramer 'userTag' is required");
 		}
 		
-	    HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/user/tag/set.json", "application/json");
+	    HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/user/tag/set.json", "application/json");
 	    HttpUtil.setBodyParameter(userTag.toString(), conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), CodeSuccessResult.class);
+	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
 	}
 	
 	/**
@@ -48,13 +61,13 @@ public class Push {
 	 **/
 	public CodeSuccessResult send(PushMessage pushMessage) throws Exception {
 		if (pushMessage == null) {
-			throw new IllegalArgumentException("Paramer 'pushMessage' is required");
+			throw new ParamException("Paramer 'pushMessage' is required");
 		}
 		
-	    HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/push.json", "application/json");
+	    HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/push.json", "application/json");
 	    HttpUtil.setBodyParameter(pushMessage.toString(), conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), CodeSuccessResult.class);
+	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
 	}
 
 	 

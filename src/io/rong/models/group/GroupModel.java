@@ -3,22 +3,27 @@ package io.rong.models.group;
 import io.rong.models.BaseParams;
 
 /**
- * 创建群组方法参数体（创建群组，并将用户加入该群组，用户将可以收到该群的消息，同一用户最多可加入 500 个群，每个群最大至 3000 人，App 内的群组数量没有限制.注：其实本方法是加入群组方法 /group/join 的别名。）
+ * 群组数据模型
  **/
 public class GroupModel extends BaseParams{
-
-    //群组id
+    /**
+     * 群组id
+     **/
     public String id;
-    //userId:要加入群的用户 Id，可提交多个，最多不超过 1000 个。
+    /**
+     * 群组成员
+     **/
     public String[] merberIds;
-    //群组 Id 对应的名称.
+    /**
+     * 群组名
+     **/
     public String name;
     /**
      * 构造方法
      *
-     * @param id
-     * @param merberIds
-     * @param name
+     * @param id 群组id
+     * @param merberIds 群组成员
+     * @param name 群名
      */
     public GroupModel(String id, String[] merberIds, String name) {
         this.merberIds = merberIds;

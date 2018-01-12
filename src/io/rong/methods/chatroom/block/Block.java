@@ -1,10 +1,12 @@
 package io.rong.methods.chatroom.block;
 
-import io.rong.models.CodeSuccessResult;
-import io.rong.models.ListBlockChatroomUserResult;
-import io.rong.models.User;
+import io.rong.RongCloud;
+import io.rong.exception.ParamException;
+import io.rong.models.*;
 import io.rong.models.chatroom.ChatRoom;
 import io.rong.models.chatroom.Member;
+import io.rong.models.group.GroupResponse;
+import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
@@ -14,9 +16,17 @@ import java.net.URLEncoder;
 
 public class Block {
     private static final String UTF8 = "UTF-8";
+    private static final String PATH = "chatroom/block";
     private String appKey;
     private String appSecret;
+    private RongCloud rongCloud;
 
+    public RongCloud getRongCloud() {
+        return rongCloud;
+    }
+    public void setRongCloud(RongCloud rongCloud) {
+        this.rongCloud = rongCloud;
+    }
     public Block(String appKey, String appSecret) {
         this.appKey = appKey;
         this.appSecret = appSecret;
@@ -25,41 +35,40 @@ public class Block {
     /**
      * 添加封禁聊天室成员方法
      *
-     * @param  chatRoom:封禁的聊天室信息，其中聊天室 Id。（必传）,用户 Id。（必传支持多个最多20个）
+     * @param  chatroom:封禁的聊天室信息，其中聊天室 Id。（必传）,用户 Id。（必传支持多个最多20个）
      * @param  minute:封禁时长，以分钟为单位，最大值为43200分钟。（必传）
      *
      * @return CodeSuccessResult
      **/
-    public CodeSuccessResult add(ChatRoom chatRoom, String minute) throws Exception {
-        if (chatRoom.getId() == null) {
-            throw new IllegalArgumentException("Paramer 'userId' is required");
+    public CodeSuccessResult add(ChatRoom chatroom, Integer minute) throws Exception {
+        //需要校验的字段
+        String[] fileds = {"id","merbers"};
+        String message = CommonUtil.checkFiled(fileds,chatroom,PATH,"chatroom", CheckMethod.ADD);
+        if(null != message){
+            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
-
-        if (chatRoom.getMembers() == null) {
-            throw new IllegalArgumentException("Paramer 'chatroomId' is required");
-        }
-
-        if (minute == null) {
-            throw new IllegalArgumentException("Paramer 'minute' is required");
+        message = CommonUtil.checkParam("minute",minute,PATH,"chatroom",CheckMethod.ADD);
+        if(null != message){
+            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
-        Member[] users = chatRoom.getMembers();
+        Member[] users = chatroom.getMembers();
         for(Member user : users){
             sb.append("&userId=").append(URLEncoder.encode(user.getId().toString(), UTF8));
         }
 
-        sb.append("&chatroomId=").append(URLEncoder.encode(chatRoom.getId().toString(), UTF8));
+        sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
         sb.append("&minute=").append(URLEncoder.encode(minute.toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/chatroom/user/block/add.json", "application/x-www-form-urlencoded");
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/block/add.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
     }
 
     /**
@@ -70,8 +79,10 @@ public class Block {
      * @return ListBlockChatroomUserResult
      **/
     public ListBlockChatroomUserResult getList(String chatroomId) throws Exception {
-        if (chatroomId == null) {
-            throw new IllegalArgumentException("Paramer 'chatroomId' is required");
+        String message = CommonUtil.checkParam("id",chatroomId,PATH,"chatroom",CheckMethod.GETLIST);
+        System.out.println("message:"+message);
+        if(null != message){
+            return (ListBlockChatroomUserResult)GsonUtil.fromJson(message,ListBlockChatroomUserResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -81,42 +92,43 @@ public class Block {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/chatroom/user/block/list.json", "application/x-www-form-urlencoded");
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/block/list.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (ListBlockChatroomUserResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), ListBlockChatroomUserResult.class);
+        return (ListBlockChatroomUserResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.GETLIST,HttpUtil.returnResult(conn)), ListBlockChatroomUserResult.class);
     }
 
     /**
      * 移除封禁聊天室成员方法
      *
-     * @param  chatRoom:聊天室 Id。（必传）,用户 Id。（必传）
+     * @param  chatroom:聊天室 Id。（必传）,用户 Id。（必传）
      *
      * @return CodeSuccessResult
      **/
-    public CodeSuccessResult remove(ChatRoom chatRoom) throws Exception {
-        if (chatRoom.getMembers() == null) {
-            throw new IllegalArgumentException("Paramer 'userId' is required");
-        }
+    public CodeSuccessResult remove(ChatRoom chatroom) throws Exception {
+        //需要校验的字段
+        String[] fileds = {"id","merbers"};
 
-        if (chatRoom.getId() == null) {
-            throw new IllegalArgumentException("Paramer 'chatroomId' is required");
+        String message = CommonUtil.checkFiled(fileds,chatroom,PATH,"chatroom",CheckMethod.REMOVE);
+
+        if(null != message){
+            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
-        Member[] users = chatRoom.getMembers();
+        Member[] users = chatroom.getMembers();
         for(Member user : users){
             sb.append("&userId=").append(URLEncoder.encode(user.getId().toString(), UTF8));
         }
-        sb.append("&chatroomId=").append(URLEncoder.encode(chatRoom.getId().toString(), UTF8));
+        sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/chatroom/user/block/rollback.json", "application/x-www-form-urlencoded");
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/block/rollback.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
     }
 }

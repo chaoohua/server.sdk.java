@@ -15,7 +15,7 @@ public class GagModel extends GroupModel{
      * @param munite 禁言时间
      */
     public GagModel(String id, String[] merberIds, String groupId, String name, String munite) {
-        super(id, merberIds, groupId, name);
+        super(groupId, merberIds, name);
 
         this.munite = munite;
     }

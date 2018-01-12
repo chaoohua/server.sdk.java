@@ -1,39 +1,61 @@
-package io.rong.example.User;
+package io.rong.example.user;
 
 import io.rong.RongCloud;
 import io.rong.models.*;
 import io.rong.models.user.UserInfo;
-import io.rong.models.user.UserResponseResult;
 
+/**
+ * Demo class
+ *
+ * @author hc
+ * @date 2017/12/30
+ */
 public class UserExample {
 
     public static void main(String[] args) throws Exception {
 
-        String appKey = "appkey";//替换成您的appkey
+       /* String appKey = "appkey";//替换成您的appkey
 
         String appSecret = "secret";//替换成匹配上面key的secret
 
-        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);*/
+        String appKey = "e0x9wycfx7flq";
+        String appSecret = "STCevzDS6Xy18n";
+        String api = "http://192.168.155.13:9200";
+
+        /*String appKey = "8luwapkvucoil";
+        String appSecret = "y0icysjl4h3LWz";
+        String api = "http://api.cn.ronghub.com";*/
+
+        //RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+
+        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret,api);
 
         UserInfo user = new UserInfo("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
 
-        System.out.println("************************user getToken********************");
-        getToken(rongCloud);
+        //System.out.println("************************user getToken********************");
+        //getToken(rongCloud);
 
-        System.out.println("************************user userRefresh********************");
-        userRefresh(rongCloud);
+        //System.out.println("************************user userRefresh********************");
+        //userRefresh(rongCloud);
+        //GTzsllarY0ybahv8n57Z8/8d3dyrkUjx04znTXDsPzyuKtQw+URw2sGGaiTPk1Y+xLtzdS48UrgFgRC9PY5fVILPgPfFBJHe"
 
-        System.out.println("************************user checkOnline********************");
-        checkOnline(rongCloud);
+        ///System.out.println("************************user checkOnline********************");
+        //checkOnline(rongCloud);
 
-        System.out.println("************************user userUnBlock********************");
-        userUnBlock(rongCloud);
+        userAddBlock(rongCloud);
 
-        System.out.println("************************user userQueryBlock*******************");
-        userQueryBlock(rongCloud);
+        //System.out.println("************************user userUnBlock********************");
+        //userUnBlock(rongCloud);
 
-        System.out.println("************************user addBlacklist*******************");
-        addBlacklist(rongCloud);
+        //System.out.println("************************user userQueryBlock*******************");
+        //userQueryBlock(rongCloud);
+
+        //System.out.println("************************user addBlacklist*******************");
+        //addBlacklist(rongCloud);
+        //removeBlacklist(rongCloud);
+        //queryBlacklist(rongCloud);
+
 
     }
 
@@ -42,7 +64,7 @@ public class UserExample {
      * 检查用户在线状态 方法
      */
     public static void checkOnline(RongCloud rongCloud) throws Exception {
-        CheckOnlineResult userCheckOnlineResult = rongCloud.user.checkOnline(null);
+        CheckOnlineResult userCheckOnlineResult = rongCloud.user.onlineStatus.check("sdsdsdsdsd嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎个");
         System.out.println("checkOnline:  " + userCheckOnlineResult.toString());
     }
 
@@ -52,7 +74,7 @@ public class UserExample {
      * 获取 Token 方法
      */
     public static void getToken(RongCloud rongCloud) throws Exception {
-        UserInfo user = new UserInfo("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
+        UserInfo user = new UserInfo("userId1华发商都发货速度符合实际发货就是房价是否就是房价是否就是分数就会飞机是否就是方法就是发生", "username", "http://www.rongcloud.cn/images/logo.png");
         TokenResult userGetTokenResult = rongCloud.user.getToken(user);
         System.out.println("getToken:  " + userGetTokenResult.toString());
     }
@@ -62,17 +84,23 @@ public class UserExample {
      */
     public static void userRefresh(RongCloud rongCloud) throws Exception {
         UserInfo user = new UserInfo("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
-        UserResponseResult userRefreshResult = (UserResponseResult)rongCloud.user.refresh(user);
+        ResponseResult userRefreshResult = (ResponseResult)rongCloud.user.refresh(user);
         System.out.println("refresh:  " + userRefreshResult.toString());
 
     }
 
-
+    /**
+     *解除用户封禁方法（每秒钟限 100 次）
+     */
+    public static void userAddBlock(RongCloud rongCloud) throws Exception {
+        ResponseResult userUnBlockResult = (ResponseResult)rongCloud.user.block.add("userId2",10000000);
+        System.out.println("userAddBlock:  " + userUnBlockResult.toString());
+    }
     /**
      *解除用户封禁方法（每秒钟限 100 次）
      */
     public static void userUnBlock(RongCloud rongCloud) throws Exception {
-        UserResponseResult userUnBlockResult = (UserResponseResult)rongCloud.user.unBlock("userId2");
+        ResponseResult userUnBlockResult = (ResponseResult)rongCloud.user.block.remove("userId2");
         System.out.println("unBlock:  " + userUnBlockResult.toString());
     }
     /**
@@ -80,7 +108,7 @@ public class UserExample {
      */
     public static void userQueryBlock(RongCloud rongCloud) throws Exception {
 
-        QueryBlockUserResult userQueryBlockResult = rongCloud.user.queryBlock();
+        QueryBlockUserResult userQueryBlockResult = rongCloud.user.block.getList();
         System.out.println("queryBlock:  " + userQueryBlockResult.toString());
 
     }
@@ -99,7 +127,7 @@ public class UserExample {
 //        String appSecret = "secret";//替换成匹配上面key的secret
 
         RongCloud rongCloud1 = RongCloud.getInstance(appKey, appSecret);
-        UserResponseResult userAddBlacklistResult = (UserResponseResult)rongCloud1.user.addBlacklist("userId1", "userId2");
+        ResponseResult userAddBlacklistResult = (ResponseResult)rongCloud1.user.blackList.add("userId1", "userId2");
         System.out.println("addBlacklist:  " + userAddBlacklistResult.toString());
     }
     /**
@@ -107,7 +135,7 @@ public class UserExample {
      */
     public static void queryBlacklist(RongCloud rongCloud) throws Exception {
 
-        QueryBlacklistUserResult userQueryBlacklistResult = rongCloud.user.queryBlacklist("userId1");
+        QueryBlacklistUserResult userQueryBlacklistResult = rongCloud.user.blackList.query("userId1");
         System.out.println("queryBlacklist:  " + userQueryBlacklistResult.toString());
 
     }
@@ -118,7 +146,7 @@ public class UserExample {
      *  从黑名单中移除用户方法（每秒钟限 100 次）
      */
     public static void removeBlacklist(RongCloud rongCloud) throws Exception {
-        UserResponseResult userRemoveBlacklistResult = (UserResponseResult)rongCloud.user.removeBlacklist("userId1", "userId2");
+        ResponseResult userRemoveBlacklistResult = (ResponseResult)rongCloud.user.blackList.remove("userId1", "userId2");
         System.out.println("removeBlacklist:  " + userRemoveBlacklistResult.toString());
     }
 }

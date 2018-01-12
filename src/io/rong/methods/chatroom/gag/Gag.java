@@ -1,5 +1,6 @@
 package io.rong.methods.chatroom.gag;
 
+import io.rong.RongCloud;
 import io.rong.methods.chatroom.gag.global.Global;
 import io.rong.methods.chatroom.gag.member.Members;
 
@@ -9,6 +10,18 @@ public class Gag {
     private String appSecret;
     public Global global;
     public Members members;
+    private RongCloud rongCloud;
+
+    public RongCloud getRongCloud() {
+        return rongCloud;
+    }
+
+    public void setRongCloud(RongCloud rongCloud) {
+        this.rongCloud = rongCloud;
+        global.setRongCloud(rongCloud);
+        members.setRongCloud(rongCloud);
+
+    }
 
     public Gag(String appKey, String appSecret) {
         this.appKey = appKey;

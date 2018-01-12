@@ -1,7 +1,6 @@
 package io.rong.models;
 
 import io.rong.messages.ErrorCodeMessage;
-import io.rong.models.user.UserConstrants;
 import io.rong.util.GsonUtil;
 import io.rong.util.RcloudServiceConstrants;
 
@@ -78,13 +77,13 @@ public class CheckOnlineResult {
 		switch (this.getCode()) {
 
 			case RcloudServiceConstrants.RCLOUD_PARAM_ERROR:
-				this.setCode(UserConstrants.USER_PARAM_ERROR);
+				//this.setCode(UserConstrants.USER_PARAM_ERROR);
 				break;
 			case RcloudServiceConstrants.RCLOUD_METHOD_LIMITED:
-				this.setCode(UserConstrants.USER_NAME_LEN_OUT);
+				//this.setCode(UserConstrants.USER_NAME_LEN_OUT);
 				break;
 			case RcloudServiceConstrants.RCLOUD_PARAM_LEN_OUT:
-				this.setCode(UserConstrants.USER_PARAM_ERROR);
+				//this.setCode(UserConstrants.USER_PARAM_ERROR);
 				break;
 			case RcloudServiceConstrants.SENSITIVEWORD:
 				break;

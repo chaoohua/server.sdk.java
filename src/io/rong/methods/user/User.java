@@ -1,33 +1,42 @@
 package io.rong.methods.user;
 
+import io.rong.RongCloud;
 import io.rong.methods.user.blacklist.BlackList;
 import io.rong.methods.user.block.Block;
 import io.rong.methods.user.onlinestatus.OnlineStatus;
 import io.rong.models.*;
-import io.rong.models.user.UserConstrants;
 import io.rong.models.user.UserInfo;
-import io.rong.models.user.UserResponseResult;
-import io.rong.util.CommonUtil;
-import io.rong.util.GsonUtil;
-import io.rong.util.HostType;
-import io.rong.util.HttpUtil;
+import io.rong.util.*;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 
 
 /**
- *
+ *用户服务
  *
  **/
 public class User {
 
 	private static final String UTF8 = "UTF-8";
+	private static final String PATH = "user";
+	private static String method = "";
 	private String appKey;
 	private String appSecret;
 	public Block block;
 	public BlackList blackList;
 	public OnlineStatus onlineStatus;
+	private RongCloud rongCloud;
+
+	public RongCloud getRongCloud() {
+		return rongCloud;
+	}
+	public void setRongCloud(RongCloud rongCloud) {
+		this.rongCloud = rongCloud;
+		block.setRongCloud(rongCloud);
+		blackList.setRongCloud(rongCloud);
+		onlineStatus.setRongCloud(rongCloud);
+	}
 	public User(String appKey, String appSecret) {
 		this.appKey = appKey;
 		this.appSecret = appSecret;
@@ -38,39 +47,24 @@ public class User {
 	/**
 	 * 获取 Token 方法 
 	 * url  "/user/getToken"
-	 * @see  "http://rongcloud.cn/docs/server.html#getToken"
+	 * docs "http://rongcloud.cn/docs/server.html#getToken"
 	 *
-	 * @param user 用户信息
+	 * @param user 用户信息 id,name,portraitUri(必传)
 	 *
 	 * @return TokenResult
 	 **/
 	public  TokenResult getToken(UserInfo user) throws Exception {
-		if (user.userId == null) {
-			return new TokenResult(UserConstrants.USER_ID_NULL,
-					"","","userId 长度超限 最大长度 64字节");
+		//需要校验的字段
+		String[] fileds = {"id","name","portraitUri"};
+		method = "getToken";
+		String message = CommonUtil.checkFiled(fileds,user,PATH,"user","getToken");
+		if(null != message){
+			return (TokenResult)GsonUtil.fromJson(message,TokenResult.class);
 		}
-		if (user.name == null) {
-			return new TokenResult(UserConstrants.USER_ID_NULL,
-					"","","userId 长度超限 最大长度 64字节");
-		}
-		if (user.portraitUri == null) {
-			return new TokenResult(UserConstrants.USER_ID_NULL,
-					"","","userId 长度超限 最大长度 64字节");
-		}
-		if(CommonUtil.validateParams(user.userId,64)){
-			return new TokenResult(UserConstrants.USER_ID_LEN_OUT,
-					"","","userId 长度超限 最大长度 64字节");
-		}
-		if(CommonUtil.validateParams(user.name,128)){
-			return new TokenResult(UserConstrants.USER_NAME_LEN_OUT,
-					"","","用户名长度超限, 最大长度 128 字节");
-		}
-		if(CommonUtil.validateParams(user.portraitUri,1024)){
-			return new TokenResult(UserConstrants.USER_PORTRAIT_OUT,
-					"","","头像长度超限， 最大长度 1024 字节");
-		}
+
+
 	    StringBuilder sb = new StringBuilder();
-	    sb.append("&userId=").append(URLEncoder.encode(user.userId.toString(), UTF8));
+	    sb.append("&userId=").append(URLEncoder.encode(user.id.toString(), UTF8));
 	    sb.append("&name=").append(URLEncoder.encode(user.name.toString(), UTF8));
 	    sb.append("&portraitUri=").append(URLEncoder.encode(user.portraitUri.toString(), UTF8));
 		String body = sb.toString();
@@ -78,39 +72,34 @@ public class User {
 	   		body = body.substring(1, body.length());
 	   	}
 	   	
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/user/getToken.json", "application/x-www-form-urlencoded");
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/user/getToken.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (TokenResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), TokenResult.class);
+	    return (TokenResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), TokenResult.class);
 	}
 	
 	/**
 	 * 刷新用户信息方法 
+	 * url  "/user/refresh"
+	 * docs "http://www.rongcloud.cn/docs/server.html#user_refresh"
 	 *
-	 * @param user 用户信息
+	 * @param user 用户信息 id name(必传)
 	 *
 	 * @return CodeSuccessResult
 	 **/
 	public ResponseResult refresh(UserInfo user) throws Exception {
-		if (user.userId == null) {
-			return new UserResponseResult(UserConstrants.USER_ID_NULL,
-					"userId 长度超限 最大长度 64字节");
-		}
-		if(!CommonUtil.validateParams(user.userId,64)){
-			return new UserResponseResult(UserConstrants.USER_ID_LEN_OUT,
-					"userId 长度超限 最大长度 64字节");
-		}
-		if(!CommonUtil.validateParams(user.name,128)){
-			return new UserResponseResult(UserConstrants.USER_NAME_LEN_OUT,
-					"用户名长度超限, 最大长度 128 字节");
-		}
-		if(!CommonUtil.validateParams(user.portraitUri,1024)){
-			return new UserResponseResult(UserConstrants.USER_PORTRAIT_OUT,
-					"头像长度超限， 最大长度 1024 字节");
+		//需要校验的字段
+		String[] fileds = {"id","name"};
+		method = "refresh";
+		String message = CommonUtil.checkFiled(fileds,user,PATH,"user","refresh");
+		System.out.println("message:"+message);
+		if(null != message){
+			return (ResponseResult)GsonUtil.fromJson(message,TokenResult.class);
+			//throw new ParamException(code);
 		}
 
 		StringBuilder sb = new StringBuilder();
-	    sb.append("&userId=").append(URLEncoder.encode(user.userId.toString(), UTF8));
+	    sb.append("&userId=").append(URLEncoder.encode(user.id.toString(), UTF8));
 	    
 	    if (user.name != null) {
 	    	sb.append("&name=").append(URLEncoder.encode(user.name.toString(), UTF8));
@@ -124,11 +113,11 @@ public class User {
 	   		body = body.substring(1, body.length());
 	   	}
 	   	
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret,
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret,
 				"/user/refresh.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (UserResponseResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), UserResponseResult.class);
+	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 
 

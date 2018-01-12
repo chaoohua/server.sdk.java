@@ -1,9 +1,13 @@
 package io.rong.methods.chatroom.gag.global;
 
+import io.rong.RongCloud;
+import io.rong.exception.ParamException;
+import io.rong.models.CheckMethod;
 import io.rong.models.CodeSuccessResult;
+import io.rong.models.CommonConstrants;
 import io.rong.models.ListGagChatroomUserResult;
+import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
-import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
@@ -12,9 +16,20 @@ import java.net.URLEncoder;
 
 public class Global {
     private static final String UTF8 = "UTF-8";
+    private static final String PATH = "chatroom/global-gag";
+    private static final String ADD = "add";
+    private static final String GETLIST = "getList";
+    private static final String REMOVE = "remove";
     private String appKey;
     private String appSecret;
+    private RongCloud rongCloud;
 
+    public RongCloud getRongCloud() {
+        return rongCloud;
+    }
+    public void setRongCloud(RongCloud rongCloud) {
+        this.rongCloud = rongCloud;
+    }
     public Global(String appKey, String appSecret) {
         this.appKey = appKey;
         this.appSecret = appSecret;
@@ -22,7 +37,7 @@ public class Global {
     }
 
     /**
-     * 添加禁言聊天室成员方法（在 App 中如果不想让某一用户在聊天室中发言时，可将此用户在聊天室中禁言，被禁言用户可以接收查看聊天室中用户聊天信息，但不能发送消息.）
+     * 添加聊天室全局禁言方法
      *
      * @param  userId:用户 Id。（必传）
      * @param  minute:禁言时长，以分钟为单位，最大值为43200分钟。（必传）
@@ -30,12 +45,14 @@ public class Global {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult add(String[] userId, String minute) throws Exception {
-        if (userId == null) {
-            throw new IllegalArgumentException("Paramer 'userId' is required");
-        }
 
-        if (minute == null) {
-            throw new IllegalArgumentException("Paramer 'minute' is required");
+        String message = CommonUtil.checkParam("members",userId,PATH,"chatroom",ADD);
+        if(null != message){
+            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+        }
+        message = CommonUtil.checkParam("minute",minute,PATH,"chatroom", CheckMethod.ADD);
+        if(null != message){
+            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -46,66 +63,52 @@ public class Global {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/chatroom/user/gag/add.json", "application/x-www-form-urlencoded");
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/ban/add.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,ADD,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
     }
 
     /**
-     * 查询被禁言聊天室成员方法
-     *
-     * @param  chatroomId:聊天室 Id。（必传）
+     * 查询聊天室全局禁言用户方法
      *
      * @return ListGagChatroomUserResult
      **/
-    public ListGagChatroomUserResult getList(String chatroomId) throws Exception {
-        if (chatroomId == null) {
-            throw new IllegalArgumentException("Paramer 'chatroomId' is required");
-        }
-
+    public ListGagChatroomUserResult getList() throws Exception {
         StringBuilder sb = new StringBuilder();
-        sb.append("&chatroomId=").append(URLEncoder.encode(chatroomId.toString(), UTF8));
-        String body = sb.toString();
-        if (body.indexOf("&") == 0) {
-            body = body.substring(1, body.length());
-        }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/chatroom/user/ban/query.json", "application/x-www-form-urlencoded");
-        HttpUtil.setBodyParameter(body, conn);
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/ban/query.json", "application/x-www-form-urlencoded");
 
-        return (ListGagChatroomUserResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), ListGagChatroomUserResult.class);
+        return (ListGagChatroomUserResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,GETLIST,HttpUtil.returnResult(conn)), ListGagChatroomUserResult.class);
     }
 
     /**
-     * 移除禁言聊天室成员方法
+     * 移除聊天室全局禁言方法
      *
      * @param  userId:用户 Id。（必传）
-     * @param  chatroomId:聊天室Id。（必传）
      *
      * @return CodeSuccessResult
      **/
-    public CodeSuccessResult remove(String userId, String chatroomId) throws Exception {
+    public CodeSuccessResult remove(String userId) throws Exception {
         if (userId == null) {
-            throw new IllegalArgumentException("Paramer 'userId' is required");
+            throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/chatroom/user/ban/remove","Paramer 'userId' is required");
         }
-
-        if (chatroomId == null) {
-            throw new IllegalArgumentException("Paramer 'chatroomId' is required");
+        String message = CommonUtil.checkParam("userId",userId,PATH,"chatroom",REMOVE);
+        if(null != message){
+            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append("&userId=").append(URLEncoder.encode(userId.toString(), UTF8));
-        sb.append("&chatroomId=").append(URLEncoder.encode(chatroomId.toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/chatroom/user/ban/remove.json", "application/x-www-form-urlencoded");
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/ban/remove.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,REMOVE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
     }
 }
 

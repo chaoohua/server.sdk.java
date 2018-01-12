@@ -1,6 +1,11 @@
 package io.rong.methods.chatroom.priority;
 
+import io.rong.RongCloud;
+import io.rong.exception.ParamException;
+import io.rong.models.CheckMethod;
 import io.rong.models.CodeSuccessResult;
+import io.rong.models.CommonConstrants;
+import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
@@ -10,9 +15,17 @@ import java.net.URLEncoder;
 
 public class Priority {
     private static final String UTF8 = "UTF-8";
+    private static final String PATH = "chatroom/priority";
     private String appKey;
     private String appSecret;
+    private RongCloud rongCloud;
 
+    public RongCloud getRongCloud() {
+        return rongCloud;
+    }
+    public void setRongCloud(RongCloud rongCloud) {
+        this.rongCloud = rongCloud;
+    }
     public Priority(String appKey, String appSecret) {
         this.appKey = appKey;
         this.appSecret = appSecret;
@@ -26,10 +39,10 @@ public class Priority {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult add(String[] objectName) throws Exception {
-        if (objectName == null) {
-            throw new IllegalArgumentException("Paramer 'objectName' is required");
+        String message = CommonUtil.checkParam("objectName",objectName,"chatroom/priority","priority", CheckMethod.ADD);
+        if(null != message){
+            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
-
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0 ; i< objectName.length; i++) {
@@ -42,28 +55,28 @@ public class Priority {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/chatroom/message/priority/add.json", "application/x-www-form-urlencoded");
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/message/priority/add.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
     }
 
     /**
-     * 销毁聊天室方法
+     * 删除聊天室优先级啊方法
      *
-     * @param  chatroomId:要销毁的聊天室 Id。（必传）
+     * @param  objectName:要销毁的聊天室 Id。（必传）
      *
      * @return CodeSuccessResult
      **/
-    public CodeSuccessResult destroy(String[] chatroomId) throws Exception {
-        if (chatroomId == null) {
-            throw new IllegalArgumentException("Paramer 'chatroomId' is required");
+    public CodeSuccessResult remove(String[] objectName) throws Exception {
+        String message = CommonUtil.checkParam("objectName",objectName,"chatroom/keepalive","priority",CheckMethod.REMOVE);
+        if(null != message){
+            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
-
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0 ; i< chatroomId.length; i++) {
-            String child  = chatroomId[i];
+        for (int i = 0 ; i< objectName.length; i++) {
+            String child  = objectName[i];
             sb.append("&chatroomId=").append(URLEncoder.encode(child, UTF8));
         }
 
@@ -72,9 +85,21 @@ public class Priority {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/chatroom/destroy.json", "application/x-www-form-urlencoded");
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "chatroom/message/priority/remove.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+    }
+    /**
+     * 查询聊天室优先级方法
+     *
+     *
+     * @return CodeSuccessResult
+     **/
+    public CodeSuccessResult get() throws Exception {
+
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/message/priority/query.json", "application/x-www-form-urlencoded");
+
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.GET,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
     }
 }

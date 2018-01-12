@@ -1,11 +1,12 @@
 package io.rong.methods.group;
 
+import io.rong.RongCloud;
+import io.rong.exception.ParamException;
 import io.rong.methods.group.gag.Gag;
 import io.rong.models.*;
 import io.rong.models.group.*;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
-import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
@@ -14,31 +15,44 @@ import java.net.URLEncoder;
 public class Group {
 
 	private static final String UTF8 = "UTF-8";
+	private static final String PATH = "group";
+	private static String method = "";
 	private String appKey;
 	private String appSecret;
 	public  Gag gag;
+	private RongCloud rongCloud;
+
+	public RongCloud getRongCloud() {
+		return rongCloud;
+	}
+
+	public void setRongCloud(RongCloud rongCloud) {
+		this.rongCloud = rongCloud;
+		this.gag.setRongCloud(rongCloud);
+	}
 	public Group(String appKey, String appSecret) {
 		this.appKey = appKey;
 		this.appSecret = appSecret;
 		this.gag = new Gag(appKey,appSecret);
+		gag.setRongCloud(rongCloud);
 
 	}
 	/**
 	 * 创建群组方法（创建群组，并将用户加入该群组，用户将可以收到该群的消息，同一用户最多可加入 500 个群，每个群最大至 3000 人，App 内的群组数量没有限制.注：其实本方法是加入群组方法 /group/join 的别名。） 
 	 *
-	 * @param group 创建群组的群组信息
+	 * url /group/create.json
+	 * docs http://rongcloud.cn/docs/server.html#group_sync"
 	 *
-	 * @url /group/create.json
-	 * @docs http://rongcloud.cn/docs/server.html#group_sync"
+	 * @param group 创建群组的群组信息
 	 *
 	 * @return GroupResponse
 	 **/
 	public ResponseResult create(GroupModel group) throws Exception {
-		//参数校验
-		GroupResponse groupResponseResult = CommonUtil.checkParamter(group,"GroupResponse");
-
-		if(null != groupResponseResult){
-			return  groupResponseResult;
+		//需要校验的字段
+		String[] fileds = {"id","merberIds","name"};
+		String message = CommonUtil.checkFiled(fileds,group,"group","group","create");
+		if(null != message){
+			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
 		}
 		StringBuilder sb = new StringBuilder();
 
@@ -54,9 +68,9 @@ public class Group {
 	   		body = body.substring(1, body.length());
 	   	}
 
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/group/create.json", "application/x-www-form-urlencoded");
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/create.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
-		return (GroupResponse) GsonUtil.fromJson(HttpUtil.returnResult(conn), GroupResponse.class);
+		return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), GroupResponse.class);
 	}
 
 	/**
@@ -68,12 +82,12 @@ public class Group {
 	 * @return CodeSuccessResult
 	 **/
 	public ResponseResult sync(String userId, GroupModel[] group) throws Exception {
-		if (userId == null) {
-			throw new IllegalArgumentException("Paramer 'userId' is required");
+		String message = CommonUtil.checkParam("id",userId,"group","user","sync");
+		if(null != message){
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
-
 		if (group == null) {
-			throw new IllegalArgumentException("Paramer 'groupInfo' is required");
+			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/group/sync", "Paramer 'groupInfo' is required");
 		}
 
 	   	StringBuilder sb = new StringBuilder();
@@ -89,28 +103,26 @@ public class Group {
 	   		body = body.substring(1, body.length());
 	   	}
 
-	   	HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/group/sync.json", "application/x-www-form-urlencoded");
+	   	HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/sync.json", "application/x-www-form-urlencoded");
 	   	HttpUtil.setBodyParameter(body, conn);
 
-	    return (GroupResponse) GsonUtil.fromJson(HttpUtil.returnResult(conn), GroupResponse.class);
+	    return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), GroupResponse.class);
 	}
 
 	/**
 	 * 刷新群组信息方法
 	 *
-	 * @param  group:群组。（必传）
+	 * @param  group:群组信息。id,name（必传）
 	 *
 	 * @return CodeSuccessResult
 	 **/
 	public ResponseResult refresh(GroupModel group) throws Exception {
-		if (group.id == null) {
-			throw new IllegalArgumentException("Paramer 'groupId' is required");
+		//需要校验的字段
+		String[] fileds = {"id","name"};
+		String message = CommonUtil.checkFiled(fileds,group,"group","group","refresh");
+		if(null != message){
+			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
 		}
-
-		if (group.name == null) {
-			throw new IllegalArgumentException("Paramer 'groupName' is required");
-		}
-
 	    StringBuilder sb = new StringBuilder();
 	    sb.append("&groupId=").append(URLEncoder.encode(group.id.toString(), UTF8));
 	    sb.append("&groupName=").append(URLEncoder.encode(group.name.toString(), UTF8));
@@ -118,11 +130,9 @@ public class Group {
 	   	if (body.indexOf("&") == 0) {
 	   		body = body.substring(1, body.length());
 	   	}
-
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/group/refresh.json", "application/x-www-form-urlencoded");
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/refresh.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
-
-	    return (GroupResponse) GsonUtil.fromJson(HttpUtil.returnResult(conn), GroupResponse.class);
+	    return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), GroupResponse.class);
 	}
 
 	/**
@@ -133,11 +143,11 @@ public class Group {
 	 * @return GroupResponse
 	 **/
 	public ResponseResult join(GroupModel group) throws Exception {
-		//参数校验
-		GroupResponse groupResponseResult = CommonUtil.checkParamter(group,"GroupResponse");
-
-		if(null != groupResponseResult){
-			return  groupResponseResult;
+		//需要校验的字段
+		String[] fileds = {"id","merberIds","name"};
+		String message = CommonUtil.checkFiled(fileds,group,"group","group","join");
+		if(null != message){
+			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
 		}
 
 	    StringBuilder sb = new StringBuilder();
@@ -154,10 +164,10 @@ public class Group {
 	   		body = body.substring(1, body.length());
 	   	}
 	   	
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/group/join.json", "application/x-www-form-urlencoded");
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/join.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (GroupResponse) GsonUtil.fromJson(HttpUtil.returnResult(conn), GroupResponse.class);
+	    return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), GroupResponse.class);
 	}
 	
 	/**
@@ -168,10 +178,11 @@ public class Group {
 	 * @return GroupUserQueryResult
 	 **/
 	public GroupUserQueryResult getMemberList(String groupId) throws Exception {
-		if (groupId == null) {
-			throw new IllegalArgumentException("Paramer 'groupId' is required");
+		//参数校验
+		String message = CommonUtil.checkParam("id",groupId,"group","group","getMemberList");
+		if(null != message){
+			return (GroupUserQueryResult)GsonUtil.fromJson(message,GroupUserQueryResult.class);
 		}
-		
 	    StringBuilder sb = new StringBuilder();
 	    sb.append("&groupId=").append(URLEncoder.encode(groupId.toString(), UTF8));
 		String body = sb.toString();
@@ -179,10 +190,10 @@ public class Group {
 	   		body = body.substring(1, body.length());
 	   	}
 	   	
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/group/user/query.json", "application/x-www-form-urlencoded");
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/user/query.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (GroupUserQueryResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), GroupUserQueryResult.class);
+	    return (GroupUserQueryResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), GroupUserQueryResult.class);
 	}
 	
 	/**
@@ -193,13 +204,19 @@ public class Group {
 	 * @return CodeSuccessResult
 	 **/
 	public ResponseResult quit(GroupModel group) throws Exception {
-		if (group.merberIds == null) {
-			throw new IllegalArgumentException("Paramer 'userId' is required");
+
+		//需要校验的字段
+		String[] fileds = {"id","merberIds"};
+
+		String message = CommonUtil.checkFiled(fileds,group,"group","group","quit");
+		System.out.println("message:"+message);
+
+		if(null != message){
+			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
+			//throw new ParamException(code);
 		}
-		
-		if (group.id == null) {
-			throw new IllegalArgumentException("Paramer 'groupId' is required");
-		}
+
+
 		
 	    StringBuilder sb = new StringBuilder();
 	    
@@ -214,10 +231,10 @@ public class Group {
 	   		body = body.substring(1, body.length());
 	   	}
 	   	
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/group/quit.json", "application/x-www-form-urlencoded");
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/quit.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (GroupResponse) GsonUtil.fromJson(HttpUtil.returnResult(conn), GroupResponse.class);
+	    return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), GroupResponse.class);
 	}
 	/**
 	 * 解散群组方法。（将该群解散，所有用户都无法再接收该群的消息。） 
@@ -228,14 +245,18 @@ public class Group {
 	 * @return CodeSuccessResult
 	 **/
 	public GroupResponse dismiss(String userId, String groupId) throws Exception {
-		if (userId == null) {
-			throw new IllegalArgumentException("Paramer 'userId' is required");
+		//参数校验
+		String message = CommonUtil.checkParam("id",userId,"group","user","dismiss");
+		if(null != message){
+			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
+			//throw new ParamException(code);
 		}
-		
-		if (groupId == null) {
-			throw new IllegalArgumentException("Paramer 'groupId' is required");
+		message = CommonUtil.checkParam("id",userId,"group","group","dismiss");
+		if(null != message){
+			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
+			//throw new ParamException(code);
 		}
-		
+
 	    StringBuilder sb = new StringBuilder();
 	    sb.append("&userId=").append(URLEncoder.encode(userId.toString(), UTF8));
 	    sb.append("&groupId=").append(URLEncoder.encode(groupId.toString(), UTF8));
@@ -244,9 +265,9 @@ public class Group {
 	   		body = body.substring(1, body.length());
 	   	}
 	   	
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/group/dismiss.json", "application/x-www-form-urlencoded");
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/dismiss.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (GroupResponse) GsonUtil.fromJson(HttpUtil.returnResult(conn), GroupResponse.class);
+	    return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), GroupResponse.class);
 	}
 }

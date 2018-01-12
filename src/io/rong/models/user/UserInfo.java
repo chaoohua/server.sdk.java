@@ -10,7 +10,7 @@ public class UserInfo {
      * userId:用户 Id，最大长度 64 字节.是用户在 App 中的唯一标识码，
      * 必须保证在同一个 App 内不重复，重复的用户 Id 将被当作是同一用户。（必传）
      */
-    public String userId;
+    public String id;
     /**
      * 用户名称，最大长度 128 字节。用来在 Push 推送时，显示用户的名称，
      * 刷新用户名称后 5 分钟内生效。（可选，提供即刷新，不提供忽略）
@@ -22,11 +22,33 @@ public class UserInfo {
      */
     public String portraitUri;
 
-    public UserInfo(String userId, String name,String portraitUri) {
-        this.userId = userId;
+    public UserInfo(String id, String name,String portraitUri) {
+        this.id = id;
         this.name = name;
         this.portraitUri = portraitUri;
     }
 
+    public String getId() {
+        return this.id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPortraitUri() {
+        return this.portraitUri;
+    }
+
+    public void setPortraitUri(String portraitUri) {
+        this.portraitUri = portraitUri;
+    }
 }

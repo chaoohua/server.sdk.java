@@ -1,10 +1,14 @@
 package io.rong.methods.group.gag;
 
+import io.rong.RongCloud;
+import io.rong.exception.ParamException;
+import io.rong.models.CheckMethod;
+import io.rong.models.CommonConstrants;
 import io.rong.models.group.GroupModel;
 import io.rong.models.group.GroupResponse;
 import io.rong.models.ListGagGroupUserResult;
+import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
-import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
@@ -12,9 +16,18 @@ import java.net.URLEncoder;
 
 public class Gag {
     private static final String UTF8 = "UTF-8";
+    private static final String PATH = "group/gag";
+    private static String method = "";
     private String appKey;
     private String appSecret;
+    private RongCloud rongCloud;
 
+    public RongCloud getRongCloud() {
+        return rongCloud;
+    }
+    public void setRongCloud(RongCloud rongCloud) {
+        this.rongCloud = rongCloud;
+    }
     public Gag(String appKey, String appSecret) {
         this.appKey = appKey;
         this.appSecret = appSecret;
@@ -28,20 +41,23 @@ public class Gag {
      * @return GroupResponse
      **/
     public GroupResponse add(GroupModel group,String munite) throws Exception {
-        if (group.getId() == null) {
-            throw new IllegalArgumentException("Paramer 'userId' is required");
+        //需要校验的字段
+        String[] fileds = {"id","merberIds","name"};
+        String message = CommonUtil.checkFiled(fileds,group,PATH,"group",CheckMethod.ADD);
+        if(null != message){
+            return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
         }
 
-        if (group.getMerberIds() == null) {
-            throw new IllegalArgumentException("Paramer 'groupId' is required");
-        }
-
-        if (group.name == null) {
-            throw new IllegalArgumentException("Paramer 'minute' is required");
+        message = CommonUtil.checkParam("munite",munite,PATH,"munite",CheckMethod.ADD);
+        if(null != message){
+            return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("&userId=").append(URLEncoder.encode(group.getMerberIds().toString(), UTF8));
+        String[] merberIds = group.getMerberIds();
+        for(String merberId : merberIds){
+            sb.append("&userId=").append(URLEncoder.encode(group.getMerberIds().toString(), UTF8));
+        }
         sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
         sb.append("&minute=").append(URLEncoder.encode(munite, UTF8));
         String body = sb.toString();
@@ -49,10 +65,10 @@ public class Gag {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/group/user/gag/add.json", "application/x-www-form-urlencoded");
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/user/gag/add.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (GroupResponse) GsonUtil.fromJson(HttpUtil.returnResult(conn), GroupResponse.class);
+        return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), GroupResponse.class);
     }
 
     /**
@@ -63,10 +79,10 @@ public class Gag {
      * @return ListGagGroupUserResult
      **/
     public ListGagGroupUserResult getList(String groupId) throws Exception {
-        if (groupId == null) {
-            throw new IllegalArgumentException("Paramer 'groupId' is required");
+        String message = CommonUtil.checkParam("id",groupId,PATH,"group",CheckMethod.GETLIST);
+        if(null != message){
+            return (ListGagGroupUserResult)GsonUtil.fromJson(message,ListGagGroupUserResult.class);
         }
-
         StringBuilder sb = new StringBuilder();
         sb.append("&groupId=").append(URLEncoder.encode(groupId.toString(), UTF8));
         String body = sb.toString();
@@ -74,10 +90,10 @@ public class Gag {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/group/user/gag/list.json", "application/x-www-form-urlencoded");
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/user/gag/list.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (ListGagGroupUserResult) GsonUtil.fromJson(HttpUtil.returnResult(conn), ListGagGroupUserResult.class);
+        return (ListGagGroupUserResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), ListGagGroupUserResult.class);
     }
 
     /**
@@ -88,13 +104,16 @@ public class Gag {
      * @return CodeSuccessResult
      **/
     public GroupResponse remove(GroupModel group) throws Exception {
-        if (group.merberIds == null) {
-            throw new IllegalArgumentException("Paramer 'userId' is required");
+        //需要校验的字段
+        String[] fileds = {"id","merberIds"};
+
+        String message = CommonUtil.checkFiled(fileds,group,PATH,"group", CheckMethod.REMOVE);
+        System.out.println("message:"+message);
+
+        if(null != message){
+            return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
         }
 
-        if (group.id == null) {
-            throw new IllegalArgumentException("Paramer 'groupId' is required");
-        }
 
         StringBuilder sb = new StringBuilder();
 
@@ -109,9 +128,9 @@ public class Gag {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(HostType.API, appKey, appSecret, "/group/user/gag/rollback.json", "application/x-www-form-urlencoded");
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/user/gag/rollback.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (GroupResponse) GsonUtil.fromJson(HttpUtil.returnResult(conn), GroupResponse.class);
+        return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), GroupResponse.class);
     }
 }

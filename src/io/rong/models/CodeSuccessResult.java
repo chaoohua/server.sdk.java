@@ -1,7 +1,6 @@
 package io.rong.models;
 
 import io.rong.messages.ErrorCodeMessage;
-import io.rong.models.group.GroupConstrants;
 import io.rong.util.CodeUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.RcloudServiceConstrants;
@@ -58,32 +57,6 @@ public class CodeSuccessResult {
 	
 	@Override
 	public String toString() {
-		if(this.flag == CodeUtil.ServiceType.group.getResultCode()){
-			switch (this.getCode()) {
-				case 1008:
-					this.setCode(GroupConstrants.GROUP_SYNC_OVERFLOW);
-					break;
-				case RcloudServiceConstrants.CHATROOM:
-					System.out.println("");
-				case RcloudServiceConstrants.MESSAGE:
-
-				case RcloudServiceConstrants.PUSH:
-
-				case RcloudServiceConstrants.SENSITIVEWORD:
-
-				case RcloudServiceConstrants.SMS:
-
-				case RcloudServiceConstrants.USER:
-
-				case RcloudServiceConstrants.WORDFILTER:
-
-				default:
-					break;
-			}
-		}
-		if(this.code != 200 && ErrorCodeMessage.errorCodeMaps.containsKey(this.code)){
-			this.setErrorMessage(ErrorCodeMessage.errorCodeMaps.get(code));
-		}
 		return GsonUtil.toJson(this, CodeSuccessResult.class);
 	}
 }

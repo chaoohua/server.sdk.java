@@ -2,18 +2,29 @@ package io.rong.models.chatroom;
 
 import io.rong.models.User;
 import io.rong.util.GsonUtil;
+import io.rong.util.ParamNotNull;
 
 /**
  * 聊天室信息。
  */
 public class ChatRoom {
-	// 聊天室 ID。
+	/**
+	 * 聊天室 id。
+	 */
+	@ParamNotNull
 	String id;
-	// 聊天室名称。
+	/**
+	 * 聊天室名。
+	 */
+	@ParamNotNull
 	String name;
-	// 聊天室创建时间。
+	/**
+	 * 聊天室创建时间。
+	 */
 	String time;
-	//聊天室成员
+	/**
+	 * 聊天室成员。
+	 */
 	Member[] members;
 
 	public ChatRoom(String id, String name) {
@@ -31,6 +42,7 @@ public class ChatRoom {
 		this.id = id;
 		this.name = name;
 		this.time = time;
+		this.members = members;
 	}
 	
 	/**
