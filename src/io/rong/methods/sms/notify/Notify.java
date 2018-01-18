@@ -2,6 +2,7 @@ package io.rong.methods.sms.notify;
 
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
+import io.rong.models.CheckMethod;
 import io.rong.models.CommonConstrants;
 import io.rong.models.SMSSendCodeResult;
 import io.rong.models.sms.SmsModel;
@@ -16,7 +17,6 @@ public class Notify {
 
     private static final String UTF8 = "UTF-8";
     private static final String PATH = "sms/notify";
-    private static String method = "";
     private String appKey;
     private String appSecret;
     private RongCloud rongCloud;
@@ -39,16 +39,11 @@ public class Notify {
      * @return SMSSendCodeResult
      **/
     public SMSSendCodeResult send(SmsModel sms, String p1, String p2, String p3) throws Exception {
-        if (sms.mobile == null) {
-            throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/sendNotify","Paramer 'sms.mobile' is required");
-        }
-
-        if (sms.templateId == null) {
-            throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/sendNotify","Paramer 'sms.templateId' is required");
-        }
-
-        if (sms.region == null) {
-            throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/sendNotify","Paramer 'sms.region' is required");
+        //需要校验的字段
+        String[] fileds = {"mobile","templateId","region"};
+        String message = CommonUtil.checkFiled(fileds,sms,PATH,"sms", CheckMethod.SEND);
+        if(null != message){
+            return (SMSSendCodeResult)GsonUtil.fromJson(message,SMSSendCodeResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -76,6 +71,6 @@ public class Notify {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getSmsHostType(), appKey, appSecret, "/sendNotify.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (SMSSendCodeResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), SMSSendCodeResult.class);
+        return (SMSSendCodeResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.SEND,HttpUtil.returnResult(conn)), SMSSendCodeResult.class);
     }
 }

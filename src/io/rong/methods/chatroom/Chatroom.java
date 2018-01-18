@@ -7,14 +7,11 @@ import io.rong.methods.chatroom.keepalive.Keepalive;
 import io.rong.methods.chatroom.priority.Priority;
 import io.rong.methods.chatroom.whitelist.WhiteList;
 import io.rong.methods.chatroom.block.Block;
-import io.rong.models.ChatroomQueryResult;
-import io.rong.models.ChatroomUserQueryResult;
-import io.rong.models.CodeSuccessResult;
-import io.rong.models.CommonConstrants;
+import io.rong.models.*;
 import io.rong.models.chatroom.*;
+import io.rong.models.chatroom.ChatRoom;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
-import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
@@ -25,7 +22,6 @@ public class Chatroom {
 	private static final String UTF8 = "UTF-8";
 	private static final String PATH = "chatroom";
 	public static final String checkObject = "chatroom";
-	private static String checkMethod = "";
 	private String appKey;
 	private String appSecret;
 	public 	 Block block;
@@ -66,7 +62,6 @@ public class Chatroom {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult create(ChatRoom[] chatRoom) throws Exception {
-		checkMethod = "create";
 		if (chatRoom == null) {
 			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/chatroom/create","Paramer 'chatRoomInfo' is required");
 		}
@@ -85,7 +80,7 @@ public class Chatroom {
 	   	HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/create.json", "application/x-www-form-urlencoded");
 	   	HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,checkMethod,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH, CheckMethod.CREATE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
 	}
 	/**
 	 * 销毁聊天室方法
@@ -95,7 +90,6 @@ public class Chatroom {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult destroy(String[] chatroomIds) throws Exception {
-		checkMethod = "destroy";
 		if (chatroomIds == null) {
 			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/chatroom/destroy", "Paramer 'chatroomId' is required");
 		}
@@ -115,7 +109,7 @@ public class Chatroom {
 		HttpUtil.setBodyParameter(body, conn);
 
 
-		return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,checkMethod,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+		return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.DESTORY,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
 	}
 	/**
 	 * 查询聊天室信息方法 
@@ -125,7 +119,6 @@ public class Chatroom {
 	 * @return ChatroomQueryResult
 	 **/
 	public ChatroomQueryResult query(String[] chatroomIds) throws Exception {
-		Chatroom.checkMethod = "query";
 		if (chatroomIds == null) {
 			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/chatroom/query", "Paramer 'chatroomIds' is required");
 		}
@@ -144,7 +137,7 @@ public class Chatroom {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/query.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 
-	    return (ChatroomQueryResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,checkMethod,HttpUtil.returnResult(conn)), ChatroomQueryResult.class);
+	    return (ChatroomQueryResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.QUERY,HttpUtil.returnResult(conn)), ChatroomQueryResult.class);
 	}
 	
 	/**
@@ -157,16 +150,15 @@ public class Chatroom {
 	 * @return ChatroomUserQueryResult
 	 **/
 	public ChatroomUserQueryResult getMembers(String chatroomId, String count, String order) throws Exception {
-		Chatroom.checkMethod = "getMembers";
-		String message = CommonUtil.checkParam("id",chatroomId,PATH,checkObject,checkMethod);
+		String message = CommonUtil.checkParam("id",chatroomId,PATH,checkObject,CheckMethod.GET_MEMBERS);
 		if(null != message){
 			return (ChatroomUserQueryResult)GsonUtil.fromJson(message,ChatroomUserQueryResult.class);
 		}
-		message = CommonUtil.checkParam("count",count,PATH,checkObject,checkMethod);
+		message = CommonUtil.checkParam("count",count,PATH,checkObject,CheckMethod.GET_MEMBERS);
 		if(null != message){
 			return (ChatroomUserQueryResult)GsonUtil.fromJson(message,ChatroomUserQueryResult.class);
 		}
-		message = CommonUtil.checkParam("order",order,PATH,checkObject,checkMethod);
+		message = CommonUtil.checkParam("order",order,PATH,checkObject,CheckMethod.GET_MEMBERS);
 		if(null != message){
 			return (ChatroomUserQueryResult)GsonUtil.fromJson(message,ChatroomUserQueryResult.class);
 		}
@@ -182,7 +174,7 @@ public class Chatroom {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/query.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (ChatroomUserQueryResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,checkMethod,HttpUtil.returnResult(conn)), ChatroomUserQueryResult.class);
+	    return (ChatroomUserQueryResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.GET_MEMBERS,HttpUtil.returnResult(conn)), ChatroomUserQueryResult.class);
 	}
 	
 	/**
@@ -193,8 +185,7 @@ public class Chatroom {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult stopDistribution(String chatroomId) throws Exception {
-		Chatroom.checkMethod = "stopDistribution";
-		String message = CommonUtil.checkParam("id",chatroomId,PATH,"chatroom",checkMethod);
+		String message = CommonUtil.checkParam("id",chatroomId,PATH,"chatroom",CheckMethod.STOP_DISTRIBUTION);
 		if(null != message){
 			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}
@@ -209,7 +200,7 @@ public class Chatroom {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/message/stopDistribution.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,checkMethod,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.STOP_DISTRIBUTION,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
 	}
 	
 	/**
@@ -220,8 +211,7 @@ public class Chatroom {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult resumeDistribution(String chatroomId) throws Exception {
-		Chatroom.checkMethod = "resumeDistribution";
-		String message = CommonUtil.checkParam("id",chatroomId,PATH,checkObject,checkMethod);
+		String message = CommonUtil.checkParam("id",chatroomId,PATH,checkObject,CheckMethod.RESUME_DISTRIBUTION);
 		if(null != message){
 			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}
@@ -236,6 +226,33 @@ public class Chatroom {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/message/resumeDistribution.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,checkMethod,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.RESUME_DISTRIBUTION,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	}
+	/**
+	 * 聊天室消息恢复分发方法
+	 *
+	 * @param  chatroomId:聊天室 Id。（必传）
+	 *
+	 * @return CodeSuccessResult
+	 **/
+	public CheckChatRoomUser isExist(String chatroomId,String userId) throws Exception {
+		/*Chatroom.checkMethod = "resumeDistribution";
+		String message = CommonUtil.checkParam("id",chatroomId,PATH,checkObject,checkMethod);
+		if(null != message){
+			return (CheckChatRoomUser)GsonUtil.fromJson(message,CodeSuccessResult.class);
+		}*/
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("&chatroomId=").append(URLEncoder.encode(chatroomId.toString(), UTF8));
+		sb.append("&userId=").append(URLEncoder.encode(userId.toString(), UTF8));
+		String body = sb.toString();
+		if (body.indexOf("&") == 0) {
+			body = body.substring(1, body.length());
+		}
+
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/exist.json", "application/x-www-form-urlencoded");
+		HttpUtil.setBodyParameter(body, conn);
+
+		return (CheckChatRoomUser) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ISEXIST,HttpUtil.returnResult(conn)), CheckChatRoomUser.class);
 	}
 }

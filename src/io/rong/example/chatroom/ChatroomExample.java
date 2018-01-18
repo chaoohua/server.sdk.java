@@ -15,8 +15,12 @@ public class ChatroomExample {
         //String appKey = "appkey";//替换成您的appkey
         //String appSecret = "secret";//替换成匹配上面key的secret
         //RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+        /*String appKey = "6tnym1br6cew7";
+        String appSecret = "cxf9v1xazAa";*/
+        /*String appKey = "c9kqb3rdcmlnj";
+        String appSecret = "uNLSQaLJA3BgH";*/
 
-
+        //RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         String appKey = "e0x9wycfx7flq";
         String appSecret = "STCevzDS6Xy18n";
         String api = "http://192.168.155.13:9200";
@@ -29,13 +33,13 @@ public class ChatroomExample {
          * 创建聊天室demo
          *
          * */
-        createChatRoom(rongCloud);
+        //createChatRoom(rongCloud);
         /**
          * 销毁聊天室demo
          * */
-        String[] chatroomDestroyChatroomId = {"chatroomId", "chatroomId1", "chatroomId2"};
-        CodeSuccessResult chatroomDestroyResult = rongCloud.chatroom.destroy(chatroomDestroyChatroomId);
-        System.out.println("destroy:  " + chatroomDestroyResult.toString());
+        String[] chatroomDestroyChatroomId = {"chatroomId3", "chatroomId2"};
+        //CodeSuccessResult chatroomDestroyResult = rongCloud.chatroom.destroy(chatroomDestroyChatroomId);
+       //System.out.println("destroy:  " + chatroomDestroyResult.toString());
 
 
         /**
@@ -46,59 +50,61 @@ public class ChatroomExample {
         /**
          * 查询聊天室内用户demo
          * */
-        ChatroomUserQueryResult chatroomQueryUserResult = rongCloud.chatroom.getMembers("chatroomId1", "500", "2");
+        ChatroomUserQueryResult chatroomQueryUserResult = rongCloud.chatroom.getMembers("howto_summitmeeting_1001", "500", "2");
         System.out.println("queryUser:  " + chatroomQueryUserResult.toString());
 
+        CheckChatRoomUser checkChatroomUserResult = rongCloud.chatroom.isExist("howto_summitmeeting_1001", "ba49773d9c7d8ff6809b0d3838e8b86c9a6709c9");
+        System.out.println("checkChatroomUserResult:  " + checkChatroomUserResult.isInChrm);
         /**
          * 聊天室消息停止分发demo（可实现控制对聊天室中消息是否进行分发，停止分发后聊天室中用户发送的消息，融云服务端不会再将消息发送给聊天室中其他用户。）
          *
          * */
-        stopDistributionMessage(rongCloud);
+        //stopDistributionMessage(rongCloud);
 
         /**
          * 聊天室消息恢复分发demo
          *
          * */
-        resumeDistributionMessage(rongCloud);
+        //resumeDistributionMessage(rongCloud);
 
         /**
         *  添加禁言聊天室成员demo（在 App 中如果不想让某一用户在聊天室中发言时，可将此用户在聊天室中禁言，被禁言用户可以接收查看聊天室中用户聊天信息，但不能发送消息.）Member[] members = {new Member("userId1", ""), new Member("userId2", "")};
         *  */
-        addGag(rongCloud);
+        //addGag(rongCloud);
         /**
          *
          * 查询被禁言聊天室成员demo
          * */
-        getGagMembersList(rongCloud);
+        //getGagMembersList(rongCloud);
 
         /**
          *移除禁言聊天室成员demo
          *
          * */
-        removeMembersGag(rongCloud);
+        //removeMembersGag(rongCloud);
 
         /**
          *添加封禁聊天室成员demo
          * */
-        addChatroomBlock(rongCloud);
+        //addChatroomBlock(rongCloud);
 
         /**
          * 查询被封禁聊天室成员demo
          *
          * */
-        getChatroomBlockList(rongCloud);
+        //getChatroomBlockList(rongCloud);
 
         /**
          * 移除封禁聊天室成员demo
          *
          * */
-        removeChatroomBlock(rongCloud);
+        //removeChatroomBlock(rongCloud);
 
         /**
          *
          * 添加聊天室消息优先级demo
          * */
-        addChatroomPriority(rongCloud);
+        //addChatroomPriority(rongCloud);
 
         // 添加聊天室白名单成员方法
 
@@ -198,7 +204,7 @@ public class ChatroomExample {
      * 查询聊天室信息方法
      */
     public static void queryChatroomInfo(RongCloud rongCloud) throws Exception {
-        String[] chatroomQueryChatroomId = {"chatroomId1", "chatroomId2", "chatroomId3"};
+        String[] chatroomQueryChatroomId = {"howto_summitmeeting_1001"};
 
         ChatroomQueryResult chatroomQueryResult = rongCloud.chatroom.query(chatroomQueryChatroomId);
 

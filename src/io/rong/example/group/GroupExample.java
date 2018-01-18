@@ -20,20 +20,26 @@ public class GroupExample {
 	 */
 	public static void main(String[] args) throws Exception {
 
-		/*String appKey = "appkey";//替换成您的appkey
+		/*String appKey = "appkey";//替换成您的appkeypwe86ga5pilt6
 
-		String appSecret = "secret";//替换成匹配上面key的secret
+		String appSecret = "secret";//替换成匹配上面key的secret ngx3lbOishj1R
 
 		String api = "http://api.cn.ronghub.com";*/
 
+		String appKey = "pwe86ga5pilt6";//替换成您的appkey
 
+		String appSecret = "ngx3lbOishj1R";//替换成匹配上面key的secret
+
+		String api = "http://api.cn.ronghub.com";
+
+/*
 		String appKey = "e0x9wycfx7flq";
 		String appSecret = "STCevzDS6Xy18n";
-		String api = "http://192.168.155.13:9200";
+		String api = "http://192.168.155.13:9200";*/
 		
-		//RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+		RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
 
-		RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret,api);
+		//RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret,api);
 
 		String[] groupCreateUserId = {"userId1","userid2","userId3"};
 		System.out.println("************************Group********************");
@@ -61,7 +67,7 @@ public class GroupExample {
 		/**
 		 *  查询群成员方法
 		 */
-		//groupQueryUser(rongCloud);
+		groupQueryUser(rongCloud);
 
 		/**
 		 *  退出群组
@@ -71,7 +77,7 @@ public class GroupExample {
 		/**
 		 *  添加禁言群成员方
 		 */
-		groupAddGagUser(rongCloud);
+		//groupAddGagUser(rongCloud);
 
 		/**
 		 *  查询被禁言群成员
@@ -81,7 +87,7 @@ public class GroupExample {
 		/**
 		 *  移除禁言群成员方法
 		 */
-		groupRollBackGagUser(rongCloud);
+		//groupRollBackGagUser(rongCloud);
 
 		/**
 		 *  解散群组方法
@@ -140,14 +146,14 @@ public class GroupExample {
 	public static void groupJoin(RongCloud rongCloud) throws Exception {
 		System.out.println("************************Group********************");
 		String[] groupJoinUserId = {"userId1","userid2","userId3"};
-		GroupModel group = new GroupModel("",groupJoinUserId,"groupName1");
+		GroupModel group = new GroupModel("groupId",groupJoinUserId,"groupName1");
 		GroupResponse groupJoinResult = (GroupResponse)rongCloud.group.join(group);
 		System.out.println("join:  " + groupJoinResult.toString());
 	}
 	// 查询群成员方法
 	public static void groupQueryUser(RongCloud rongCloud) throws Exception {
 
-		GroupUserQueryResult groupQueryUserResult = rongCloud.group.getMemberList("groupId1");
+		GroupUserQueryResult groupQueryUserResult = rongCloud.group.getMemberList("25");
 		System.out.println("queryUser:  " + groupQueryUserResult.toString());
 	}
 
@@ -174,7 +180,7 @@ public class GroupExample {
 
 	// 查询被禁言群成员方法
 	public static void groupLisGagUser(RongCloud rongCloud) throws Exception {
-		ListGagGroupUserResult groupLisGagUserResult = rongCloud.group.gag.getList("groupId");
+		ListGagGroupUserResult groupLisGagUserResult = rongCloud.group.gag.getList("25");
 		System.out.println("group.gag.getList:  " + groupLisGagUserResult.toString());
 	}
 

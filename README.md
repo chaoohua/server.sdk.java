@@ -10,7 +10,7 @@ Rong Cloud Server SDK in Java.
 - 官方文档(http://www.rongcloud.cn/docs/server.html)
 
 # 使用教程
-* 请参考 Example.java 上面提供了所有的 API 接口的调用用例。
+* 请参考 Example 里面提供了所有的 API 接口的调用用例。
 
 ## 高级API接口
 
@@ -29,18 +29,24 @@ Rong Cloud Server SDK in Java.
   * check 检查用户在线状态 
 
 ### Message
+- 消息发送
   #### private
-  
-- publishPrivate  发送单聊消息
-- publishTemplate  发送单聊模板消息
-- PublishSystem  发送系统消息
-- publishSystemTemplate  发送系统模板消息
-- publishGroup  发送群组消息
-- publishDiscussion  发送讨论组消息
-- publishChatroom  发送聊天室消息
-- broadcast  发送广播消息
-- getHistory  消息历史记录下载地址获取 消息历史记录下载地址获取。获取 APP 内指定某天某小时内的所有会话消息记录的下载地址
-- deleteMessage  消息历史记录删除
+   - publish  发送单聊消息
+   - publishTemplate  发送单聊模板消息
+  #### system
+    - publish  发送系统消息
+    - publishTemplate  发送系统模板消息
+  #### group
+    - publish  发送群组消息
+  #### discussion 
+    - publish  发送讨论组消息
+  #### chatroom
+    - publish  发送聊天室消息
+  #### broadcast
+    - publish  发送广播消息
+  #### history
+    - get  消息历史记录下载地址获取 消息历史记录下载地址获取。获取 APP 内指定某天某小时内的所有会话消息记录的下载地址
+    - remove  消息历史记录删除
 
 ### SensitiveWord
 - add  添加敏感词

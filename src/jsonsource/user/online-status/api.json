@@ -1,5 +1,5 @@
 {
-	"get": {
+	"check": {
 		"docs": "http://rongcloud.cn/docs/server.html#user_check_online",
 		"url": "user/checkOnline",
 		"params": {

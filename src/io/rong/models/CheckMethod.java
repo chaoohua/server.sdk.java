@@ -4,7 +4,7 @@ public class CheckMethod {
     public static final String ADD = "add";
     public static final String GETLIST = "getList";
     public static final String REMOVE = "remove";
-    public static final String CREAT = "create";
+    public static final String CREATE = "create";
     public static final String DESTORY = "destory";
     public static final String GET_MEMBERS = "getMembers";
     public static final String ISEXIST = "isExist";
@@ -28,5 +28,6 @@ public class CheckMethod {
     public static final String SEND = "SEND";
     public static final String GET_TOKEN = "getToken";
     public static final String CHECK = "check";
+    public static final String QUERY = "query";
 
 }

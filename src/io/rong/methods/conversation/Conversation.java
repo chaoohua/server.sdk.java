@@ -2,10 +2,7 @@ package io.rong.methods.conversation;
 
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
-import io.rong.models.CodeSuccessResult;
-import io.rong.models.CommonConstrants;
-import io.rong.models.ConversationNotificationResult;
-import io.rong.models.TokenResult;
+import io.rong.models.*;
 import io.rong.models.conversation.ConversationModel;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -44,9 +41,7 @@ public class Conversation {
         //需要校验的字段
         String[] fileds = {"type","userId","targetId"};
 
-        String message = CommonUtil.checkFiled(fileds,conversation,"conversation","conversation","mute");
-        System.out.println("message:"+message);
-
+        String message = CommonUtil.checkFiled(fileds,conversation,PATH,"conversation",CheckMethod.MUTE);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
@@ -64,7 +59,7 @@ public class Conversation {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/conversation/notification/set.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH, CheckMethod.MUTE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
     }
 
     /**
@@ -76,7 +71,7 @@ public class Conversation {
     public CodeSuccessResult unMute(ConversationModel conversation) throws Exception {
         //需要校验的字段
         String[] fileds = {"type","userId","targetId"};
-        String message = CommonUtil.checkFiled(fileds,conversation,"conversation","conversation","mute");
+        String message = CommonUtil.checkFiled(fileds,conversation,PATH,"conversation",CheckMethod.UNMUTE);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
@@ -94,7 +89,7 @@ public class Conversation {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/conversation/notification/set.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.UNMUTE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
     }
 
     /**
@@ -105,7 +100,7 @@ public class Conversation {
      **/
     public ConversationNotificationResult get(ConversationModel conversation) throws Exception {
         String[] fileds = {"type","userId","targetId"};
-        String message = CommonUtil.checkFiled(fileds,conversation,"conversation","conversation","mute");
+        String message = CommonUtil.checkFiled(fileds,conversation,PATH,"conversation",CheckMethod.GET);
         if(null != message){
             return (ConversationNotificationResult)GsonUtil.fromJson(message,ConversationNotificationResult.class);
         }
@@ -121,6 +116,6 @@ public class Conversation {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/conversation/notification/get.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (ConversationNotificationResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), ConversationNotificationResult.class);
+        return (ConversationNotificationResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.GET,HttpUtil.returnResult(conn)), ConversationNotificationResult.class);
     }
 }

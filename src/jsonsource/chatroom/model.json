@@ -1,0 +1,7 @@
+"chatroom": {
+"id": "chatromId01",
+"name": "chatroomName",
+"minute": "封禁时间",
+"count": 10,
+"order": 1
+}

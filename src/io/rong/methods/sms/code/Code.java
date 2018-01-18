@@ -2,10 +2,7 @@ package io.rong.methods.sms.code;
 
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
-import io.rong.models.CommonConstrants;
-import io.rong.models.SMSImageCodeResult;
-import io.rong.models.SMSSendCodeResult;
-import io.rong.models.SMSVerifyCodeResult;
+import io.rong.models.*;
 import io.rong.models.sms.SmsModel;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -18,7 +15,6 @@ public class Code {
 
 	private static final String UTF8 = "UTF-8";
 	private static final String PATH = "sms/code";
-	private static String method = "";
 	private String appKey;
 	private String appSecret;
 	private RongCloud rongCloud;
@@ -52,7 +48,7 @@ public class Code {
 
 		HttpURLConnection conn = HttpUtil.CreateGetHttpConnection(sb.toString());
 
-		return (SMSImageCodeResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), SMSImageCodeResult.class);
+		return (SMSImageCodeResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH, CheckMethod.GET_IMAGE,HttpUtil.returnResult(conn)), SMSImageCodeResult.class);
 	}
 
 	/**
@@ -62,16 +58,11 @@ public class Code {
 	 * @return SMSSendCodeResult
 	 **/
 	public SMSSendCodeResult send(SmsModel sms) throws Exception {
-		if (sms.mobile == null) {
-			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/sendCode","Paramer 'sms.mobile' is required");
-		}
-
-		if (sms.templateId == null) {
-			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/sendCode","Paramer 'sms.templateId' is required");
-		}
-
-		if (sms.region == null) {
-			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/sendCode","Paramer 'sms.region' is required");
+		//需要校验的字段
+		String[] fileds = {"mobile","templateId","region"};
+		String message = CommonUtil.checkFiled(fileds,sms,PATH,"sms",CheckMethod.SEND);
+		if(null != message){
+			return (SMSSendCodeResult)GsonUtil.fromJson(message,SMSSendCodeResult.class);
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -94,7 +85,7 @@ public class Code {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getSmsHostType(), appKey, appSecret, "/sendCode.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 
-		return (SMSSendCodeResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), SMSSendCodeResult.class);
+		return (SMSSendCodeResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.SEND,HttpUtil.returnResult(conn)), SMSSendCodeResult.class);
 	}
 
 	/**
@@ -106,14 +97,14 @@ public class Code {
 	 * @return SMSVerifyCodeResult
 	 **/
 	public SMSVerifyCodeResult verify(String sessionId, String code) throws Exception {
-		if (sessionId == null) {
-			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/verifyCode","Paramer 'sms.mobile' is required");
+		String message = CommonUtil.checkParam("sessionId",sessionId,PATH,"sms",CheckMethod.VERIFY);
+		if(null != message){
+			return (SMSVerifyCodeResult)GsonUtil.fromJson(message,SMSVerifyCodeResult.class);
 		}
-
-		if (code == null) {
-			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/verifyCode","Paramer 'sms.mobile' is required");
+		message = CommonUtil.checkParam("code",code,PATH,"sms",CheckMethod.VERIFY);
+		if(null != message){
+			return (SMSVerifyCodeResult)GsonUtil.fromJson(message,SMSVerifyCodeResult.class);
 		}
-
 		StringBuilder sb = new StringBuilder();
 		sb.append("&sessionId=").append(URLEncoder.encode(sessionId.toString(), UTF8));
 		sb.append("&code=").append(URLEncoder.encode(code.toString(), UTF8));
@@ -125,7 +116,7 @@ public class Code {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getSmsHostType(), appKey, appSecret, "/verifyCode.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 
-		return (SMSVerifyCodeResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), SMSVerifyCodeResult.class);
+		return (SMSVerifyCodeResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.VERIFY,HttpUtil.returnResult(conn)), SMSVerifyCodeResult.class);
 	}
 
 	 

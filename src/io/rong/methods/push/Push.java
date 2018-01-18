@@ -2,6 +2,7 @@ package io.rong.methods.push;
 
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
+import io.rong.models.CheckMethod;
 import io.rong.models.CodeSuccessResult;
 import io.rong.models.PushMessage;
 import io.rong.models.UserTag;
@@ -15,7 +16,6 @@ import java.net.HttpURLConnection;
 public class Push {
 	private static final String UTF8 = "UTF-8";
 	private static final String PATH = "push";
-	private static String method = "";
 	private String appKey;
 	private String appSecret;
 	private RongCloud rongCloud;
@@ -49,7 +49,7 @@ public class Push {
 	    HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/user/tag/set.json", "application/json");
 	    HttpUtil.setBodyParameter(userTag.toString(), conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH, CheckMethod.SET_TAG,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
 	}
 	
 	/**
@@ -60,6 +60,8 @@ public class Push {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult send(PushMessage pushMessage) throws Exception {
+		String[] fields = {"platform","audience","is_to_all","notification","alert"};
+
 		if (pushMessage == null) {
 			throw new ParamException("Paramer 'pushMessage' is required");
 		}
@@ -67,7 +69,7 @@ public class Push {
 	    HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/push.json", "application/json");
 	    HttpUtil.setBodyParameter(pushMessage.toString(), conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.SEND,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
 	}
 
 	 

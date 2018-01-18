@@ -1,11 +1,9 @@
 package io.rong.models.group;
 
-import io.rong.models.BaseParams;
-
 /**
  * 群组数据模型
  **/
-public class GroupModel extends BaseParams{
+public class GroupModel {
     /**
      * 群组id
      **/

@@ -20,7 +20,6 @@ public class User {
 
 	private static final String UTF8 = "UTF-8";
 	private static final String PATH = "user";
-	private static String method = "";
 	private String appKey;
 	private String appSecret;
 	public Block block;
@@ -56,8 +55,7 @@ public class User {
 	public  TokenResult getToken(UserInfo user) throws Exception {
 		//需要校验的字段
 		String[] fileds = {"id","name","portraitUri"};
-		method = "getToken";
-		String message = CommonUtil.checkFiled(fileds,user,PATH,"user","getToken");
+		String message = CommonUtil.checkFiled(fileds,user,PATH,"user",CheckMethod.GET_TOKEN);
 		if(null != message){
 			return (TokenResult)GsonUtil.fromJson(message,TokenResult.class);
 		}
@@ -75,7 +73,7 @@ public class User {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/user/getToken.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (TokenResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), TokenResult.class);
+	    return (TokenResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.GET_TOKEN,HttpUtil.returnResult(conn)), TokenResult.class);
 	}
 	
 	/**
@@ -90,12 +88,9 @@ public class User {
 	public ResponseResult refresh(UserInfo user) throws Exception {
 		//需要校验的字段
 		String[] fileds = {"id","name"};
-		method = "refresh";
-		String message = CommonUtil.checkFiled(fileds,user,PATH,"user","refresh");
-		System.out.println("message:"+message);
+		String message = CommonUtil.checkFiled(fileds,user,PATH,"user",CheckMethod.REFRESH);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,TokenResult.class);
-			//throw new ParamException(code);
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -117,7 +112,7 @@ public class User {
 				"/user/refresh.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), ResponseResult.class);
+	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REFRESH,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 
 

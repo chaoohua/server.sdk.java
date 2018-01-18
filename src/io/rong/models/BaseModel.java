@@ -3,12 +3,16 @@ package io.rong.models;
 import io.rong.util.GsonUtil;
 
 public class BaseModel {
-    // 返回码，200 为正常。
+    /**
+     * 返回码，200 为正常。
+     *
+     */
     Integer code;
-    // 错误信息。
+    /**
+     * 错误信息
+     *
+     */
     String errorMessage;
-    //建议信息
-    String suggestMessage;
 
     public BaseModel(Integer code, String errorMessage) {
         this.code = code;
@@ -49,13 +53,6 @@ public class BaseModel {
         return errorMessage;
     }
 
-    public String getSuggestMessage() {
-        return this.suggestMessage;
-    }
-
-    public void setSuggestMessage(String suggestMessage) {
-        this.suggestMessage = suggestMessage;
-    }
 
     @Override
     public String toString() {

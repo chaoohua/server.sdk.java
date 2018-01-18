@@ -1,6 +1,7 @@
 package io.rong.methods.user.onlinestatus;
 
 import io.rong.RongCloud;
+import io.rong.models.CheckMethod;
 import io.rong.models.CheckOnlineResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -12,7 +13,6 @@ import java.net.URLEncoder;
 public class OnlineStatus {
     private static final String UTF8 = "UTF-8";
     private static final String PATH = "user/online-status";
-    private static String method = "";
     private String appKey;
     private String appSecret;
     private RongCloud rongCloud;
@@ -41,7 +41,7 @@ public class OnlineStatus {
      **/
     public CheckOnlineResult check(String userId) throws Exception {
         //参数校验
-        String message = CommonUtil.checkParam("id",userId,PATH,"user","check");
+        String message = CommonUtil.checkParam("id",userId,PATH,"user", CheckMethod.CHECK);
         if(null != message){
             return (CheckOnlineResult)GsonUtil.fromJson(message,CheckOnlineResult.class);
         }
@@ -56,6 +56,6 @@ public class OnlineStatus {
                 "/user/checkOnline.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CheckOnlineResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CheckOnlineResult.class);
+        return (CheckOnlineResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.CHECK,HttpUtil.returnResult(conn)), CheckOnlineResult.class);
     }
 }

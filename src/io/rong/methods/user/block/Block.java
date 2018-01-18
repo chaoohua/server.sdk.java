@@ -14,7 +14,6 @@ import java.net.URLEncoder;
 public class Block {
     private static final String UTF8 = "UTF-8";
     private static final String PATH = "user/block";
-    private static String method = "";
     private String appKey;
     private String appSecret;
     private RongCloud rongCloud;
@@ -40,12 +39,12 @@ public class Block {
      **/
     public ResponseResult add(String userId, Integer minute) throws Exception {
 
-        String message = CommonUtil.checkParam("id",userId,"user/block","user", CheckMethod.ADD);
+        String message = CommonUtil.checkParam("id",userId,PATH,"user", CheckMethod.ADD);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
-        message = CommonUtil.checkParam("minute",minute,"user/block","user",CheckMethod.ADD);
+        message = CommonUtil.checkParam("minute",minute,PATH,"user",CheckMethod.ADD);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
@@ -62,7 +61,7 @@ public class Block {
                 "/user/block.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), ResponseResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 
     /**
@@ -74,7 +73,7 @@ public class Block {
      **/
     public ResponseResult remove(String userId) throws Exception {
         //参数校验
-        String message = CommonUtil.checkParam("id",userId,"user/block","user",CheckMethod.REMOVE);
+        String message = CommonUtil.checkParam("id",userId,PATH,"user",CheckMethod.REMOVE);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
@@ -90,7 +89,7 @@ public class Block {
                 "/user/unblock.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), ResponseResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 
     /**
@@ -110,6 +109,6 @@ public class Block {
                 "/user/block/query.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (QueryBlockUserResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), QueryBlockUserResult.class);
+        return (QueryBlockUserResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.GETLIST,HttpUtil.returnResult(conn)), QueryBlockUserResult.class);
     }
 }

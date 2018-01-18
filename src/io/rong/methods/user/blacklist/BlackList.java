@@ -15,7 +15,6 @@ public class BlackList {
 
     private static final String UTF8 = "UTF-8";
     private static final String PATH = "user/black";
-    private static String method = "";
     private String appKey;
     private String appSecret;
     private RongCloud rongCloud;
@@ -64,7 +63,7 @@ public class BlackList {
                 "/user/blacklist/add.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), ResponseResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 
     /**
@@ -91,7 +90,7 @@ public class BlackList {
                 "/user/blacklist/query.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (QueryBlacklistUserResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), QueryBlacklistUserResult.class);
+        return (QueryBlacklistUserResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.QUERY,HttpUtil.returnResult(conn)), QueryBlacklistUserResult.class);
     }
 
     /**
@@ -125,6 +124,6 @@ public class BlackList {
                 "/user/blacklist/remove.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), ResponseResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 }

@@ -30,12 +30,14 @@ public class SMS {
 	}
 	public void setRongCloud(RongCloud rongCloud) {
 		this.rongCloud = rongCloud;
+		code.setRongCloud(rongCloud);
+		notify.setRongCloud(rongCloud);
 	}
 	public SMS(String appKey, String appSecret) {
 		this.appKey = appKey;
 		this.appSecret = appSecret;
-		this.code = new Code(appKey,appSecret);
-		this.notify = new Notify(appKey,appSecret);
+		code = new Code(appKey,appSecret);
+		notify = new Notify(appKey,appSecret);
 
 	}
 }
