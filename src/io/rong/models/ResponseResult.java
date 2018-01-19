@@ -3,7 +3,7 @@ package io.rong.models;
  *  基础 http 成功返回结果
  */
 public abstract class ResponseResult {
-    //// 返回码，200 为正常。
+    // 返回码，200 为正常。
     Integer code;
     // 错误信息。
     String errorMessage;

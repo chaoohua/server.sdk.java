@@ -5,7 +5,7 @@ import io.rong.methods.user.blacklist.BlackList;
 import io.rong.methods.user.block.Block;
 import io.rong.methods.user.onlinestatus.OnlineStatus;
 import io.rong.models.*;
-import io.rong.models.user.UserInfo;
+import io.rong.models.user.UserModel;
 import io.rong.util.*;
 
 import java.net.HttpURLConnection;
@@ -13,8 +13,8 @@ import java.net.URLEncoder;
 
 
 /**
- *用户服务
- *
+ * 用户服务
+ * docs : http://www.rongcloud.cn/docs/server.html#user
  **/
 public class User {
 
@@ -52,14 +52,12 @@ public class User {
 	 *
 	 * @return TokenResult
 	 **/
-	public  TokenResult getToken(UserInfo user) throws Exception {
+	public  TokenResult getToken(UserModel user) throws Exception {
 		//需要校验的字段
-		String[] fileds = {"id","name","portraitUri"};
-		String message = CommonUtil.checkFiled(fileds,user,PATH,"user",CheckMethod.GET_TOKEN);
+		String message = CommonUtil.checkFiled(user,PATH,"user",CheckMethod.GET_TOKEN);
 		if(null != message){
 			return (TokenResult)GsonUtil.fromJson(message,TokenResult.class);
 		}
-
 
 	    StringBuilder sb = new StringBuilder();
 	    sb.append("&userId=").append(URLEncoder.encode(user.id.toString(), UTF8));
@@ -85,10 +83,9 @@ public class User {
 	 *
 	 * @return CodeSuccessResult
 	 **/
-	public ResponseResult refresh(UserInfo user) throws Exception {
+	public ResponseResult refresh(UserModel user) throws Exception {
 		//需要校验的字段
-		String[] fileds = {"id","name"};
-		String message = CommonUtil.checkFiled(fileds,user,PATH,"user",CheckMethod.REFRESH);
+		String message = CommonUtil.checkFiled(user,PATH,"user",CheckMethod.REFRESH);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,TokenResult.class);
 		}

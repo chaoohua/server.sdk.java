@@ -1,20 +1,20 @@
-package io.rong.models;
+package io.rong.models.chatroom;
 
 import io.rong.util.GsonUtil;
 import java.util.List;
 
 /**
- * listBlockChatroomUser返回结果
+ * listGagChatroomUser返回结果
  */
-public class ListBlockChatroomUserResult {
+public class ListGagChatroomUserResult {
 	// 返回码，200 为正常。
 	Integer code;
-	// 被封禁用户列表。
-	List<BlockChatRoomUser> users;
+	// 聊天室被禁言用户列表。
+	List<GagChatRoomUser> users;
 	// 错误信息。
 	String errorMessage;
 	
-	public ListBlockChatroomUserResult(Integer code, List<BlockChatRoomUser> users, String errorMessage) {
+	public ListGagChatroomUserResult(Integer code, List<GagChatRoomUser> users, String errorMessage) {
 		this.code = code;
 		this.users = users;
 		this.errorMessage = errorMessage;
@@ -41,16 +41,16 @@ public class ListBlockChatroomUserResult {
 	 * 设置users
 	 *
 	 */	
-	public void setUsers(List<BlockChatRoomUser> users) {
+	public void setUsers(List<GagChatRoomUser> users) {
 		this.users = users;
 	}
 	
 	/**
 	 * 获取users
 	 *
-	 * @return List<BlockChatRoomUser>
+	 * @return List<GagChatRoomUser>
 	 */
-	public List<BlockChatRoomUser> getUsers() {
+	public List<GagChatRoomUser> getUsers() {
 		return users;
 	}
 	
@@ -73,6 +73,6 @@ public class ListBlockChatroomUserResult {
 	
 	@Override
 	public String toString() {
-		return GsonUtil.toJson(this, ListBlockChatroomUserResult.class);
+		return GsonUtil.toJson(this, ListGagChatroomUserResult.class);
 	}
 }

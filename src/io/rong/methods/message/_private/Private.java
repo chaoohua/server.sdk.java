@@ -49,10 +49,7 @@ public class Private {
 	 **/
 	public CodeSuccessResult publish(PrivateMessage privateMessage) throws Exception {
 
-		//需要校验的字段
-		String[] fileds = {"senderUserId","targetIds","content"};
-
-		String message = CommonUtil.checkFiled(fileds,privateMessage,"message","message","publish");
+		String message = CommonUtil.checkFiled(privateMessage,"message","message","publish");
 		if(null != message){
 			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}

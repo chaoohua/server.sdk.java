@@ -42,10 +42,7 @@ public class Group {
      **/
     public CodeSuccessResult publish(GroupMessage message) throws Exception {
 
-        //需要校验的字段
-        String[] fileds = {"senderUserId","targetIds","content"};
-
-        String code = CommonUtil.checkFiled(fileds,message,"message","message","publish");
+        String code = CommonUtil.checkFiled(message,"message","message","publish");
         if(null != code){
             return (CodeSuccessResult)GsonUtil.fromJson(code,CodeSuccessResult.class);
         }

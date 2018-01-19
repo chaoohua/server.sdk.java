@@ -1,5 +1,7 @@
 package io.rong.messages;
 
+import io.rong.example.Example;
+
 import java.io.*;
 import java.util.HashMap;
 

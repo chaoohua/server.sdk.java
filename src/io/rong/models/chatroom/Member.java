@@ -1,6 +1,5 @@
 package io.rong.models.chatroom;
 
-import io.rong.models.ChatRoomUser;
 import io.rong.util.GsonUtil;
 
 public class Member {
@@ -50,6 +49,6 @@ public class Member {
 
     @Override
     public String toString() {
-        return GsonUtil.toJson(this, ChatRoomUser.class);
+        return GsonUtil.toJson(this, Member.class);
     }
 }

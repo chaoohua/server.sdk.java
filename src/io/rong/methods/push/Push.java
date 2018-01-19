@@ -12,7 +12,13 @@ import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
-
+/**
+ *
+ * Server API 广播推送
+ * docs: "http://www.rongcloud.cn/docs/push_service.html#broadcast_push"
+ *
+ * @version
+ * */
 public class Push {
 	private static final String UTF8 = "UTF-8";
 	private static final String PATH = "push";
@@ -32,8 +38,7 @@ public class Push {
 		this.appSecret = appSecret;
 
 	}
-	
-	
+
 	/**
 	 * 添加 Push 标签方法 
 	 * 

@@ -43,14 +43,10 @@ public class Broadcast {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult send(BroadcastMessage broadcastMessage) throws Exception {
-        //需要校验的字段
-        String[] fileds = {"senderUserId","objectName","content"};
-
-        String message = CommonUtil.checkFiled(fileds,broadcastMessage,PATH,"broadcast",BROADCAST_SEND);
+        String message = CommonUtil.checkFiled(broadcastMessage,PATH,"broadcast",BROADCAST_SEND);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
-
         StringBuilder sb = new StringBuilder();
         sb.append("&fromUserId=").append(URLEncoder.encode(broadcastMessage.senderUserId.toString(), UTF8));
         sb.append("&objectName=").append(URLEncoder.encode(broadcastMessage.content.getType(), UTF8));

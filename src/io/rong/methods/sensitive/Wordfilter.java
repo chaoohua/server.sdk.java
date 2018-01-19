@@ -13,7 +13,13 @@ import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
+/**
+ *
+ *  敏感词服务
+ * docs: "http://www.rongcloud.cn/docs/server.html#sensitiveword"
+ *
+ * @version
+ * */
 public class Wordfilter {
 
 	private static final String UTF8 = "UTF-8";

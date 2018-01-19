@@ -1,17 +1,17 @@
-package io.rong.models;
+package io.rong.models.chatroom;
 
 import io.rong.util.GsonUtil;
 
 /**
- * 群组用户信息。
+ * 聊天室被禁言用户信息。
  */
-public class GagGroupUser {
+public class GagChatRoomUser {
 	// 解禁时间。
 	String time;
-	// 群成员 Id。
+	// 被封禁用户 Id。
 	String userId;
 	
-	public GagGroupUser(String time, String userId) {
+	public GagChatRoomUser(String time, String userId) {
 		this.time = time;
 		this.userId = userId;
 	}
@@ -52,6 +52,6 @@ public class GagGroupUser {
 	
 	@Override
 	public String toString() {
-		return GsonUtil.toJson(this, GagGroupUser.class);
+		return GsonUtil.toJson(this, GagChatRoomUser.class);
 	}
 }

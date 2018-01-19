@@ -2,13 +2,9 @@ package io.rong.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import io.rong.models.group.GroupResponse;
-import io.rong.models.group.GroupModel;
-import io.rong.models.user.UserInfo;
 import org.apache.commons.lang3.StringUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Set;
@@ -44,9 +40,8 @@ public class CommonUtil {
         return false;
     }
     /**
-     * 参数校验
+     * 参数校验方法
      *
-     * @param fileds 需要校验的字段
      * @param model  传入实体
      * @param path   路径
      * @param checkRulesName 校验规则名 （根据此规则名获取json里面的具体校验规则）
@@ -54,7 +49,7 @@ public class CommonUtil {
      *
      * @return String
      **/
-    public static String checkFiled(String[] fileds,Object model,String path,String checkRulesName,String method){
+    public static String checkFiled(Object model,String path,String checkRulesName,String method){
         try {
             String code = "200";
             Integer max = 64;
@@ -63,6 +58,7 @@ public class CommonUtil {
             if(path.contains("/")){
                 path = path.substring(0,path.indexOf("/"));
             }
+            String[] fileds = getCheckFileds(path,method);
             JSONObject verify =  JsonUtil.getJsonObject(path);//获取校验文件
             Set<String> keys = verify.getJSONObject(checkRulesName).keySet();//获取校验key
             JSONObject entity = verify.getJSONObject(checkRulesName);//获取具体校验规则
@@ -155,6 +151,119 @@ public class CommonUtil {
         }
         return null;
     }
+    /**
+     * 参数校验
+     *
+     * @param fileds 需要校验的字段
+     * @param model  传入实体
+     * @param path   路径
+     * @param checkRulesName 校验规则名 （根据此规则名获取json里面的具体校验规则）
+     * @param method 需要校验方法
+     *
+     * @return String
+     **/
+    /*public static String checkFiled(String[] fileds,Object model,String path,String checkRulesName,String method){
+        try {
+            String code = "200";
+            Integer max = 64;
+            String apiPath = path;
+            String type = "";
+            if(path.contains("/")){
+                path = path.substring(0,path.indexOf("/"));
+            }
+            JSONObject verify =  JsonUtil.getJsonObject(path);//获取校验文件
+            Set<String> keys = verify.getJSONObject(checkRulesName).keySet();//获取校验key
+            JSONObject entity = verify.getJSONObject(checkRulesName);//获取具体校验规则
+            for(String name : fileds){
+                for (String key : keys) {
+                    if(name.equals(key)){
+                        String nameTemp = name;
+                        name = name.substring(0,1).toUpperCase()+name.substring(1); //将属性的首字符大写，方便构造get，set方法
+                        Method m = model.getClass().getMethod("get"+name);
+
+                        JSONObject object =  entity.getJSONObject(nameTemp);//获取字段的具体校验规则
+                        if(object.containsKey("require")){
+                            Boolean must = (Boolean)object.getJSONObject("require").get("must");
+                            if(m.invoke(model)  instanceof String){
+                                String value = (String) m.invoke(model);
+                                if(StringUtils.isBlank(value)){
+                                    code = (String)object.getJSONObject("require").get("invalid");
+                                }
+                            }else{
+                                Object value = (Object) m.invoke(model);
+                                if(null == value){
+                                    code = (String)object.getJSONObject("require").get("invalid");
+                                }
+                            }
+                        }
+                        if(object.containsKey("length")){
+                            max = (Integer)object.getJSONObject("length").get("max");
+                            //String value = (String) m.invoke(model);
+                            if(m.invoke(model)  instanceof String){
+                                String value = (String) m.invoke(model);
+                                if("200".equals(code) && StringUtils.isBlank(value)){
+                                    code = (String)object.getJSONObject("length").get("invalid");
+                                }
+                                if("200".equals(code) && value.getBytes("UTF-8").length > max){
+                                    code = (String)object.getJSONObject("length").get("invalid");
+                                }
+                            }else if(m.invoke(model)  instanceof String[]){
+                                String[] value = (String[]) m.invoke(model);
+                                if("200".equals(code) && value.length > max){
+                                    code = (String)object.getJSONObject("length").get("invalid");
+                                }
+                            }else{
+                                Object value = (Object) m.invoke(model);
+                                if("200".equals(code) && null == value){
+                                    code = (String)object.getJSONObject("length").get("invalid");
+                                }
+
+                            }
+
+                        }
+                        if(object.containsKey("size")){
+                            max = (Integer)object.getJSONObject("size").get("max");
+                            type = (String)object.getJSONObject("typeof").get("type");
+                            if(type.contains("array")){
+                                String[] value = (String[]) m.invoke(model);
+                                if("200".equals(code) && null == value){
+                                    code = (String)object.getJSONObject("size").get("invalid");
+                                }
+                                if("200".equals(code) && value.length > max){
+                                    code = (String)object.getJSONObject("size").get("invalid");
+                                }
+
+                            }else if(type.contains("int")){
+                                Integer value = 0;
+                                try{
+                                    value = (Integer) m.invoke(model);
+                                }catch (Exception e){
+                                    code = (String)object.getJSONObject("typeof").get("invalid");
+                                }
+
+                                if("200".equals(code) && null == value){
+                                    code = (String)object.getJSONObject("size").get("invalid");
+                                }
+                                if("200".equals(code) && value > max){
+                                    code = (String)object.getJSONObject("size").get("invalid");
+                                }
+
+                            }
+                        }
+                        String message = (String)CommonUtil.getErrorMessage(apiPath,method,code,name,String.valueOf(max),"1",type);
+                        message = StringUtils.replace(message,"msg","errorMessage");
+                        return message;
+
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    */
     /**
      * 参数校验
      *
@@ -286,6 +395,19 @@ public class CommonUtil {
             }
         } catch (IOException e) {
 
+        }
+        return null;
+    }
+    public static String[] getCheckFileds(String path,String method){
+        JSONObject api = null;
+        try {
+            api = JsonUtil.getJsonObject2(path);
+            Set<String> keys = api.getJSONObject(method).getJSONObject("params").keySet();
+            String key = keys.iterator().next();
+            Set<String> subkeys = api.getJSONObject(method).getJSONObject("params").getJSONObject(key).keySet();
+            return subkeys.toArray(new String[subkeys.size()]);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }

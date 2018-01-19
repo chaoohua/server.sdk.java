@@ -11,7 +11,11 @@ import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
+/**
+ * 群组服务
+ * http://www.rongcloud.cn/docs/server.html#group
+ *
+ * */
 public class Group {
 
 	private static final String UTF8 = "UTF-8";
@@ -48,8 +52,7 @@ public class Group {
 	 **/
 	public ResponseResult create(GroupModel group) throws Exception {
 		//需要校验的字段
-		String[] fileds = {"id","merberIds","name"};
-		String message = CommonUtil.checkFiled(fileds,group,PATH,"group",CheckMethod.CREATE);
+		String message = CommonUtil.checkFiled(group,PATH,"group",CheckMethod.CREATE);
 		if(null != message){
 			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
 		}
@@ -116,9 +119,7 @@ public class Group {
 	 * @return CodeSuccessResult
 	 **/
 	public ResponseResult refresh(GroupModel group) throws Exception {
-		//需要校验的字段
-		String[] fileds = {"id","name"};
-		String message = CommonUtil.checkFiled(fileds,group,PATH,"group",CheckMethod.REFRESH);
+		String message = CommonUtil.checkFiled(group,PATH,"group",CheckMethod.REFRESH);
 		if(null != message){
 			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
 		}
@@ -142,9 +143,7 @@ public class Group {
 	 * @return GroupResponse
 	 **/
 	public ResponseResult join(GroupModel group) throws Exception {
-		//需要校验的字段
-		String[] fileds = {"id","merberIds","name"};
-		String message = CommonUtil.checkFiled(fileds,group,PATH,"group",CheckMethod.JOIN);
+		String message = CommonUtil.checkFiled(group,PATH,"group",CheckMethod.JOIN);
 		if(null != message){
 			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
 		}
@@ -204,19 +203,10 @@ public class Group {
 	 **/
 	public ResponseResult quit(GroupModel group) throws Exception {
 
-		//需要校验的字段
-		String[] fileds = {"id","merberIds"};
-
-		String message = CommonUtil.checkFiled(fileds,group,PATH,"group",CheckMethod.QUIT);
-		System.out.println("message:"+message);
-
+		String message = CommonUtil.checkFiled(group,PATH,"group",CheckMethod.QUIT);
 		if(null != message){
 			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
-			//throw new ParamException(code);
 		}
-
-
-		
 	    StringBuilder sb = new StringBuilder();
 	    
 	    for (int i = 0 ; i< group.merberIds.length; i++) {
@@ -248,12 +238,10 @@ public class Group {
 		String message = CommonUtil.checkParam("id",userId,PATH,"user",CheckMethod.DISMISS);
 		if(null != message){
 			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
-			//throw new ParamException(code);
 		}
 		message = CommonUtil.checkParam("id",userId,PATH,"group",CheckMethod.DISMISS);
 		if(null != message){
 			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
-			//throw new ParamException(code);
 		}
 
 	    StringBuilder sb = new StringBuilder();

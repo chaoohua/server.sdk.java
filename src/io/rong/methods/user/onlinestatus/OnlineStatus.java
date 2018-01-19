@@ -3,13 +3,20 @@ package io.rong.methods.user.onlinestatus;
 import io.rong.RongCloud;
 import io.rong.models.CheckMethod;
 import io.rong.models.CheckOnlineResult;
+import io.rong.models.user.UserModel;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
+/**
+ *
+ * 敏感词服务
+ * docs: "http://www.rongcloud.cn/docs/server.html#sensitiveword"
+ *
+ * @version
+ * */
 public class OnlineStatus {
     private static final String UTF8 = "UTF-8";
     private static final String PATH = "user/online-status";
@@ -35,18 +42,18 @@ public class OnlineStatus {
      * url /user/checkOnline
      * docs http://www.rongcloud.cn/docs/server.html#user_check_online
      *
-     * @param  userId:用户 Id，最大长度 64 字节。是用户在 App 中的唯一标识码，必须保证在同一个 App 内不重复，重复的用户 Id 将被当作是同一用户。（必传）
+     * @param  user:用户
      *
      * @return CheckOnlineResult
      **/
-    public CheckOnlineResult check(String userId) throws Exception {
+    public CheckOnlineResult check(UserModel user) throws Exception {
         //参数校验
-        String message = CommonUtil.checkParam("id",userId,PATH,"user", CheckMethod.CHECK);
+        String message = CommonUtil.checkFiled(user,PATH,"user", CheckMethod.CHECK);
         if(null != message){
             return (CheckOnlineResult)GsonUtil.fromJson(message,CheckOnlineResult.class);
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("&userId=").append(URLEncoder.encode(userId.toString(), UTF8));
+        sb.append("&userId=").append(URLEncoder.encode(user.id.toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());

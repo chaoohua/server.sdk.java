@@ -1,4 +1,4 @@
-package io.rong.models;
+package io.rong.models.group;
 
 import io.rong.util.GsonUtil;
 import java.util.List;

@@ -12,7 +12,12 @@ import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
+/**
+ *
+ * 聊天室优先级服务
+ * docs: "http://www.rongcloud.cn/docs/server.html#chatroom_message_priority"
+ *
+ * */
 public class Priority {
     private static final String UTF8 = "UTF-8";
     private static final String PATH = "chatroom/priority";

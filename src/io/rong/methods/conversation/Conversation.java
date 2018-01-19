@@ -10,6 +10,13 @@ import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
+/**
+ *
+ * 会话消息免打扰服务
+ * docs: "http://www.rongcloud.cn/docs/server.html#conversation_notification"
+ *
+ * @version
+ * */
 public class Conversation {
 
     private static final String UTF8 = "UTF-8";
@@ -38,10 +45,7 @@ public class Conversation {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult mute(ConversationModel conversation) throws Exception {
-        //需要校验的字段
-        String[] fileds = {"type","userId","targetId"};
-
-        String message = CommonUtil.checkFiled(fileds,conversation,PATH,"conversation",CheckMethod.MUTE);
+        String message = CommonUtil.checkFiled(conversation,PATH,"conversation",CheckMethod.MUTE);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
@@ -69,9 +73,7 @@ public class Conversation {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult unMute(ConversationModel conversation) throws Exception {
-        //需要校验的字段
-        String[] fileds = {"type","userId","targetId"};
-        String message = CommonUtil.checkFiled(fileds,conversation,PATH,"conversation",CheckMethod.UNMUTE);
+        String message = CommonUtil.checkFiled(conversation,PATH,"conversation",CheckMethod.UNMUTE);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
@@ -99,8 +101,7 @@ public class Conversation {
      * @return ConversationNotificationResult
      **/
     public ConversationNotificationResult get(ConversationModel conversation) throws Exception {
-        String[] fileds = {"type","userId","targetId"};
-        String message = CommonUtil.checkFiled(fileds,conversation,PATH,"conversation",CheckMethod.GET);
+        String message = CommonUtil.checkFiled(conversation,PATH,"conversation",CheckMethod.GET);
         if(null != message){
             return (ConversationNotificationResult)GsonUtil.fromJson(message,ConversationNotificationResult.class);
         }

@@ -1,36 +1,36 @@
-package io.rong.models;
+package io.rong.models.chatroom;
 
 import io.rong.util.GsonUtil;
 
 /**
- * 聊天室用户信息。
+ * 聊天室被封禁用户信息。
  */
-public class ChatRoomUser {
+public class BlockChatRoomUser {
 	// 聊天室用户Id。
-	String id;
+	String userId;
 	// 加入聊天室时间。
 	String time;
 	
-	public ChatRoomUser(String id, String time) {
-		this.id = id;
+	public BlockChatRoomUser(String userId, String time) {
+		this.userId = userId;
 		this.time = time;
 	}
 	
 	/**
-	 * 设置id
+	 * 设置userId
 	 *
 	 */	
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 	/**
-	 * 获取id
+	 * 获取userId
 	 *
 	 * @return String
 	 */
-	public String getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
 	
 	/**
@@ -52,6 +52,6 @@ public class ChatRoomUser {
 	
 	@Override
 	public String toString() {
-		return GsonUtil.toJson(this, ChatRoomUser.class);
+		return GsonUtil.toJson(this, BlockChatRoomUser.class);
 	}
 }

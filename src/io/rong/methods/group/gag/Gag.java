@@ -1,19 +1,21 @@
 package io.rong.methods.group.gag;
 
 import io.rong.RongCloud;
-import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
-import io.rong.models.CommonConstrants;
 import io.rong.models.group.GroupModel;
 import io.rong.models.group.GroupResponse;
-import io.rong.models.ListGagGroupUserResult;
+import io.rong.models.group.ListGagGroupUserResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
+/**
+ * 群组成员禁言服务
+ * docs : http://www.rongcloud.cn/docs/server.html#group_user_gag
+ *
+ * */
 public class Gag {
     private static final String UTF8 = "UTF-8";
     private static final String PATH = "group/gag";
@@ -41,9 +43,7 @@ public class Gag {
      * @return GroupResponse
      **/
     public GroupResponse add(GroupModel group,String munite) throws Exception {
-        //需要校验的字段
-        String[] fileds = {"id","merberIds","name"};
-        String message = CommonUtil.checkFiled(fileds,group,PATH,"group",CheckMethod.ADD);
+        String message = CommonUtil.checkFiled(group,PATH,"group",CheckMethod.ADD);
         if(null != message){
             return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
         }
@@ -105,9 +105,7 @@ public class Gag {
      **/
     public GroupResponse remove(GroupModel group) throws Exception {
         //需要校验的字段
-        String[] fileds = {"id","merberIds"};
-
-        String message = CommonUtil.checkFiled(fileds,group,PATH,"group", CheckMethod.REMOVE);
+        String message = CommonUtil.checkFiled(group,PATH,"group", CheckMethod.REMOVE);
         System.out.println("message:"+message);
 
         if(null != message){

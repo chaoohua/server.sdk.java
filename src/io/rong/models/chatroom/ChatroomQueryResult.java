@@ -1,6 +1,7 @@
-package io.rong.models;
+package io.rong.models.chatroom;
 
 import io.rong.util.GsonUtil;
+
 import java.util.List;
 
 /**
@@ -13,21 +14,21 @@ public class ChatroomQueryResult {
 	List<ChatRoom> chatRooms;
 	// 错误信息。
 	String errorMessage;
-	
+
 	public ChatroomQueryResult(Integer code, List<ChatRoom> chatRooms, String errorMessage) {
 		this.code = code;
 		this.chatRooms = chatRooms;
 		this.errorMessage = errorMessage;
 	}
-	
+
 	/**
 	 * 设置code
 	 *
-	 */	
+	 */
 	public void setCode(Integer code) {
 		this.code = code;
 	}
-	
+
 	/**
 	 * 获取code
 	 *
@@ -36,11 +37,11 @@ public class ChatroomQueryResult {
 	public Integer getCode() {
 		return code;
 	}
-	
+
 	/**
 	 * 设置chatRooms
 	 *
-	 */	
+	 */
 	public void setChatRooms(List<ChatRoom> chatRooms) {
 		this.chatRooms = chatRooms;
 	}
@@ -48,7 +49,7 @@ public class ChatroomQueryResult {
 	/**
 	 * 获取chatRooms
 	 *
-	 * @return List<ChatRoom>
+	 * @return chatRooms
 	 */
 	public List<ChatRoom> getChatRooms() {
 		return chatRooms;

@@ -41,10 +41,8 @@ public class Chatroom {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult publish(ChatroomMessage message) throws Exception {
-        //需要校验的字段
-        String[] fileds = {"senderUserId","targetIds","content"};
 
-        String code = CommonUtil.checkFiled(fileds,message,"message","message","publish");
+        String code = CommonUtil.checkFiled(message,"message","message","publish");
         if(null != code){
             return (CodeSuccessResult)GsonUtil.fromJson(code,CodeSuccessResult.class);
         }
@@ -77,10 +75,8 @@ public class Chatroom {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult broadcast (ChatroomMessage message) throws Exception {
-        //需要校验的字段
-        String[] fileds = {"senderUserId"};
 
-        String code = CommonUtil.checkFiled(fileds,message,"message/chatroom","message","broadcast");
+        String code = CommonUtil.checkFiled(message,"message/chatroom","message","broadcast");
         if(null != code){
             return (CodeSuccessResult)GsonUtil.fromJson(code,CodeSuccessResult.class);
         }

@@ -10,7 +10,13 @@ import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
+/**
+ *
+ * 用户黑名单服务
+ * docs: "http://www.rongcloud.cn/docs/server.html#black"
+ *
+ * @version
+ * */
 public class BlackList {
 
     private static final String UTF8 = "UTF-8";

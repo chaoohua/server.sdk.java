@@ -16,7 +16,12 @@ import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
+/**
+ *
+ * 聊天室服务
+ * docs: "http://www.rongcloud.cn/docs/server.html#chatroom"
+ *
+ * */
 public class Chatroom {
 
 	private static final String UTF8 = "UTF-8";

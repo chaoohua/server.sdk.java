@@ -5,7 +5,7 @@ import io.rong.models.SMSImageCodeResult;
 import io.rong.models.SMSSendCodeResult;
 import io.rong.models.SMSVerifyCodeResult;
 import io.rong.models.sms.SmsModel;
-import io.rong.models.user.UserInfo;
+import io.rong.models.user.UserModel;
 
 import java.io.Reader;
 
@@ -25,7 +25,7 @@ public class SmsExample {
 
 
         System.out.println("************************User********************");
-        UserInfo user = new UserInfo("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
+        UserModel user = new UserModel("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
 
 
         SmsModel sms = new SmsModel("13500000000", "dsfdsfd", "86", "1408706337", "1408706337");

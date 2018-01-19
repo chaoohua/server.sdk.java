@@ -2,7 +2,7 @@ package io.rong.example.user;
 
 import io.rong.RongCloud;
 import io.rong.models.*;
-import io.rong.models.user.UserInfo;
+import io.rong.models.user.UserModel;
 
 /**
  * Demo class
@@ -31,10 +31,10 @@ public class UserExample {
 
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret,api);
 
-        UserInfo user = new UserInfo("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
+        UserModel user = new UserModel("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
 
         //System.out.println("************************user getToken********************");
-        //getToken(rongCloud);
+        getToken(rongCloud);
 
         //System.out.println("************************user userRefresh********************");
         //userRefresh(rongCloud);
@@ -43,7 +43,7 @@ public class UserExample {
         ///System.out.println("************************user checkOnline********************");
         //checkOnline(rongCloud);
 
-        userAddBlock(rongCloud);
+       // userAddBlock(rongCloud);
 
         //System.out.println("************************user userUnBlock********************");
         //userUnBlock(rongCloud);
@@ -64,7 +64,8 @@ public class UserExample {
      * 检查用户在线状态 方法
      */
     public static void checkOnline(RongCloud rongCloud) throws Exception {
-        CheckOnlineResult userCheckOnlineResult = rongCloud.user.onlineStatus.check("sdsdsdsdsd嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎个");
+        UserModel user = new UserModel("userId",null,null);
+        CheckOnlineResult userCheckOnlineResult = rongCloud.user.onlineStatus.check(user);
         System.out.println("checkOnline:  " + userCheckOnlineResult.toString());
     }
 
@@ -74,7 +75,7 @@ public class UserExample {
      * 获取 Token 方法
      */
     public static void getToken(RongCloud rongCloud) throws Exception {
-        UserInfo user = new UserInfo("userId1华发商都发货速度符合实际发货就是房价是否就是房价是否就是分数就会飞机是否就是方法就是发生", "username", "http://www.rongcloud.cn/images/logo.png");
+        UserModel user = new UserModel("userId1华发商都发货速度符合实际发货就是房价是否就是房价是否就是分数就会飞机是否就是方法就是发生", "username", "http://www.rongcloud.cn/images/logo.png");
         TokenResult userGetTokenResult = rongCloud.user.getToken(user);
         System.out.println("getToken:  " + userGetTokenResult.toString());
     }
@@ -83,7 +84,7 @@ public class UserExample {
      *  刷新用户信息方法
      */
     public static void userRefresh(RongCloud rongCloud) throws Exception {
-        UserInfo user = new UserInfo("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
+        UserModel user = new UserModel("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
         ResponseResult userRefreshResult = (ResponseResult)rongCloud.user.refresh(user);
         System.out.println("refresh:  " + userRefreshResult.toString());
 

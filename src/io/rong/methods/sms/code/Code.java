@@ -10,7 +10,13 @@ import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
+/**
+ *
+ * 短信服务
+ * docs: "http://www.rongcloud.cn/docs/sms_service.html#summary"
+ *
+ * @version
+ * */
 public class Code {
 
 	private static final String UTF8 = "UTF-8";
@@ -58,9 +64,7 @@ public class Code {
 	 * @return SMSSendCodeResult
 	 **/
 	public SMSSendCodeResult send(SmsModel sms) throws Exception {
-		//需要校验的字段
-		String[] fileds = {"mobile","templateId","region"};
-		String message = CommonUtil.checkFiled(fileds,sms,PATH,"sms",CheckMethod.SEND);
+		String message = CommonUtil.checkFiled(sms,PATH,"sms",CheckMethod.SEND);
 		if(null != message){
 			return (SMSSendCodeResult)GsonUtil.fromJson(message,SMSSendCodeResult.class);
 		}

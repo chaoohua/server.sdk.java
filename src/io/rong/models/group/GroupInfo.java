@@ -1,17 +1,17 @@
-package io.rong.models;
+package io.rong.models.group;
 
 import io.rong.util.GsonUtil;
 
 /**
- * 聊天室信息。
+ * 群组信息。
  */
-public class ChatRoomInfo {
-	// 聊天室Id。
+public class GroupInfo {
+	// 群组Id。
 	String id;
-	// 聊天室名称。
+	// 群组名称。
 	String name;
 	
-	public ChatRoomInfo(String id, String name) {
+	public GroupInfo(String id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -52,6 +52,6 @@ public class ChatRoomInfo {
 	
 	@Override
 	public String toString() {
-		return GsonUtil.toJson(this, ChatRoomInfo.class);
+		return GsonUtil.toJson(this, GroupInfo.class);
 	}
 }

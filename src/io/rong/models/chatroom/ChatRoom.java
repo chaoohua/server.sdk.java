@@ -11,12 +11,10 @@ public class ChatRoom {
 	/**
 	 * 聊天室 id。
 	 */
-	@ParamNotNull
 	String id;
 	/**
 	 * 聊天室名。
 	 */
-	@ParamNotNull
 	String name;
 	/**
 	 * 聊天室创建时间。

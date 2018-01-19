@@ -10,7 +10,13 @@ import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
+/**
+ *
+ * 用户封禁服务
+ * docs: "http://www.rongcloud.cn/docs/server.html#user_block"
+ *
+ * @version
+ * */
 public class Block {
     private static final String UTF8 = "UTF-8";
     private static final String PATH = "user/block";

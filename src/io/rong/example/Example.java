@@ -1,11 +1,11 @@
 package io.rong.example;
 
 import io.rong.RongCloud;
-import io.rong.messages.TxtMessage;
-import io.rong.messages.VoiceMessage;
 import io.rong.models.*;
+import io.rong.models.chatroom.ChatroomQueryResult;
+import io.rong.models.chatroom.ChatroomUserQueryResult;
 import io.rong.models.sms.SmsModel;
-import io.rong.models.user.UserInfo;
+import io.rong.models.user.UserModel;
 import io.rong.util.GsonUtil;
 
 import java.io.FileInputStream;
@@ -34,7 +34,7 @@ public class Example {
 				
 		
 		System.out.println("************************User********************");
-		UserInfo user = new UserInfo("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
+		UserModel user = new UserModel("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
 
 
 		// 获取 Token 方法

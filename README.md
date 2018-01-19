@@ -18,15 +18,15 @@ Rong Cloud Server SDK in Java.
 - getToken  获取 Token 
 - refresh  刷新用户信息
   #### black
-  * add 添加用户到黑名单
-  * remove 从黑名单中移除用户
-  * getList 获取某用户的黑名单列表
+  - add 添加用户到黑名单
+  - remove 从黑名单中移除用户
+  - getList 获取某用户的黑名单列表
   #### block
-  * add 封禁用户
-  * remove 解除用户封禁
-  * getList 获取被封禁用户
+  - add 封禁用户
+  - remove 解除用户封禁
+  - getList 获取被封禁用户
   #### online-status
-  * check 检查用户在线状态 
+  - check 检查用户在线状态 
 
 ### Message
 - 消息发送
@@ -63,9 +63,9 @@ Rong Cloud Server SDK in Java.
 - quit  退出群组
 - dismiss  解散群组。
   #### gag
-  * addGagUser  添加禁言群成员
-  * lisGagUser  查询被禁言群成员
-  * rollBackGagUser  移除禁言群成员
+  - add  添加禁言群成员
+  - getList  查询被禁言群成员
+  - remove  移除禁言群成员
 
 
 ### Chatroom

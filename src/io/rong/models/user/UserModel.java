@@ -4,7 +4,7 @@ package io.rong.models.user;
 *
 * 用户信息
 * */
-public class UserInfo {
+public class UserModel {
 
     /**
      * userId:用户 Id，最大长度 64 字节.是用户在 App 中的唯一标识码，
@@ -22,7 +22,7 @@ public class UserInfo {
      */
     public String portraitUri;
 
-    public UserInfo(String id, String name,String portraitUri) {
+    public UserModel(String id, String name, String portraitUri) {
         this.id = id;
         this.name = name;
         this.portraitUri = portraitUri;

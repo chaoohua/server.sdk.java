@@ -1,19 +1,23 @@
 package io.rong.methods.chatroom.block;
 
 import io.rong.RongCloud;
-import io.rong.exception.ParamException;
 import io.rong.models.*;
 import io.rong.models.chatroom.ChatRoom;
+import io.rong.models.chatroom.ListBlockChatroomUserResult;
 import io.rong.models.chatroom.Member;
-import io.rong.models.group.GroupResponse;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
-import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 
+/**
+ *
+ * 聊天室封禁服务
+ * docs: "http://www.rongcloud.cn/docs/server.html#chatroom_user_block"
+ *
+ * */
 public class Block {
     private static final String UTF8 = "UTF-8";
     private static final String PATH = "chatroom/block";
@@ -41,9 +45,7 @@ public class Block {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult add(ChatRoom chatroom, Integer minute) throws Exception {
-        //需要校验的字段
-        String[] fileds = {"id","merbers"};
-        String message = CommonUtil.checkFiled(fileds,chatroom,PATH,"chatroom", CheckMethod.ADD);
+        String message = CommonUtil.checkFiled(chatroom,PATH,"chatroom", CheckMethod.ADD);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
@@ -101,16 +103,12 @@ public class Block {
     /**
      * 移除封禁聊天室成员方法
      *
-     * @param  chatroom:聊天室 Id。（必传）,用户 Id。（必传）
+     * @param  chatroom: 封禁的聊天室信息 其中聊天室 Id。（必传）,用户 Id。（必传）
      *
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult remove(ChatRoom chatroom) throws Exception {
-        //需要校验的字段
-        String[] fileds = {"id","merbers"};
-
-        String message = CommonUtil.checkFiled(fileds,chatroom,PATH,"chatroom",CheckMethod.REMOVE);
-
+        String message = CommonUtil.checkFiled(chatroom,PATH,"chatroom",CheckMethod.REMOVE);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
