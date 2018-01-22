@@ -2,6 +2,7 @@ package io.rong.methods.message.history;
 
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
+import io.rong.models.CheckMethod;
 import io.rong.models.CodeSuccessResult;
 import io.rong.models.HistoryMessageResult;
 import io.rong.util.CommonUtil;
@@ -10,11 +11,16 @@ import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
+/**
+ * 消息历史记录服务
+ *
+ * docs : http://www.rongcloud.cn/docs/server.html#history_message
+ * @author hc
+ * @date 2017/12/30
+ */
 public class History {
     private static final String UTF8 = "UTF-8";
-    private static final String PATH = "message";
-    private static String method = "";
+    private static final String PATH = "message/history";
     private String appKey;
     private String appSecret;
     private RongCloud rongCloud;
@@ -53,7 +59,7 @@ public class History {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/history.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (HistoryMessageResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), HistoryMessageResult.class);
+        return (HistoryMessageResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH, CheckMethod.GET,HttpUtil.returnResult(conn)), HistoryMessageResult.class);
     }
 
     /**
@@ -78,6 +84,6 @@ public class History {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/history/delete.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
     }
 }

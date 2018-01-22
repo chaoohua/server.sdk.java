@@ -26,7 +26,6 @@ public class Chatroom {
 
 	private static final String UTF8 = "UTF-8";
 	private static final String PATH = "chatroom";
-	public static final String checkObject = "chatroom";
 	private String appKey;
 	private String appSecret;
 	public 	 Block block;
@@ -148,29 +147,21 @@ public class Chatroom {
 	/**
 	 * 查询聊天室内用户方法 
 	 * 
-	 * @param  chatroomId:要查询的聊天室 ID。（必传）
-	 * @param  count:要获取的聊天室成员数，上限为 500 ，超过 500 时最多返回 500 个成员。（必传）
-	 * @param  order:加入聊天室的先后顺序， 1 为加入时间正序， 2 为加入时间倒序。（必传）
+	 * @param  chatroom:聊天室信息，其中，要查询的聊天室 ID。（必传），要获取的聊天室成员数（必传），加入聊天室的先后顺序（必传）
 	 *
 	 * @return ChatroomUserQueryResult
 	 **/
-	public ChatroomUserQueryResult getMembers(String chatroomId, String count, String order) throws Exception {
-		String message = CommonUtil.checkParam("id",chatroomId,PATH,checkObject,CheckMethod.GET_MEMBERS);
+	public ChatroomUserQueryResult getMembers(ChatRoom chatroom) throws Exception {
+
+		String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.GET_MEMBERS);
 		if(null != message){
 			return (ChatroomUserQueryResult)GsonUtil.fromJson(message,ChatroomUserQueryResult.class);
 		}
-		message = CommonUtil.checkParam("count",count,PATH,checkObject,CheckMethod.GET_MEMBERS);
-		if(null != message){
-			return (ChatroomUserQueryResult)GsonUtil.fromJson(message,ChatroomUserQueryResult.class);
-		}
-		message = CommonUtil.checkParam("order",order,PATH,checkObject,CheckMethod.GET_MEMBERS);
-		if(null != message){
-			return (ChatroomUserQueryResult)GsonUtil.fromJson(message,ChatroomUserQueryResult.class);
-		}
+
 	    StringBuilder sb = new StringBuilder();
-	    sb.append("&chatroomId=").append(URLEncoder.encode(chatroomId.toString(), UTF8));
-	    sb.append("&count=").append(URLEncoder.encode(count.toString(), UTF8));
-	    sb.append("&order=").append(URLEncoder.encode(order.toString(), UTF8));
+	    sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
+	    sb.append("&count=").append(URLEncoder.encode(chatroom.getCount().toString(), UTF8));
+	    sb.append("&order=").append(URLEncoder.encode(chatroom.getOrder().toString(), UTF8));
 		String body = sb.toString();
 	   	if (body.indexOf("&") == 0) {
 	   		body = body.substring(1, body.length());
@@ -190,7 +181,7 @@ public class Chatroom {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult stopDistribution(String chatroomId) throws Exception {
-		String message = CommonUtil.checkParam("id",chatroomId,PATH,"chatroom",CheckMethod.STOP_DISTRIBUTION);
+		String message = CommonUtil.checkParam("id",chatroomId,PATH,CheckMethod.STOP_DISTRIBUTION);
 		if(null != message){
 			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}
@@ -216,7 +207,7 @@ public class Chatroom {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult resumeDistribution(String chatroomId) throws Exception {
-		String message = CommonUtil.checkParam("id",chatroomId,PATH,checkObject,CheckMethod.RESUME_DISTRIBUTION);
+		String message = CommonUtil.checkParam("id",chatroomId,PATH,CheckMethod.RESUME_DISTRIBUTION);
 		if(null != message){
 			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}

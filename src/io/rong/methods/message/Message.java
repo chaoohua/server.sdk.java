@@ -69,7 +69,7 @@ public class Message {
 	 **/
 	public ResponseResult recall(RecallMessage recallMessage) throws Exception {
 		//需要校验的字段
-		String message = CommonUtil.checkFiled(recallMessage,"message","recallInfo","recall");
+		String message = CommonUtil.checkFiled(recallMessage,"message","recall");
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}

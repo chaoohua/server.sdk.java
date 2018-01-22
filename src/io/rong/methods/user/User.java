@@ -54,7 +54,7 @@ public class User {
 	 **/
 	public  TokenResult getToken(UserModel user) throws Exception {
 		//需要校验的字段
-		String message = CommonUtil.checkFiled(user,PATH,"user",CheckMethod.GET_TOKEN);
+		String message = CommonUtil.checkFiled(user,PATH,CheckMethod.GET_TOKEN);
 		if(null != message){
 			return (TokenResult)GsonUtil.fromJson(message,TokenResult.class);
 		}
@@ -85,7 +85,7 @@ public class User {
 	 **/
 	public ResponseResult refresh(UserModel user) throws Exception {
 		//需要校验的字段
-		String message = CommonUtil.checkFiled(user,PATH,"user",CheckMethod.REFRESH);
+		String message = CommonUtil.checkFiled(user,PATH,CheckMethod.REFRESH);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,TokenResult.class);
 		}

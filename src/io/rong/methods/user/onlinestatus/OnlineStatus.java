@@ -48,7 +48,7 @@ public class OnlineStatus {
      **/
     public CheckOnlineResult check(UserModel user) throws Exception {
         //参数校验
-        String message = CommonUtil.checkFiled(user,PATH,"user", CheckMethod.CHECK);
+        String message = CommonUtil.checkFiled(user,PATH, CheckMethod.CHECK);
         if(null != message){
             return (CheckOnlineResult)GsonUtil.fromJson(message,CheckOnlineResult.class);
         }

@@ -14,6 +14,12 @@ import io.rong.util.HttpUtil;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 
+/**
+ *
+ * 发送广播消息方法
+ * docs: "http://www.rongcloud.cn/docs/server.html#message_broadcast"
+ *
+ * */
 public class Broadcast {
     private static final String UTF8 = "UTF-8";
     private static final String PATH = "broadcast";
@@ -43,7 +49,7 @@ public class Broadcast {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult send(BroadcastMessage broadcastMessage) throws Exception {
-        String message = CommonUtil.checkFiled(broadcastMessage,PATH,"broadcast",BROADCAST_SEND);
+        String message = CommonUtil.checkFiled(broadcastMessage,PATH,BROADCAST_SEND);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }

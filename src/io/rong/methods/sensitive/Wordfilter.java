@@ -10,6 +10,7 @@ import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
+import org.apache.zookeeper.Op;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
@@ -24,7 +25,6 @@ public class Wordfilter {
 
 	private static final String UTF8 = "UTF-8";
 	private static final String PATH = "sensitiveword";
-	private static String method = "";
 	private String appKey;
 	private String appSecret;
 	private RongCloud rongCloud;
@@ -50,7 +50,7 @@ public class Wordfilter {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult add(String word) throws Exception {
-		String message = CommonUtil.checkParam("keyword",word,"sensitive","rule", CheckMethod.ADD);
+		String message = CommonUtil.checkParam("keyword",word,PATH, CheckMethod.ADD);
 		if(null != message){
 			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}
@@ -65,7 +65,7 @@ public class Wordfilter {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/wordfilter/add.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class Wordfilter {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/wordfilter/list.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (ListWordfilterResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), ListWordfilterResult.class);
+	    return (ListWordfilterResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.GETLIST,HttpUtil.returnResult(conn)), ListWordfilterResult.class);
 	}
 	
 	/**
@@ -94,7 +94,7 @@ public class Wordfilter {
 	 *
 	 * @return CodeSuccessResult
 	 **/
-	public CodeSuccessResult delete(String word) throws Exception {
+	public CodeSuccessResult remove(String word) throws Exception {
 		if (word == null) {
 			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/wordfilter/delete","Paramer 'word' is required");
 		}
@@ -109,7 +109,7 @@ public class Wordfilter {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/wordfilter/delete.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH, CheckMethod.REMOVE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
 	}
 
 	 

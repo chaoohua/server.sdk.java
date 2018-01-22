@@ -167,8 +167,8 @@ public class Example {
 		System.out.println("getList:  " + wordfilterGetListResult.toString());
 		
 		// 移除敏感词方法（从敏感词列表中，移除某一敏感词。） 
-		CodeSuccessResult wordfilterDeleteResult = rongCloud.wordfilter.delete("money");
-		System.out.println("delete:  " + wordfilterDeleteResult.toString());
+		//CodeSuccessResult wordfilterDeleteResult = rongCloud.wordfilter.delete("money");
+		//System.out.println("delete:  " + wordfilterDeleteResult.toString());
 
 
 		//敏感词服务已升级，Sensitiveword新敏感词服务。
@@ -206,8 +206,8 @@ public class Example {
 		System.out.println("query:  " + chatroomQueryResult.toString());
 		
 		// 查询聊天室内用户方法 
-		ChatroomUserQueryResult chatroomQueryUserResult = rongCloud.chatroom.getMembers("chatroomId1", "500", "2");
-		System.out.println("queryUser:  " + chatroomQueryUserResult.toString());
+		//ChatroomUserQueryResult chatroomQueryUserResult = rongCloud.chatroom.getMembers("chatroomId1", "500", "2");
+		//System.out.println("queryUser:  " + chatroomQueryUserResult.toString());
 		
 		// 聊天室消息停止分发方法（可实现控制对聊天室中消息是否进行分发，停止分发后聊天室中用户发送的消息，融云服务端不会再将消息发送给聊天室中其他用户。） 
 		CodeSuccessResult chatroomStopDistributionMessageResult = rongCloud.chatroom.stopDistribution("chatroomId1");

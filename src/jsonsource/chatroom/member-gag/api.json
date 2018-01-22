@@ -71,7 +71,11 @@
 	"getList": {
 		"docs": "http://rongcloud.cn/docs/server.html#chatroom_user_gag_query",
 		"url": "chatroom/user/gag/query",
-		"params": {},
+		"params": {
+			"chatroom": {
+				"memberId": "akfj0a1"
+			}
+		},
 		"response": {
 			"success": {
 				"code": "200",

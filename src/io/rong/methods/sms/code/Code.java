@@ -64,7 +64,7 @@ public class Code {
 	 * @return SMSSendCodeResult
 	 **/
 	public SMSSendCodeResult send(SmsModel sms) throws Exception {
-		String message = CommonUtil.checkFiled(sms,PATH,"sms",CheckMethod.SEND);
+		String message = CommonUtil.checkFiled(sms,PATH,CheckMethod.SEND);
 		if(null != message){
 			return (SMSSendCodeResult)GsonUtil.fromJson(message,SMSSendCodeResult.class);
 		}
@@ -101,11 +101,11 @@ public class Code {
 	 * @return SMSVerifyCodeResult
 	 **/
 	public SMSVerifyCodeResult verify(String sessionId, String code) throws Exception {
-		String message = CommonUtil.checkParam("sessionId",sessionId,PATH,"sms",CheckMethod.VERIFY);
+		String message = CommonUtil.checkParam("sessionId",sessionId,PATH,CheckMethod.VERIFY);
 		if(null != message){
 			return (SMSVerifyCodeResult)GsonUtil.fromJson(message,SMSVerifyCodeResult.class);
 		}
-		message = CommonUtil.checkParam("code",code,PATH,"sms",CheckMethod.VERIFY);
+		message = CommonUtil.checkParam("code",code,PATH,CheckMethod.VERIFY);
 		if(null != message){
 			return (SMSVerifyCodeResult)GsonUtil.fromJson(message,SMSVerifyCodeResult.class);
 		}

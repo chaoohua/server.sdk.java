@@ -45,7 +45,7 @@ public class Conversation {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult mute(ConversationModel conversation) throws Exception {
-        String message = CommonUtil.checkFiled(conversation,PATH,"conversation",CheckMethod.MUTE);
+        String message = CommonUtil.checkFiled(conversation,PATH,CheckMethod.MUTE);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
@@ -73,7 +73,7 @@ public class Conversation {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult unMute(ConversationModel conversation) throws Exception {
-        String message = CommonUtil.checkFiled(conversation,PATH,"conversation",CheckMethod.UNMUTE);
+        String message = CommonUtil.checkFiled(conversation,PATH,CheckMethod.UNMUTE);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
@@ -101,7 +101,7 @@ public class Conversation {
      * @return ConversationNotificationResult
      **/
     public ConversationNotificationResult get(ConversationModel conversation) throws Exception {
-        String message = CommonUtil.checkFiled(conversation,PATH,"conversation",CheckMethod.GET);
+        String message = CommonUtil.checkFiled(conversation,PATH,CheckMethod.GET);
         if(null != message){
             return (ConversationNotificationResult)GsonUtil.fromJson(message,ConversationNotificationResult.class);
         }

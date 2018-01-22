@@ -43,12 +43,12 @@ public class Gag {
      * @return GroupResponse
      **/
     public GroupResponse add(GroupModel group,String munite) throws Exception {
-        String message = CommonUtil.checkFiled(group,PATH,"group",CheckMethod.ADD);
+        String message = CommonUtil.checkFiled(group,PATH,CheckMethod.ADD);
         if(null != message){
             return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
         }
 
-        message = CommonUtil.checkParam("munite",munite,PATH,"munite",CheckMethod.ADD);
+        message = CommonUtil.checkParam("munite",munite,PATH,CheckMethod.ADD);
         if(null != message){
             return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
         }
@@ -79,7 +79,7 @@ public class Gag {
      * @return ListGagGroupUserResult
      **/
     public ListGagGroupUserResult getList(String groupId) throws Exception {
-        String message = CommonUtil.checkParam("id",groupId,PATH,"group",CheckMethod.GETLIST);
+        String message = CommonUtil.checkParam("id",groupId,PATH,CheckMethod.GETLIST);
         if(null != message){
             return (ListGagGroupUserResult)GsonUtil.fromJson(message,ListGagGroupUserResult.class);
         }
@@ -105,7 +105,7 @@ public class Gag {
      **/
     public GroupResponse remove(GroupModel group) throws Exception {
         //需要校验的字段
-        String message = CommonUtil.checkFiled(group,PATH,"group", CheckMethod.REMOVE);
+        String message = CommonUtil.checkFiled(group,PATH, CheckMethod.REMOVE);
         System.out.println("message:"+message);
 
         if(null != message){

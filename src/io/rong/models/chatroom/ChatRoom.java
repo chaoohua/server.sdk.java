@@ -24,6 +24,14 @@ public class ChatRoom {
 	 * 聊天室成员。
 	 */
 	Member[] members;
+	/**
+	 * 聊天室成员数。
+	 */
+	Integer count;
+	/**
+	 * 加入聊天室的先后顺序,1正序，2倒叙。
+	 */
+	Integer order;
 
 	public ChatRoom(String id, String name) {
 		this.id = id;
@@ -42,7 +50,16 @@ public class ChatRoom {
 		this.time = time;
 		this.members = members;
 	}
-	
+
+	public ChatRoom(String id, String name, String time, Member[] members, Integer count, Integer order) {
+		this.id = id;
+		this.name = name;
+		this.time = time;
+		this.members = members;
+		this.count = count;
+		this.order = order;
+	}
+
 	/**
 	 * 设置chrmId
 	 *
@@ -100,6 +117,22 @@ public class ChatRoom {
 
 	public void setMembers(Member[] members) {
 		this.members = members;
+	}
+
+	public Integer getCount() {
+		return this.count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	public Integer getOrder() {
+		return this.order;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
 	}
 
 	@Override

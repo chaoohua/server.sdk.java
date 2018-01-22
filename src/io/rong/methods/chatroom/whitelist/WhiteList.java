@@ -45,7 +45,7 @@ public class WhiteList {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult add(String chatroomId, String[] userId) throws Exception {
-        String message = CommonUtil.checkParam("id",chatroomId,PATH,"chatroom", CheckMethod.ADD);
+        String message = CommonUtil.checkParam("id",chatroomId,PATH, CheckMethod.ADD);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }

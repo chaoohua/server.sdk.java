@@ -47,11 +47,11 @@ public class Global {
      **/
     public CodeSuccessResult add(String[] userId, String minute) throws Exception {
 
-        String message = CommonUtil.checkParam("members",userId,PATH,"chatroom",CheckMethod.ADD);
+        String message = CommonUtil.checkParam("members",userId,PATH,CheckMethod.ADD);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
-        message = CommonUtil.checkParam("minute",minute,PATH,"chatroom", CheckMethod.ADD);
+        message = CommonUtil.checkParam("minute",minute,PATH, CheckMethod.ADD);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
@@ -94,7 +94,7 @@ public class Global {
         if (userId == null) {
             throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/chatroom/user/ban/remove","Paramer 'userId' is required");
         }
-        String message = CommonUtil.checkParam("userId",userId,PATH,"chatroom",CheckMethod.REMOVE);
+        String message = CommonUtil.checkParam("userId",userId,PATH,CheckMethod.REMOVE);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }

@@ -44,7 +44,7 @@ public class Priority {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult add(String[] objectName) throws Exception {
-        String message = CommonUtil.checkParam("objectName",objectName,"chatroom/priority","priority", CheckMethod.ADD);
+        String message = CommonUtil.checkParam("objectName",objectName,PATH,CheckMethod.ADD);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
@@ -74,7 +74,7 @@ public class Priority {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult remove(String[] objectName) throws Exception {
-        String message = CommonUtil.checkParam("objectName",objectName,"chatroom/keepalive","priority",CheckMethod.REMOVE);
+        String message = CommonUtil.checkParam("objectName",objectName,PATH,CheckMethod.REMOVE);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }

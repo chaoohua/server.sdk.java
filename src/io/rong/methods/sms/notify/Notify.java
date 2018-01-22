@@ -45,7 +45,7 @@ public class Notify {
      * @return SMSSendCodeResult
      **/
     public SMSSendCodeResult send(SmsModel sms, String p1, String p2, String p3) throws Exception {
-        String message = CommonUtil.checkFiled(sms,PATH,"sms", CheckMethod.SEND);
+        String message = CommonUtil.checkFiled(sms,PATH, CheckMethod.SEND);
         if(null != message){
             return (SMSSendCodeResult)GsonUtil.fromJson(message,SMSSendCodeResult.class);
         }

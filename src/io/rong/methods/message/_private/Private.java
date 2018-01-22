@@ -3,6 +3,7 @@ package io.rong.methods.message._private;
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
 import io.rong.messages.BaseMessage;
+import io.rong.models.CheckMethod;
 import io.rong.models.CodeSuccessResult;
 import io.rong.models.CommonConstrants;
 import io.rong.models.TemplateMessage;
@@ -14,15 +15,15 @@ import io.rong.util.HttpUtil;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 /**
- *
+ * 发送单聊消息方法
+ * docs : http://www.rongcloud.cn/docs/server.html#message_private_publish
  * @author hc
  * @date 2017/12/30
  */
 public class Private {
 
 	private static final String UTF8 = "UTF-8";
-	private static final String PATH = "message";
-	private static String method = "";
+	private static final String PATH = "message/_private";
 	private String appKey;
 	private String appSecret;
 	private RongCloud rongCloud;
@@ -49,7 +50,7 @@ public class Private {
 	 **/
 	public CodeSuccessResult publish(PrivateMessage privateMessage) throws Exception {
 
-		String message = CommonUtil.checkFiled(privateMessage,"message","message","publish");
+		String message = CommonUtil.checkFiled(privateMessage,PATH, CheckMethod.PUBLISH);
 		if(null != message){
 			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}
@@ -100,7 +101,7 @@ public class Private {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/private/publish.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 
-	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISH,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
 	}
 	
 	/**
@@ -111,14 +112,16 @@ public class Private {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult publishTemplate(TemplateMessage templateMessage) throws Exception {
-		if (templateMessage == null) {
-			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/message/private/publish_template", "Paramer 'templateMessage' is required");
+
+		String message = CommonUtil.checkFiled(templateMessage,PATH, CheckMethod.PUBLISH);
+		if(null != message){
+			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}
 		
 	    HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/private/publish_template.json", "application/json");
 	    HttpUtil.setBodyParameter(templateMessage.toString(), conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISHTEMPLATE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
 	}
 	 
 }

@@ -52,7 +52,7 @@ public class Group {
 	 **/
 	public ResponseResult create(GroupModel group) throws Exception {
 		//需要校验的字段
-		String message = CommonUtil.checkFiled(group,PATH,"group",CheckMethod.CREATE);
+		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.CREATE);
 		if(null != message){
 			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
 		}
@@ -84,7 +84,7 @@ public class Group {
 	 * @return CodeSuccessResult
 	 **/
 	public ResponseResult sync(String userId, GroupModel[] group) throws Exception {
-		String message = CommonUtil.checkParam("id",userId,PATH,"user",CheckMethod.SYNC);
+		String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.SYNC);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
@@ -119,7 +119,7 @@ public class Group {
 	 * @return CodeSuccessResult
 	 **/
 	public ResponseResult refresh(GroupModel group) throws Exception {
-		String message = CommonUtil.checkFiled(group,PATH,"group",CheckMethod.REFRESH);
+		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.REFRESH);
 		if(null != message){
 			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
 		}
@@ -143,7 +143,7 @@ public class Group {
 	 * @return GroupResponse
 	 **/
 	public ResponseResult join(GroupModel group) throws Exception {
-		String message = CommonUtil.checkFiled(group,PATH,"group",CheckMethod.JOIN);
+		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.JOIN);
 		if(null != message){
 			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
 		}
@@ -177,7 +177,7 @@ public class Group {
 	 **/
 	public GroupUserQueryResult getMemberList(String groupId) throws Exception {
 		//参数校验
-		String message = CommonUtil.checkParam("id",groupId,PATH,"group",CheckMethod.GET_MEMBERS_LIST);
+		String message = CommonUtil.checkParam("id",groupId,PATH,CheckMethod.GET_MEMBERS_LIST);
 		if(null != message){
 			return (GroupUserQueryResult)GsonUtil.fromJson(message,GroupUserQueryResult.class);
 		}
@@ -203,7 +203,7 @@ public class Group {
 	 **/
 	public ResponseResult quit(GroupModel group) throws Exception {
 
-		String message = CommonUtil.checkFiled(group,PATH,"group",CheckMethod.QUIT);
+		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.QUIT);
 		if(null != message){
 			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
 		}
@@ -235,11 +235,11 @@ public class Group {
 	 **/
 	public GroupResponse dismiss(String userId, String groupId) throws Exception {
 		//参数校验
-		String message = CommonUtil.checkParam("id",userId,PATH,"user",CheckMethod.DISMISS);
+		String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.DISMISS);
 		if(null != message){
 			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
 		}
-		message = CommonUtil.checkParam("id",userId,PATH,"group",CheckMethod.DISMISS);
+		message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.DISMISS);
 		if(null != message){
 			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
 		}

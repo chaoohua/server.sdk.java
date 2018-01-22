@@ -29,5 +29,10 @@ public class CheckMethod {
     public static final String GET_TOKEN = "getToken";
     public static final String CHECK = "check";
     public static final String QUERY = "query";
+    public static final String PUBLISH = "publish";
+    public static final String PUBLISHTEMPLATE = "publishTemplate";
+    public static final String BROADCAST = "broadcast";
+
+
 
 }

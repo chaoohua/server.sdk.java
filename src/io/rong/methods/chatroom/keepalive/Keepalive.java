@@ -45,7 +45,7 @@ public class Keepalive {
      **/
     public CodeSuccessResult add(String chatroomId) throws Exception {
 
-        String message = CommonUtil.checkParam("id",chatroomId,"chatroom/keepalive","chatroom", CheckMethod.ADD);
+        String message = CommonUtil.checkParam("id",chatroomId,"chatroom", CheckMethod.ADD);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
@@ -69,7 +69,7 @@ public class Keepalive {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult remove(String chatroomId) throws Exception {
-        String message = CommonUtil.checkParam("id",chatroomId,"chatroom/keepalive","chatroom",CheckMethod.REMOVE);
+        String message = CommonUtil.checkParam("id",chatroomId,PATH,CheckMethod.REMOVE);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }

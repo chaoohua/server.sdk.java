@@ -48,11 +48,11 @@ public class BlackList {
     public ResponseResult add(String userId, String blackIds) throws Exception {
 
         //参数校验
-        String message = CommonUtil.checkParam("id",userId,PATH,"user",CheckMethod.ADD);
+        String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.ADD);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
-        message = CommonUtil.checkParam("blackIds",blackIds,PATH,"user",CheckMethod.ADD);
+        message = CommonUtil.checkParam("blackIds",blackIds,PATH,CheckMethod.ADD);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
@@ -81,7 +81,7 @@ public class BlackList {
      **/
     public QueryBlacklistUserResult query(String userId) throws Exception {
         //参数校验
-        String message = CommonUtil.checkParam("id",userId,PATH,"user","query");
+        String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.QUERY);
         if(null != message){
             return (QueryBlacklistUserResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
@@ -109,11 +109,11 @@ public class BlackList {
      **/
     public ResponseResult remove(String userId, String blackIds) throws Exception {
         //参数校验
-        String message = CommonUtil.checkParam("id",userId,PATH,"user", CheckMethod.REMOVE);
+        String message = CommonUtil.checkParam("id",userId,PATH, CheckMethod.REMOVE);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
-        message = CommonUtil.checkParam("blackIds",blackIds,PATH,"user",CheckMethod.REMOVE);
+        message = CommonUtil.checkParam("blackIds",blackIds,PATH,CheckMethod.REMOVE);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }

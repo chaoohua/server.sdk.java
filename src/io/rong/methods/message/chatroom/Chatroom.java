@@ -3,6 +3,7 @@ package io.rong.methods.message.chatroom;
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
 import io.rong.messages.BaseMessage;
+import io.rong.models.CheckMethod;
 import io.rong.models.CodeSuccessResult;
 import io.rong.models.message.ChatroomMessage;
 import io.rong.util.CommonUtil;
@@ -11,11 +12,15 @@ import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
+/**
+ * 发送聊天室消息方法
+ * docs : http://www.rongcloud.cn/docs/server.html#message_chatroom_publish
+ * @author hc
+ * @date 2017/12/30
+ */
 public class Chatroom {
     private static final String UTF8 = "UTF-8";
-    private static final String PATH = "message";
-    private static String method = "";
+    private static final String PATH = "message/chatroom";
     private String appKey;
     private String appSecret;
     private RongCloud rongCloud;
@@ -42,7 +47,7 @@ public class Chatroom {
      **/
     public CodeSuccessResult publish(ChatroomMessage message) throws Exception {
 
-        String code = CommonUtil.checkFiled(message,"message","message","publish");
+        String code = CommonUtil.checkFiled(message,PATH, CheckMethod.PUBLISH);
         if(null != code){
             return (CodeSuccessResult)GsonUtil.fromJson(code,CodeSuccessResult.class);
         }
@@ -64,7 +69,7 @@ public class Chatroom {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/chatroom/publish.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISH,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
     }
 
     /**
@@ -76,7 +81,7 @@ public class Chatroom {
      **/
     public CodeSuccessResult broadcast (ChatroomMessage message) throws Exception {
 
-        String code = CommonUtil.checkFiled(message,"message/chatroom","message","broadcast");
+        String code = CommonUtil.checkFiled(message,PATH,CheckMethod.BROADCAST);
         if(null != code){
             return (CodeSuccessResult)GsonUtil.fromJson(code,CodeSuccessResult.class);
         }
@@ -94,6 +99,6 @@ public class Chatroom {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/chatroom/broadcast.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.BROADCAST,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
     }
 }

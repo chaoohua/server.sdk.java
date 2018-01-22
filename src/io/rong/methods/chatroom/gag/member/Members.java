@@ -43,11 +43,11 @@ public class Members {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult add(ChatRoom chatroom, Integer minute) throws Exception {
-        String message = CommonUtil.checkFiled(chatroom,PATH,"chatroom",CheckMethod.ADD);
+        String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.ADD);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
-        message = CommonUtil.checkParam("minute",minute,PATH,"chatroom",CheckMethod.ADD);
+        message = CommonUtil.checkParam("minute",minute,PATH,CheckMethod.ADD);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }
@@ -78,7 +78,7 @@ public class Members {
      * @return ListGagChatroomUserResult
      **/
     public ListGagChatroomUserResult getList(String chatroomId) throws Exception {
-        String message = CommonUtil.checkParam("id",chatroomId,PATH,"chatroom",CheckMethod.GETLIST);
+        String message = CommonUtil.checkParam("id",chatroomId,PATH,CheckMethod.GETLIST);
         if(null != message){
             return (ListGagChatroomUserResult)GsonUtil.fromJson(message,ListGagChatroomUserResult.class);
         }
@@ -103,7 +103,7 @@ public class Members {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult remove(ChatRoom chatroom) throws Exception {
-        String message = CommonUtil.checkFiled(chatroom,PATH,"chatroom",CheckMethod.REMOVE);
+        String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.REMOVE);
         if(null != message){
             return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
         }

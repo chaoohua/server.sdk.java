@@ -3,6 +3,7 @@ package io.rong.methods.message.system;
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
 import io.rong.messages.BaseMessage;
+import io.rong.models.CheckMethod;
 import io.rong.models.CodeSuccessResult;
 import io.rong.models.TemplateMessage;
 import io.rong.models.message.Message;
@@ -13,13 +14,18 @@ import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
+/**
+ * 发送系统消息方法
+ *
+ * docs : http://www.rongcloud.cn/docs/server.html#message_system_publish
+ * @author hc
+ * @date 2017/12/30
+ */
 public class System {
     private static final String UTF8 = "UTF-8";
     private String appKey;
     private String appSecret;
     private static final String PATH = "message/system";
-    private static String method = "";
     private RongCloud rongCloud;
 
     public RongCloud getRongCloud() {
@@ -42,19 +48,10 @@ public class System {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult publish(SystemMessage systemMessage) throws Exception {
-        method = "publish";
-        if (systemMessage.getSenderUserId() == null) {
-            throw new ParamException("Paramer 'fromUserId' is required");
+        String code = CommonUtil.checkFiled(systemMessage,PATH,CheckMethod.PUBLISH);
+        if(null != code){
+            return (CodeSuccessResult)GsonUtil.fromJson(code,CodeSuccessResult.class);
         }
-
-        if (systemMessage.getTargetIds() == null) {
-            throw new ParamException("Paramer 'toUserId' is required");
-        }
-
-        if (systemMessage.getContent() == null) {
-            throw new ParamException("Paramer 'message' is required");
-        }
-
         StringBuilder sb = new StringBuilder();
         sb.append("&fromUserId=").append(URLEncoder.encode(systemMessage.getSenderUserId().toString(), UTF8));
 
@@ -89,7 +86,7 @@ public class System {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/system/publish.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn))), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISH,CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISH,HttpUtil.returnResult(conn))), CodeSuccessResult.class);
     }
 
     /**
@@ -100,13 +97,14 @@ public class System {
      * @return CodeSuccessResult
      **/
     public CodeSuccessResult publishTemplate(TemplateMessage templateMessage) throws Exception {
-        if (templateMessage == null) {
-            throw new ParamException("Paramer 'templateMessage' is required");
+        String code = CommonUtil.checkFiled(templateMessage,PATH,CheckMethod.PUBLISHTEMPLATE);
+        if(null != code){
+            return (CodeSuccessResult)GsonUtil.fromJson(code,CodeSuccessResult.class);
         }
 
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/system/publish_template.json", "application/json");
         HttpUtil.setBodyParameter(templateMessage.toString(), conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISHTEMPLATE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
     }
 }

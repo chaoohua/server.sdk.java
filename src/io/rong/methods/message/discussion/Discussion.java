@@ -3,6 +3,7 @@ package io.rong.methods.message.discussion;
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
 import io.rong.messages.BaseMessage;
+import io.rong.models.CheckMethod;
 import io.rong.models.CodeSuccessResult;
 import io.rong.models.message.DiscussionMessage;
 import io.rong.util.CommonUtil;
@@ -11,12 +12,17 @@ import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
+/**
+ * 发送讨论组消息方法
+ *
+ * docs : http://www.rongcloud.cn/docs/server.html#message_discussion_publish
+ * @author hc
+ * @date 2017/12/30
+ */
 public class Discussion {
 
     private static final String UTF8 = "UTF-8";
-    private static final String PATH = "message";
-    private static String method = "";
+    private static final String PATH = "message/discussion";
     private String appKey;
     private String appSecret;
     private RongCloud rongCloud;
@@ -44,7 +50,7 @@ public class Discussion {
     public CodeSuccessResult publish(DiscussionMessage message) throws Exception {
 
 
-        String code = CommonUtil.checkFiled(message,"message","message","publish");
+        String code = CommonUtil.checkFiled(message,PATH, CheckMethod.PUBLISH);
         if(null != code){
             return (CodeSuccessResult)GsonUtil.fromJson(code,CodeSuccessResult.class);
         }
@@ -82,6 +88,6 @@ public class Discussion {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/discussion/publish.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISH,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
     }
 }

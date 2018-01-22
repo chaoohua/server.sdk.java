@@ -45,12 +45,12 @@ public class Block {
      **/
     public ResponseResult add(String userId, Integer minute) throws Exception {
 
-        String message = CommonUtil.checkParam("id",userId,PATH,"user", CheckMethod.ADD);
+        String message = CommonUtil.checkParam("id",userId,PATH, CheckMethod.ADD);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
-        message = CommonUtil.checkParam("minute",minute,PATH,"user",CheckMethod.ADD);
+        message = CommonUtil.checkParam("minute",minute,PATH,CheckMethod.ADD);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
@@ -79,7 +79,7 @@ public class Block {
      **/
     public ResponseResult remove(String userId) throws Exception {
         //参数校验
-        String message = CommonUtil.checkParam("id",userId,PATH,"user",CheckMethod.REMOVE);
+        String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.REMOVE);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }

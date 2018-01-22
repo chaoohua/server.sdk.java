@@ -50,11 +50,11 @@ public class Sensitiveword {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult add(String keyword, String replace) throws Exception {
-		String message = CommonUtil.checkParam("keyword",keyword,PATH,"rule",CheckMethod.ADD);
+		String message = CommonUtil.checkParam("keyword",keyword,PATH,CheckMethod.ADD);
 		if(null != message){
 			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}
-		message = CommonUtil.checkParam("replace",replace,PATH,"rule",CheckMethod.ADD);
+		message = CommonUtil.checkParam("replace",replace,PATH,CheckMethod.ADD);
 		if(null != message){
 			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}
@@ -107,7 +107,7 @@ public class Sensitiveword {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult remove(String word) throws Exception {
-		String message = CommonUtil.checkParam("keyword",word,PATH,"rule",CheckMethod.REMOVE);
+		String message = CommonUtil.checkParam("keyword",word,PATH,CheckMethod.REMOVE);
 		if(null != message){
 			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}
@@ -132,7 +132,7 @@ public class Sensitiveword {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult batchDelete(String[] words) throws Exception {
-		String message = CommonUtil.checkParam("keyword",words,PATH,"sensitive",CheckMethod.BATCH_DELETE);
+		String message = CommonUtil.checkParam("keyword",words,PATH,CheckMethod.BATCH_DELETE);
 		if(null != message){
 			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}
