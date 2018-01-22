@@ -79,9 +79,9 @@ Rong Cloud Server SDK in Java.
   #### Gag
   - 局部禁言与全局禁言
     ##### Member
-    - add
-    - remove
-    - getList
+    - add 添加禁言聊天室成员方法
+    - remove 移除禁言聊天室成员方法
+    - getList 查询被禁言聊天室成员方法
     ##### Global
     - add  添加禁言聊天室成员
     - getList  查询被禁言聊天室成员
@@ -92,16 +92,16 @@ Rong Cloud Server SDK in Java.
     - getList  查询被封禁聊天室成员
   #### WhiteList
     - add  添加聊天室白名单成员
-    - remove
-    - getList 
+    - remove 移除聊天室白名单成员方法
+    - getList 查询聊天室白名单成员方法
   #### Priority
-    - add
-    - remove
-    - getList
+    - add 添加聊天室消息优先级方法
+    - remove 移除聊天室消息优先级方法
+    - getList 查询聊天室消息优先级方法
   #### Keeplive
-    - add
-    - remove
-    - getList
+    - add 添加保活聊天室方法
+    - remove 移除保活聊天室方法
+    - getList 查询保活聊天室方法
 ### Push
 - setUserTag  添加 Push 标签
 - send  广播消息
