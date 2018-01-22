@@ -82,11 +82,9 @@ public class Block {
      **/
     public ListBlockChatroomUserResult getList(String chatroomId) throws Exception {
         String message = CommonUtil.checkParam("id",chatroomId,PATH,CheckMethod.GETLIST);
-        System.out.println("message:"+message);
         if(null != message){
             return (ListBlockChatroomUserResult)GsonUtil.fromJson(message,ListBlockChatroomUserResult.class);
         }
-
         StringBuilder sb = new StringBuilder();
         sb.append("&chatroomId=").append(URLEncoder.encode(chatroomId.toString(), UTF8));
         String body = sb.toString();

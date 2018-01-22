@@ -3,7 +3,6 @@ package io.rong.methods.group.gag;
 import io.rong.RongCloud;
 import io.rong.models.CheckMethod;
 import io.rong.models.group.GroupModel;
-import io.rong.models.group.GroupResponse;
 import io.rong.models.group.ListGagGroupUserResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;

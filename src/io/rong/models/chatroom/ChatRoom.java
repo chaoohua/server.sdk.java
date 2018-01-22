@@ -5,7 +5,7 @@ import io.rong.util.GsonUtil;
 import io.rong.util.ParamNotNull;
 
 /**
- * 聊天室信息。
+ * 聊天室。
  */
 public class ChatRoom {
 	/**
@@ -32,25 +32,41 @@ public class ChatRoom {
 	 * 加入聊天室的先后顺序,1正序，2倒叙。
 	 */
 	Integer order;
-
+	/**
+	 * 聊天室构造函数 聊天室信息
+	 * */
 	public ChatRoom(String id, String name) {
 		this.id = id;
 		this.name = name;
 	}
-
+	/**
+	 * 聊天室构造函数 聊天室信息包含时间
+	 * */
 	public ChatRoom(String id, String name, String time) {
 		this.id = id;
 		this.name = name;
 		this.time = time;
 	}
-
+	/**
+	 * 聊天室构造函数 聊天室信息和成员
+	 * */
 	public ChatRoom(String id, String name, Member[] members) {
 		this.id = id;
 		this.name = name;
 		this.time = time;
 		this.members = members;
 	}
-
+	/**
+	 * 聊天室构造函数 用户数量的
+	 * */
+	public ChatRoom(String id, Integer count, Integer order) {
+		this.id = id;
+		this.count = count;
+		this.order = order;
+	}
+	/**
+	 * 聊天室构造函数 全量
+	 * */
 	public ChatRoom(String id, String name, String time, Member[] members, Integer count, Integer order) {
 		this.id = id;
 		this.name = name;

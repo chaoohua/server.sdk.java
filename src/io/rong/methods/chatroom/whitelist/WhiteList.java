@@ -7,7 +7,6 @@ import io.rong.models.CodeSuccessResult;
 import io.rong.models.CommonConstrants;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
-import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;

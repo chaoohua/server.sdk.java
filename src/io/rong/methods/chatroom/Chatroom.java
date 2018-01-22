@@ -227,20 +227,19 @@ public class Chatroom {
 	/**
 	 * 聊天室消息恢复分发方法
 	 *
-	 * @param  chatroomId:聊天室 Id。（必传）
+	 * @param  member:聊天室成员。（必传）
 	 *
 	 * @return CodeSuccessResult
 	 **/
-	public CheckChatRoomUser isExist(String chatroomId,String userId) throws Exception {
-		/*Chatroom.checkMethod = "resumeDistribution";
-		String message = CommonUtil.checkParam("id",chatroomId,PATH,checkObject,checkMethod);
+	public CheckChatRoomUser isExist(Member member) throws Exception {
+		String message = CommonUtil.checkFiled(member,PATH,CheckMethod.ISEXIST);
 		if(null != message){
 			return (CheckChatRoomUser)GsonUtil.fromJson(message,CodeSuccessResult.class);
-		}*/
+		}
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("&chatroomId=").append(URLEncoder.encode(chatroomId.toString(), UTF8));
-		sb.append("&userId=").append(URLEncoder.encode(userId.toString(), UTF8));
+		sb.append("&chatroomId=").append(URLEncoder.encode(member.chatroomId.toString(), UTF8));
+		sb.append("&userId=").append(URLEncoder.encode(member.id.toString(), UTF8));
 		String body = sb.toString();
 		if (body.indexOf("&") == 0) {
 			body = body.substring(1, body.length());

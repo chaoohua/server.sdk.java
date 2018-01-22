@@ -136,7 +136,7 @@ public class ChatroomExample {
      * */
     public static void getChatroomMembers(RongCloud rongCloud) throws Exception {
 
-        chatRoom = new ChatRoom("chatroomId1", "chatroomName1", members);
+        chatRoom = new ChatRoom("chatroomId1", 500, 1);
 
         ChatroomUserQueryResult chatroomQueryUserResult = rongCloud.chatroom.getMembers(chatRoom);
         System.out.println("queryUser:  " + chatroomQueryUserResult.toString());
@@ -147,7 +147,7 @@ public class ChatroomExample {
      * */
     public static void isExist(RongCloud rongCloud) throws Exception {
 
-        CheckChatRoomUser checkChatroomUserResult = rongCloud.chatroom.isExist("de0b2058751896848b67360332c7260c", "39629c8d860b2bd37fcb58c075fa77d2");
+        CheckChatRoomUser checkChatroomUserResult = rongCloud.chatroom.isExist(new Member("userId1", "","chatroomId"));
         System.out.println("checkChatroomUserResult:  " + checkChatroomUserResult.isInChrm);
     }
 
@@ -244,7 +244,6 @@ public class ChatroomExample {
 
 
     }
-
     /**
      * 添加聊天室白名单成员方法
      */
@@ -253,13 +252,5 @@ public class ChatroomExample {
         String[] chatroomAddWhiteListUserUserId = {"userId1", "userId2", "userId3", "userId4", "userId5"};
         CodeSuccessResult chatroomAddWhiteListUserResult = rongCloud.chatroom.whiteList.add("chatroomId", chatroomAddWhiteListUserUserId);
         System.out.println("addWhiteListUser:  " + chatroomAddWhiteListUserResult.toString());
-
-
-
-
     }
-
-
-
-
 }

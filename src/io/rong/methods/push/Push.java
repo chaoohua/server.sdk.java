@@ -47,8 +47,9 @@ public class Push {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult setUserTag(UserTag userTag) throws Exception {
-		if (userTag == null) {
-			throw new ParamException("Paramer 'userTag' is required");
+		String message = CommonUtil.checkFiled(userTag,PATH, CheckMethod.SET_USER_TAG);
+		if(null != message){
+			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}
 		
 	    HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/user/tag/set.json", "application/json");
@@ -65,10 +66,9 @@ public class Push {
 	 * @return CodeSuccessResult
 	 **/
 	public CodeSuccessResult send(PushMessage pushMessage) throws Exception {
-		String[] fields = {"platform","audience","is_to_all","notification","alert"};
-
-		if (pushMessage == null) {
-			throw new ParamException("Paramer 'pushMessage' is required");
+		String message = CommonUtil.checkFiled(pushMessage,PATH, CheckMethod.SEND);
+		if(null != message){
+			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
 		}
 		
 	    HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/push.json", "application/json");

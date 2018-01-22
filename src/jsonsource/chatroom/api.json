@@ -124,9 +124,9 @@
 		"docs": "http://rongcloud.cn/docs/server.html#chatroom_user_exist",
 		"url": "chatroom/user/exist",
 		"params": {
-			"chatroom": {
-				"id": "chatroom01",
-				"memberIds": ["memberId01"]
+			"member": {
+				"id": "memberId01",
+				"chatroomId": ["chatroomId01"]
 			}
 		},
 		"response": {

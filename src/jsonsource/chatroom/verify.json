@@ -101,5 +101,41 @@
 				"invalid": "20002"
 			}
 		}
+	},
+	"member": {
+		"_self": {
+			"require": {
+				"must": true,
+				"invalid": "20005"
+			}
+		},
+		"id": {
+			"require": {
+				"must": true,
+				"invalid": "20005"
+			},
+			"length": {
+				"max": 64,
+				"min": 1,
+				"invalid": "20002"
+			}
+		},
+		"chatroomId": {
+			"require": {
+				"must": true,
+				"invalid": "20005"
+			},
+			"length": {
+				"max": 64,
+				"min": 1,
+				"invalid": "20002"
+			}
+		},
+		"time": {
+			"require": {
+				"must": true,
+				"invalid": "20005"
+			}
+		}
 	}
 }

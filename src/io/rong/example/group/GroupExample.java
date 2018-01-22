@@ -2,7 +2,6 @@ package io.rong.example.group;
 
 import io.rong.RongCloud;
 import io.rong.models.group.*;
-import io.rong.models.group.GroupResponse;
 import io.rong.models.group.GroupModel;
 
 /**

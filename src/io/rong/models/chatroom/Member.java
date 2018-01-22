@@ -4,12 +4,22 @@ import io.rong.util.GsonUtil;
 
 public class Member {
     // 聊天室用户Id。
-    String id;
+    public String id;
     // 加入聊天室时间。
-    String time;
+    public String time;
+    /**
+     * 聊天室ID
+     * */
+    public String chatroomId;
 
     public Member(String id, String time) {
         this.id = id;
+        this.time = time;
+    }
+
+    public Member(String id, String chatroomId, String time) {
+        this.id = id;
+        this.chatroomId = chatroomId;
         this.time = time;
     }
 
@@ -45,6 +55,14 @@ public class Member {
      */
     public String getTime() {
         return time;
+    }
+
+    public String getChatroomId() {
+        return this.chatroomId;
+    }
+
+    public void setChatroomId(String chatroomId) {
+        this.chatroomId = chatroomId;
     }
 
     @Override
