@@ -48,13 +48,13 @@ public class Group {
 	 *
 	 * @param group 创建群组的群组信息
 	 *
-	 * @return GroupResponse
+	 * @return ResponseResult
 	 **/
 	public ResponseResult create(GroupModel group) throws Exception {
 		//需要校验的字段
 		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.CREATE);
 		if(null != message){
-			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 		StringBuilder sb = new StringBuilder();
 
@@ -72,7 +72,7 @@ public class Group {
 
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/create.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
-		return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.CREATE,HttpUtil.returnResult(conn)), GroupResponse.class);
+		return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.CREATE,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class Group {
 	   	HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/sync.json", "application/x-www-form-urlencoded");
 	   	HttpUtil.setBodyParameter(body, conn);
 
-	    return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.SYNC,HttpUtil.returnResult(conn)), GroupResponse.class);
+	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.SYNC,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class Group {
 	public ResponseResult refresh(GroupModel group) throws Exception {
 		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.REFRESH);
 		if(null != message){
-			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 	    StringBuilder sb = new StringBuilder();
 	    sb.append("&groupId=").append(URLEncoder.encode(group.id.toString(), UTF8));
@@ -132,7 +132,7 @@ public class Group {
 	   	}
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/refresh.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
-	    return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REFRESH,HttpUtil.returnResult(conn)), GroupResponse.class);
+	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REFRESH,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 
 	/**
@@ -140,12 +140,12 @@ public class Group {
 	 *
 	 * @param group 用户加入指定群组参数
 	 *
-	 * @return GroupResponse
+	 * @return ResponseResult
 	 **/
 	public ResponseResult join(GroupModel group) throws Exception {
 		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.JOIN);
 		if(null != message){
-			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 
 	    StringBuilder sb = new StringBuilder();
@@ -165,7 +165,7 @@ public class Group {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/join.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.JOIN,HttpUtil.returnResult(conn)), GroupResponse.class);
+	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.JOIN,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 	
 	/**
@@ -205,7 +205,7 @@ public class Group {
 
 		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.QUIT);
 		if(null != message){
-			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 	    StringBuilder sb = new StringBuilder();
 	    
@@ -223,7 +223,7 @@ public class Group {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/quit.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.QUIT,HttpUtil.returnResult(conn)), GroupResponse.class);
+	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.QUIT,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 	/**
 	 * 解散群组方法。（将该群解散，所有用户都无法再接收该群的消息。） 
@@ -233,15 +233,15 @@ public class Group {
 	 *
 	 * @return CodeSuccessResult
 	 **/
-	public GroupResponse dismiss(String userId, String groupId) throws Exception {
+	public ResponseResult dismiss(String userId, String groupId) throws Exception {
 		//参数校验
 		String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.DISMISS);
 		if(null != message){
-			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 		message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.DISMISS);
 		if(null != message){
-			return (GroupResponse)GsonUtil.fromJson(message,GroupResponse.class);
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 
 	    StringBuilder sb = new StringBuilder();
@@ -255,6 +255,6 @@ public class Group {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/dismiss.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (GroupResponse) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.DISMISS,HttpUtil.returnResult(conn)), GroupResponse.class);
+	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.DISMISS,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 }

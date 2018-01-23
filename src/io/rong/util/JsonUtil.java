@@ -12,14 +12,21 @@ import io.rong.models.PushMessage;
 import java.io.*;
 
 public class JsonUtil {
-    private static final String JSONFILE = Example.class.getClassLoader().getResource("jsonsource").getPath()+"/";
-
-    public static <T> T getJsonObject(String method) throws IOException {
+    private static final String JSONFILE = JsonUtil.class.getClassLoader().getResource("jsonsource").getPath()+"/";
+    /**
+     * 获取JsonObject
+     *
+     * @param path 项目路径
+     * @param jsonName json文件名字
+     *
+     * @return JsonObject
+     **/
+    public static <T> T getJsonObject(String path,String jsonName) throws IOException {
         BufferedReader reader = null ;
         try {
             String line="";
             StringBuffer arrs=new StringBuffer();
-            reader =new BufferedReader( new InputStreamReader(new FileInputStream(JSONFILE+method+"/verify.json")));
+            reader =new BufferedReader( new InputStreamReader(new FileInputStream(JSONFILE+path+jsonName)));
             while ((line = reader.readLine()) != null){
                 arrs.append(line);
             }
@@ -38,34 +45,9 @@ public class JsonUtil {
         }
         return null;
     }
-
-    public static <T> T getJsonObject2(String path) throws IOException {
-        BufferedReader reader = null ;
-        try {
-            String line="";
-            StringBuffer arrs=new StringBuffer();
-            reader =new BufferedReader( new InputStreamReader(new FileInputStream(JSONFILE+path+"/api.json")));
-            while ((line = reader.readLine()) != null){
-                arrs.append(line);
-            }
-            JSONObject object =  JSON.parseObject(arrs.toString());
-            return (T)object;
-        } catch (Exception e) {
-
-        }finally {
-            if(null != reader){
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-    }
     public static void main(String[] args){
         try {
-           System.out.println((String)getJsonObject("group"));
+           System.out.println((String)getJsonObject("group","/verify.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }

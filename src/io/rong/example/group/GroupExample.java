@@ -1,6 +1,7 @@
 package io.rong.example.group;
 
 import io.rong.RongCloud;
+import io.rong.models.ResponseResult;
 import io.rong.models.group.*;
 import io.rong.models.group.GroupModel;
 
@@ -103,7 +104,7 @@ public class GroupExample {
 		 String[] groupCreateUserId = {"userId1","userid2","userId3"};
 
 		 GroupModel groupUsersParam = new GroupModel("groupId",groupCreateUserId,"groupName1");
-		 GroupResponse groupCreateResult = (GroupResponse)rongCloud.group.create(groupUsersParam);
+		 ResponseResult groupCreateResult = (ResponseResult)rongCloud.group.create(groupUsersParam);
 		 System.out.println("create result:  " + groupCreateResult.toString());
 		 return;
 	 }
@@ -117,7 +118,7 @@ public class GroupExample {
 
 		GroupModel[] groupSyncGroupInfo = {new GroupModel("groupId1",null ,"groupName"), new GroupModel("groupId2",null,"groupName2" ), new GroupModel("groupId3",null,"groupName3" )};
 
-		 GroupResponse groupSyncResult = (GroupResponse)rongCloud.group.sync("userId1", groupSyncGroupInfo);
+		 ResponseResult groupSyncResult = (ResponseResult)rongCloud.group.sync("userId1", groupSyncGroupInfo);
 
 		 System.out.println("sync:  " + groupSyncResult.toString());
 	 }
@@ -131,7 +132,7 @@ public class GroupExample {
 		 GroupModel group = new GroupModel("groupId",groupCreateUserId,"groupName1");
 		 //CodeSuccessResult groupRefreshResult = rongCloud.group.refresh(groupRefreshRaram);
 		 //System.out.println("refresh:  " + groupRefreshResult.toString());
-		 GroupResponse groupRefreshResult = (GroupResponse)rongCloud.group.refresh(group);
+		 ResponseResult groupRefreshResult = (ResponseResult)rongCloud.group.refresh(group);
 		 System.out.println("refresh:  " + groupRefreshResult.toString());
 
 	 }
@@ -144,7 +145,7 @@ public class GroupExample {
 		System.out.println("************************Group********************");
 		String[] groupJoinUserId = {"userId1","userid2","userId3"};
 		GroupModel group = new GroupModel("groupId",groupJoinUserId,"groupName1");
-		GroupResponse groupJoinResult = (GroupResponse)rongCloud.group.join(group);
+		ResponseResult groupJoinResult = (ResponseResult)rongCloud.group.join(group);
 		System.out.println("join:  " + groupJoinResult.toString());
 	}
 	// 查询群成员方法
@@ -159,7 +160,7 @@ public class GroupExample {
 
 		String[] memberIds = {"userId2","userid3","userId4"};
 		GroupModel group = new GroupModel("",memberIds,"groupName1");
-		GroupResponse groupQuitResult = (GroupResponse)rongCloud.group.quit(group);
+		ResponseResult groupQuitResult = (ResponseResult)rongCloud.group.quit(group);
 		System.out.println("quit:  " + groupQuitResult.toString());
 	}
 
@@ -170,7 +171,7 @@ public class GroupExample {
 		GroupModel group = new GroupModel(null,memberIds,null);
 		String munite = "1";
 
-		GroupResponse groupAddGagUserResult = (GroupResponse)rongCloud.group.gag.add(group, "1");
+		ResponseResult groupAddGagUserResult = (ResponseResult)rongCloud.group.gag.add(group, "1");
 		System.out.println("group.gag.add(:  " + groupAddGagUserResult.toString());
 
 	}
@@ -185,13 +186,13 @@ public class GroupExample {
 	public static void groupRollBackGagUser(RongCloud rongCloud) throws Exception {
 		String[] memberIds = {"userId2","userid3","userId4"};
 		GroupModel group = new GroupModel("",memberIds,null);
-		GroupResponse groupRollBackGagUserResult = (GroupResponse)rongCloud.group.gag.remove(group);
+		ResponseResult groupRollBackGagUserResult = (ResponseResult)rongCloud.group.gag.remove(group);
 		System.out.println("group.gag.remove:  " + groupRollBackGagUserResult.toString());
 	}
 
 	// 解散群组方法。（将该群解散，所有用户都无法再接收该群的消息。）
 	public static void groupDismissR(RongCloud rongCloud) throws Exception {
-		GroupResponse groupDismissResult = (GroupResponse)rongCloud.group.dismiss("userId1", "groupId1");
+		ResponseResult groupDismissResult = (ResponseResult)rongCloud.group.dismiss("userId1", "groupId1");
 		System.out.println("dismiss:  " + groupDismissResult.toString());
 	}
 
