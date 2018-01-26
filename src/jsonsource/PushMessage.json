@@ -1,14 +1,27 @@
-{
-    "platform": ["iOS", "Android"],
-    "fromuserid": "198765cb-5ce3-4573-b59b-9fe8b5c0eafe",
-    "audience": {
-        "userid": ["db955d07-09c7-4aa5-84c6-d507cdcd226f"],
-        "is_to_all": false
+/*{
+    "platform":["ios","android"],
+    "fromuserid":"U161142135",
+    "audience":{
+        "tag":["1"],
+        "is_to_all":false
     },
-    "message": {
-        "content": "258493609",
+    "message":{
+        "content":"{\"content\":\"sadfsadfa\",\"extra\":\"www.baidu.com\"}",
         "objectName": "peakhu7"
     },
     "notification":{"alert":"this is a push"}
+}*/
+{
+    "platform": ["ios","android"],
+    "fromuserid": "U161142135",
+    "audience": {
+        "tag":["1"],
+        "is_to_all": false
+    },
+    "message": {
+        "content":"{\"content\":\"sadfsadfa\",\"extra\":\"www.baidu.com\"}",
+        "objectName": "RC:TxtMsg"
+    }
+    //"notification":{"alert":"this is a push"}
 }
 

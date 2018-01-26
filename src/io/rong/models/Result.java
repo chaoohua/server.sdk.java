@@ -1,24 +1,20 @@
 package io.rong.models;
-
-import io.rong.util.GsonUtil;
-
-public class BaseModel {
-    /**
-     * 返回码，200 为正常。
-     *
-     */
+/**
+ *  基础 http 成功返回结果
+ */
+public abstract class Result {
+    // 返回码，200 为正常。
     Integer code;
-    /**
-     * 错误信息
-     *
-     */
+    // 错误信息。
     String errorMessage;
 
-    public BaseModel(Integer code, String errorMessage) {
+    public Result(Integer code, String errorMessage) {
         this.code = code;
         this.errorMessage = errorMessage;
     }
+    public Result() {
 
+    }
     /**
      * 设置code
      *
@@ -53,9 +49,5 @@ public class BaseModel {
         return errorMessage;
     }
 
-
-    @Override
-    public String toString() {
-        return GsonUtil.toJson(this, BaseModel.class);
-    }
+    public abstract String toString();
 }

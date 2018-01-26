@@ -1,8 +1,6 @@
 package io.rong.methods.message;
 
 import io.rong.RongCloud;
-import io.rong.exception.ParamException;
-import io.rong.messages.BaseMessage;
 import io.rong.methods.message._private.Private;
 import io.rong.methods.message.chatroom.Chatroom;
 import io.rong.methods.message.discussion.Discussion;
@@ -13,7 +11,6 @@ import io.rong.models.*;
 import io.rong.models.message.RecallMessage;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
-import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
@@ -65,13 +62,13 @@ public class Message {
 	 *
 	 *@param recallMessage
 	 *
-	 * @return CodeSuccessResult
+	 * @return ResponseResult
 	 **/
-	public ResponseResult recall(RecallMessage recallMessage) throws Exception {
+	public Result recall(RecallMessage recallMessage) throws Exception {
 		//需要校验的字段
 		String message = CommonUtil.checkFiled(recallMessage,"message","recall");
 		if(null != message){
-			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+			return (Result)GsonUtil.fromJson(message,Result.class);
 		}
 		StringBuilder sb = new StringBuilder();
 		sb.append("&conversationType=").append(URLEncoder.encode(recallMessage.conversationType.toString(), UTF8));
@@ -86,7 +83,7 @@ public class Message {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/conversation/notification/get.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 
-		return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), ResponseResult.class);
+		return (Result) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), Result.class);
 	}
 	 
 }

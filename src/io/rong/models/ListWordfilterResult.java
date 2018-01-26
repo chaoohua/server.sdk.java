@@ -1,20 +1,18 @@
 package io.rong.models;
 
+import io.rong.models.sensitiveword.Sensitivewords;
 import io.rong.util.GsonUtil;
 import java.util.List;
 
 /**
  * listWordfilter返回结果
  */
-public class ListWordfilterResult {
-	// 返回码，200 为正常。
-	Integer code;
+public class ListWordfilterResult extends Result {
 	// 敏感词内容。
 	List<Sensitivewords> words;
-	// 错误信息。
-	String errorMessage;
-	
+
 	public ListWordfilterResult(Integer code, List<Sensitivewords> words, String errorMessage) {
+		super(code, errorMessage);
 		this.code = code;
 		this.words = words;
 		this.errorMessage = errorMessage;

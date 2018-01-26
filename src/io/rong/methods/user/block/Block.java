@@ -1,8 +1,9 @@
 package io.rong.methods.user.block;
 
 import io.rong.RongCloud;
+import io.rong.models.Result;
+import io.rong.models.BlockUser;
 import io.rong.models.CheckMethod;
-import io.rong.models.QueryBlockUserResult;
 import io.rong.models.ResponseResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -41,9 +42,9 @@ public class Block {
      * @param  userId:用户 Id。（必传）
      * @param  minute:封禁时长,单位为分钟，最大值为43200分钟。（必传）
      *
-     * @return ResponseResult
+     * @return Result
      **/
-    public ResponseResult add(String userId, Integer minute) throws Exception {
+    public Result add(String userId, Integer minute) throws Exception {
 
         String message = CommonUtil.checkParam("id",userId,PATH, CheckMethod.ADD);
         if(null != message){
@@ -75,7 +76,7 @@ public class Block {
      *
      * @param  userId:用户 Id。（必传）
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
     public ResponseResult remove(String userId) throws Exception {
         //参数校验
@@ -104,7 +105,7 @@ public class Block {
      *
      * @return QueryBlockUserResult
      **/
-    public QueryBlockUserResult getList() throws Exception {
+    public Result getList() throws Exception {
         StringBuilder sb = new StringBuilder();
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
@@ -115,6 +116,6 @@ public class Block {
                 "/user/block/query.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (QueryBlockUserResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.GETLIST,HttpUtil.returnResult(conn)), QueryBlockUserResult.class);
+        return (BlockUser) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.GETLIST,HttpUtil.returnResult(conn)), BlockUser.class);
     }
 }

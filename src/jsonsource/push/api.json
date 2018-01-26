@@ -1,5 +1,5 @@
 {
-	"push": {
+	"send": {
 		"docs": "http://www.rongcloud.cn/docs/push_service.html#push",
 		"url": "/push",
 		"params": {
@@ -75,7 +75,7 @@
 		}
 
 	},
-	"setTag": {
+	"setUserTag": {
 		"docs": "http://www.rongcloud.cn/docs/push_service.html#user_tag_set",
 		"url": "/user/tag/set",
 		"params": {

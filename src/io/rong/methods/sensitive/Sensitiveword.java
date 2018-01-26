@@ -1,10 +1,8 @@
 package io.rong.methods.sensitive;
 
 import io.rong.RongCloud;
-import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
-import io.rong.models.CodeSuccessResult;
-import io.rong.models.CommonConstrants;
+import io.rong.models.ResponseResult;
 import io.rong.models.ListWordfilterResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -47,16 +45,16 @@ public class Sensitiveword {
 	 * @param  keyword:敏感词，最长不超过 32 个字符。（必传）
 	 * @param  replace:需要替换的敏感词，最长不超过 32 个字符，（非必传）。如未设置替换的敏感词，当消息中含有敏感词时，消息将被屏蔽，用户不会收到消息。如设置了替换敏感词，当消息中含有敏感词时，将被替换为指定的字符进行发送。敏感词替换目前只支持单聊、群聊、聊天室会话。
 	 *
-	 * @return CodeSuccessResult
+	 * @return ResponseResult
 	 **/
-	public CodeSuccessResult add(String keyword, String replace) throws Exception {
+	public ResponseResult add(String keyword, String replace) throws Exception {
 		String message = CommonUtil.checkParam("keyword",keyword,PATH,CheckMethod.ADD);
 		if(null != message){
-			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 		message = CommonUtil.checkParam("replace",replace,PATH,CheckMethod.ADD);
 		if(null != message){
-			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 	    StringBuilder sb = new StringBuilder();
 	    sb.append("&word=").append(URLEncoder.encode(keyword.toString(), UTF8));
@@ -72,7 +70,7 @@ public class Sensitiveword {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/sensitiveword/add.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 	
 	/**
@@ -104,12 +102,12 @@ public class Sensitiveword {
 	 * 
 	 * @param  word:敏感词，最长不超过 32 个字符。（必传）
 	 *
-	 * @return CodeSuccessResult
+	 * @return ResponseResult
 	 **/
-	public CodeSuccessResult remove(String word) throws Exception {
+	public ResponseResult remove(String word) throws Exception {
 		String message = CommonUtil.checkParam("keyword",word,PATH,CheckMethod.REMOVE);
 		if(null != message){
-			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 	    StringBuilder sb = new StringBuilder();
 	    sb.append("&word=").append(URLEncoder.encode(word.toString(), UTF8));
@@ -121,7 +119,7 @@ public class Sensitiveword {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/sensitiveword/delete.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 	//sensitiveword/batch/delete
 	/**
@@ -129,12 +127,12 @@ public class Sensitiveword {
 	 *
 	 * @param  words:敏感词数组，一次最多移除 50 个敏感词（必传）
 	 *
-	 * @return CodeSuccessResult
+	 * @return ResponseResult
 	 **/
-	public CodeSuccessResult batchDelete(String[] words) throws Exception {
+	public ResponseResult batchDelete(String[] words) throws Exception {
 		String message = CommonUtil.checkParam("keyword",words,PATH,CheckMethod.BATCH_DELETE);
 		if(null != message){
-			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 		StringBuilder sb = new StringBuilder();
 		for(String word : words){
@@ -148,7 +146,7 @@ public class Sensitiveword {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/sensitiveword/batch/delete.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 
-		return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.BATCH_DELETE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+		return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.BATCH_DELETE,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 	 
 }

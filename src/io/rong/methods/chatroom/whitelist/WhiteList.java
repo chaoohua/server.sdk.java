@@ -3,7 +3,7 @@ package io.rong.methods.chatroom.whitelist;
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
-import io.rong.models.CodeSuccessResult;
+import io.rong.models.ResponseResult;
 import io.rong.models.CommonConstrants;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -41,12 +41,12 @@ public class WhiteList {
      * @param  userId:聊天室中用户 Id，可提交多个，聊天室中白名单用户最多不超过 5 个。（必传）
      * @param  chatroomId:聊天室 Id。（必传）
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult add(String chatroomId, String[] userId) throws Exception {
+    public ResponseResult add(String chatroomId, String[] userId) throws Exception {
         String message = CommonUtil.checkParam("id",chatroomId,PATH, CheckMethod.ADD);
         if(null != message){
-            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
         if (userId == null) {
@@ -69,6 +69,6 @@ public class WhiteList {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/whitelist/add.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 }

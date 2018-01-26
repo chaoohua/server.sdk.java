@@ -1,10 +1,8 @@
 package io.rong.methods.message.discussion;
 
 import io.rong.RongCloud;
-import io.rong.exception.ParamException;
-import io.rong.messages.BaseMessage;
 import io.rong.models.CheckMethod;
-import io.rong.models.CodeSuccessResult;
+import io.rong.models.ResponseResult;
 import io.rong.models.message.DiscussionMessage;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -45,14 +43,14 @@ public class Discussion {
      *
      * @param  message:发送消息内容，参考融云消息类型表.示例说明；如果 objectName 为自定义消息类型，该参数可自定义格式。（必传）
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult publish(DiscussionMessage message) throws Exception {
+    public ResponseResult publish(DiscussionMessage message) throws Exception {
 
 
         String code = CommonUtil.checkFiled(message,PATH, CheckMethod.PUBLISH);
         if(null != code){
-            return (CodeSuccessResult)GsonUtil.fromJson(code,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(code,ResponseResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -88,6 +86,6 @@ public class Discussion {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/discussion/publish.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISH,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISH,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 }

@@ -1,12 +1,9 @@
 package io.rong.methods.message.system;
 
 import io.rong.RongCloud;
-import io.rong.exception.ParamException;
-import io.rong.messages.BaseMessage;
 import io.rong.models.CheckMethod;
-import io.rong.models.CodeSuccessResult;
+import io.rong.models.ResponseResult;
 import io.rong.models.TemplateMessage;
-import io.rong.models.message.Message;
 import io.rong.models.message.SystemMessage;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -45,12 +42,12 @@ public class System {
      * 发送系统消息方法（一个用户向一个或多个用户发送系统消息，单条消息最大 128k，会话类型为 SYSTEM。每秒钟最多发送 100 条消息，每次最多同时向 100 人发送，如：一次发送 100 人时，示为 100 条消息。）
      *
      * @param
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult publish(SystemMessage systemMessage) throws Exception {
+    public ResponseResult publish(SystemMessage systemMessage) throws Exception {
         String code = CommonUtil.checkFiled(systemMessage,PATH,CheckMethod.PUBLISH);
         if(null != code){
-            return (CodeSuccessResult)GsonUtil.fromJson(code,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(code,ResponseResult.class);
         }
         StringBuilder sb = new StringBuilder();
         sb.append("&fromUserId=").append(URLEncoder.encode(systemMessage.getSenderUserId().toString(), UTF8));
@@ -86,7 +83,7 @@ public class System {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/system/publish.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISH,CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISH,HttpUtil.returnResult(conn))), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISH,CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISH,HttpUtil.returnResult(conn))), ResponseResult.class);
     }
 
     /**
@@ -94,17 +91,17 @@ public class System {
      *
      * @param  templateMessage:系统模版消息。
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult publishTemplate(TemplateMessage templateMessage) throws Exception {
+    public ResponseResult publishTemplate(TemplateMessage templateMessage) throws Exception {
         String code = CommonUtil.checkFiled(templateMessage,PATH,CheckMethod.PUBLISHTEMPLATE);
         if(null != code){
-            return (CodeSuccessResult)GsonUtil.fromJson(code,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(code,ResponseResult.class);
         }
 
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/system/publish_template.json", "application/json");
         HttpUtil.setBodyParameter(templateMessage.toString(), conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISHTEMPLATE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISHTEMPLATE,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 }

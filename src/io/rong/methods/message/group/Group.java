@@ -1,10 +1,8 @@
 package io.rong.methods.message.group;
 
 import io.rong.RongCloud;
-import io.rong.exception.ParamException;
-import io.rong.messages.BaseMessage;
 import io.rong.models.CheckMethod;
-import io.rong.models.CodeSuccessResult;
+import io.rong.models.ResponseResult;
 import io.rong.models.message.GroupMessage;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -44,13 +42,13 @@ public class Group {
      *
      * @param message
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult publish(GroupMessage message) throws Exception {
+    public ResponseResult publish(GroupMessage message) throws Exception {
 
         String code = CommonUtil.checkFiled(message,PATH, CheckMethod.PUBLISH);
         if(null != code){
-            return (CodeSuccessResult)GsonUtil.fromJson(code,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(code,ResponseResult.class);
         }
         StringBuilder sb = new StringBuilder();
         sb.append("&fromUserId=").append(URLEncoder.encode(message.senderUserId.toString(), UTF8));
@@ -90,6 +88,6 @@ public class Group {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/group/publish.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISH,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISH,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 }

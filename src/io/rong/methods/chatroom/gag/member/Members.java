@@ -40,16 +40,16 @@ public class Members {
      * @param  chatroom:封禁的聊天室信息，其中聊天室 Id。（必传）,用户 Id。（必传支持多个最多20个）
      * @param  minute:禁言时长，以分钟为单位，最大值为43200分钟。（必传）
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult add(ChatRoom chatroom, Integer minute) throws Exception {
+    public ResponseResult add(ChatRoom chatroom, Integer minute) throws Exception {
         String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.ADD);
         if(null != message){
-            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
         message = CommonUtil.checkParam("minute",minute,PATH,CheckMethod.ADD);
         if(null != message){
-            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -67,7 +67,7 @@ public class Members {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/gag/add.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH, CheckMethod.ADD,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH, CheckMethod.ADD,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 
     /**
@@ -100,12 +100,12 @@ public class Members {
      * 移除禁言聊天室成员方法
      *
      * @param  chatroom:封禁的聊天室信息，其中聊天室 Id。（必传）,用户 Id。（必传支持多个最多20个）
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult remove(ChatRoom chatroom) throws Exception {
+    public ResponseResult remove(ChatRoom chatroom) throws Exception {
         String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.REMOVE);
         if(null != message){
-            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -122,6 +122,6 @@ public class Members {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/gag/rollback.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 }

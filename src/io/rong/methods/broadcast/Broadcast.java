@@ -1,11 +1,7 @@
 package io.rong.methods.broadcast;
 
 import io.rong.RongCloud;
-import io.rong.exception.ParamException;
-import io.rong.messages.BaseMessage;
-import io.rong.models.CodeSuccessResult;
-import io.rong.models.CommonConstrants;
-import io.rong.models.TokenResult;
+import io.rong.models.ResponseResult;
 import io.rong.models.message.BroadcastMessage;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -46,12 +42,12 @@ public class Broadcast {
      *
      *  @param broadcastMessage
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult send(BroadcastMessage broadcastMessage) throws Exception {
+    public ResponseResult send(BroadcastMessage broadcastMessage) throws Exception {
         String message = CommonUtil.checkFiled(broadcastMessage,PATH,BROADCAST_SEND);
         if(null != message){
-            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
         StringBuilder sb = new StringBuilder();
         sb.append("&fromUserId=").append(URLEncoder.encode(broadcastMessage.senderUserId.toString(), UTF8));
@@ -77,6 +73,6 @@ public class Broadcast {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/broadcast.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,BROADCAST_SEND,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,BROADCAST_SEND,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 }

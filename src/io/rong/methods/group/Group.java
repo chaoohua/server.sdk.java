@@ -48,9 +48,9 @@ public class Group {
 	 *
 	 * @param group 创建群组的群组信息
 	 *
-	 * @return ResponseResult
+	 * @return Result
 	 **/
-	public ResponseResult create(GroupModel group) throws Exception {
+	public Result create(GroupModel group) throws Exception {
 		//需要校验的字段
 		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.CREATE);
 		if(null != message){
@@ -81,9 +81,9 @@ public class Group {
 	 * @param  userId:被同步群信息的用户 Id。（必传）
 	 * @param  group:该用户的群信息，如群 Id 已经存在，则不会刷新对应群组名称，如果想刷新群组名称请调用刷新群组信息方法。
 	 *
-	 * @return CodeSuccessResult
+	 * @return ResponseResult
 	 **/
-	public ResponseResult sync(String userId, GroupModel[] group) throws Exception {
+	public Result sync(String userId, GroupModel[] group) throws Exception {
 		String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.SYNC);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
@@ -116,9 +116,9 @@ public class Group {
 	 *
 	 * @param  group:群组信息。id,name（必传）
 	 *
-	 * @return CodeSuccessResult
+	 * @return ResponseResult
 	 **/
-	public ResponseResult refresh(GroupModel group) throws Exception {
+	public Result refresh(GroupModel group) throws Exception {
 		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.REFRESH);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
@@ -140,9 +140,9 @@ public class Group {
 	 *
 	 * @param group 用户加入指定群组参数
 	 *
-	 * @return ResponseResult
+	 * @return Result
 	 **/
-	public ResponseResult join(GroupModel group) throws Exception {
+	public Result join(GroupModel group) throws Exception {
 		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.JOIN);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
@@ -199,9 +199,9 @@ public class Group {
 	 * 
 	 * @param  group:群组.（必传）
 	 *
-	 * @return CodeSuccessResult
+	 * @return ResponseResult
 	 **/
-	public ResponseResult quit(GroupModel group) throws Exception {
+	public Result quit(GroupModel group) throws Exception {
 
 		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.QUIT);
 		if(null != message){
@@ -231,9 +231,9 @@ public class Group {
 	 * @param  userId:操作解散群的用户 Id。（必传）
 	 * @param  groupId:要解散的群 Id。（必传）
 	 *
-	 * @return CodeSuccessResult
+	 * @return ResponseResult
 	 **/
-	public ResponseResult dismiss(String userId, String groupId) throws Exception {
+	public Result dismiss(String userId, String groupId) throws Exception {
 		//参数校验
 		String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.DISMISS);
 		if(null != message){

@@ -54,6 +54,7 @@
   "getImage": {
     "docs": "http://www.rongcloud.cn/docs/sms_service.html#get_image_code",
     "url": "/getImgCode",
+    "params": {},
     "response": {
       "success": {
         "code": "200",

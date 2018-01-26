@@ -1,9 +1,10 @@
 package io.rong.methods.user.blacklist;
 
 import io.rong.RongCloud;
-import io.rong.models.CheckMethod;
-import io.rong.models.QueryBlacklistUserResult;
 import io.rong.models.ResponseResult;
+import io.rong.models.Result;
+import io.rong.models.BlackListResult;
+import io.rong.models.CheckMethod;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HttpUtil;
@@ -43,9 +44,9 @@ public class BlackList {
      * @param  userId:用户 Id。（必传）
      * @param  blackIds:被加到黑名单的用户Id。（必传）
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public ResponseResult add(String userId, String blackIds) throws Exception {
+    public Result add(String userId, String blackIds) throws Exception {
 
         //参数校验
         String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.ADD);
@@ -79,11 +80,11 @@ public class BlackList {
      *
      * @return QueryBlacklistUserResult
      **/
-    public QueryBlacklistUserResult query(String userId) throws Exception {
+    public BlackListResult query(String userId) throws Exception {
         //参数校验
         String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.QUERY);
         if(null != message){
-            return (QueryBlacklistUserResult)GsonUtil.fromJson(message,ResponseResult.class);
+            return (BlackListResult)GsonUtil.fromJson(message,BlackListResult.class);
         }
         StringBuilder sb = new StringBuilder();
         sb.append("&userId=").append(URLEncoder.encode(userId.toString(), UTF8));
@@ -96,7 +97,7 @@ public class BlackList {
                 "/user/blacklist/query.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (QueryBlacklistUserResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.QUERY,HttpUtil.returnResult(conn)), QueryBlacklistUserResult.class);
+        return (BlackListResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.QUERY,HttpUtil.returnResult(conn)), BlackListResult.class);
     }
 
     /**
@@ -105,17 +106,17 @@ public class BlackList {
      * @param  userId:用户 Id。（必传）
      * @param  blackIds:被移除的用户Id。（必传）
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public ResponseResult remove(String userId, String blackIds) throws Exception {
+    public Result remove(String userId, String blackIds) throws Exception {
         //参数校验
         String message = CommonUtil.checkParam("id",userId,PATH, CheckMethod.REMOVE);
         if(null != message){
-            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+            return (Result)GsonUtil.fromJson(message,Result.class);
         }
         message = CommonUtil.checkParam("blackIds",blackIds,PATH,CheckMethod.REMOVE);
         if(null != message){
-            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+            return (Result)GsonUtil.fromJson(message,Result.class);
         }
 
         StringBuilder sb = new StringBuilder();

@@ -1,13 +1,15 @@
 {
-  "getToken": {
-    "docs": "http://rongcloud.cn/docs/server.html#user_get_token",
-    "url": "user/getToken",
+  "send": {
+    "docs": "http://www.rongcloud.cn/docs/sms_service.html#send_notify",
+    "url": "/sendNotify",
     "params": {
       "sms": {
-        "mobile": "aFo990k",
-        "templateId": "Martin",
+        "mobile": "1333333333",
+        "templateId": "232323",
         "region": "http://image.rongcloud.cn/portrait.png",
-        "p1": 86
+        "p1": "p1",
+        "p2": "p2",
+        "p3": "p3"
       }
     },
     "response": {
@@ -33,42 +35,6 @@
           "code": "20006",
           "msg": "user 类型不正确，请检查参数类型,应该为 Object 传入为 {{currentType}} "
         },
-        "1004": {
-          "code": "20000",
-          "msg": "签名错误, 请排查 Appkey、Secret 是否正确"
-        },
-        "1008": {
-          "code": "20001",
-          "msg": "调用频率超限，每秒钟限制 100 次，调整频率上限请移步至专有云 http://www.rongcloud.cn/pricing#pay"
-        }
-      }
-    }
-
-  },
-  "refresh": {
-    "docs": "http://rongcloud.cn/docs/server.html#user_refresh",
-    "url": "user/refresh",
-    "params": {
-      "user": {
-        "id": "aFo990k",
-        "name": "Martin",
-        "portrait": "http://image.rongcloud.cn/portrait.png"
-      }
-    },
-    "response": {
-      "success": {
-        "code": "200",
-        "msg": "成功返回"
-      },
-      "fail": {
-        "20003": {
-          "code": "20003",
-          "msg": "{{name}} 长度超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
-        },
-        "20005": {
-          "code": "20005",
-          "msg": "{{name}} 参数为必传项"
-        },
         "20007": {
           "code": "20007",
           "msg": "protrait 不是合法地址，请检查 protrait 是否正确"
@@ -83,5 +49,6 @@
         }
       }
     }
+
   }
 }

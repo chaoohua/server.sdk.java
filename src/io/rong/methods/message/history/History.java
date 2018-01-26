@@ -3,7 +3,7 @@ package io.rong.methods.message.history;
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
-import io.rong.models.CodeSuccessResult;
+import io.rong.models.ResponseResult;
 import io.rong.models.HistoryMessageResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -67,9 +67,9 @@ public class History {
      *
      * @param  date:指定北京时间某天某小时，格式为2014010101,表示：2014年1月1日凌晨1点。（必传）
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult remove(String date) throws Exception {
+    public ResponseResult remove(String date) throws Exception {
         if (date == null) {
             throw new ParamException("Paramer 'date' is required");
         }
@@ -84,6 +84,6 @@ public class History {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/history/delete.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 }

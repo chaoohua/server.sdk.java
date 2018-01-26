@@ -4,7 +4,7 @@ import io.rong.util.GsonUtil;
 
 import java.util.List;
 
-public class BlockUser extends BaseModel{
+public class BlockUser extends Result {
     // 被封禁用户列表。
     List<BlockUsers> users;
 

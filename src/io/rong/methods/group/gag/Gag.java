@@ -1,14 +1,13 @@
 package io.rong.methods.group.gag;
 
 import io.rong.RongCloud;
+import io.rong.models.Result;
 import io.rong.models.CheckMethod;
-import io.rong.models.ResponseResult;
 import io.rong.models.group.GroupModel;
 import io.rong.models.group.ListGagGroupUserResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HttpUtil;
-import org.apache.solr.client.solrj.response.GroupResponse;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
@@ -41,17 +40,17 @@ public class Gag {
      *
      * @param group:群组信息。（必传）
      * @param munite :禁言时间
-     * @return ResponseResult
+     * @return Result
      **/
-    public ResponseResult add(GroupModel group, String munite) throws Exception {
+    public Result add(GroupModel group, String munite) throws Exception {
         String message = CommonUtil.checkFiled(group,PATH,CheckMethod.ADD);
         if(null != message){
-            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+            return (Result)GsonUtil.fromJson(message,Result.class);
         }
 
         message = CommonUtil.checkParam("munite",munite,PATH,CheckMethod.ADD);
         if(null != message){
-            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+            return (Result)GsonUtil.fromJson(message,Result.class);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -69,7 +68,7 @@ public class Gag {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/user/gag/add.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), ResponseResult.class);
+        return (Result) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), Result.class);
     }
 
     /**
@@ -102,15 +101,15 @@ public class Gag {
      *
      * @param  group:群组（必传）
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public ResponseResult remove(GroupModel group) throws Exception {
+    public Result remove(GroupModel group) throws Exception {
         //需要校验的字段
         String message = CommonUtil.checkFiled(group,PATH, CheckMethod.REMOVE);
         System.out.println("message:"+message);
 
         if(null != message){
-            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+            return (Result)GsonUtil.fromJson(message,Result.class);
         }
 
 
@@ -130,6 +129,6 @@ public class Gag {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/user/gag/rollback.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), ResponseResult.class);
+        return (Result) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), Result.class);
     }
 }

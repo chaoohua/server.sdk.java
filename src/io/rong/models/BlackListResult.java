@@ -2,14 +2,14 @@ package io.rong.models;
 
 import io.rong.util.GsonUtil;
 
-public class BlackList extends BaseModel{
+public class BlackListResult extends Result {
     // 黑名单用户列表。
     String[] users;
 
-    public BlackList(Integer code, String errorMessage) {
+    public BlackListResult(Integer code, String errorMessage) {
         super(code, errorMessage);
     }
-    public BlackList(Integer code, String[] users, String errorMessage) {
+    public BlackListResult(Integer code, String[] users, String errorMessage) {
         super(code, errorMessage);
         this.code = code;
         this.users = users;
@@ -34,7 +34,7 @@ public class BlackList extends BaseModel{
 
     @Override
     public String toString() {
-        return GsonUtil.toJson(this, BlackList.class);
+        return GsonUtil.toJson(this, BlackListResult.class);
     }
 
 }

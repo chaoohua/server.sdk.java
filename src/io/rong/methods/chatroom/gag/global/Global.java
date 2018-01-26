@@ -3,7 +3,7 @@ package io.rong.methods.chatroom.gag.global;
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
-import io.rong.models.CodeSuccessResult;
+import io.rong.models.ResponseResult;
 import io.rong.models.CommonConstrants;
 import io.rong.models.chatroom.ListGagChatroomUserResult;
 import io.rong.util.CommonUtil;
@@ -43,17 +43,17 @@ public class Global {
      * @param  userId:用户 Id。（必传）
      * @param  minute:禁言时长，以分钟为单位，最大值为43200分钟。（必传）
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult add(String[] userId, String minute) throws Exception {
+    public ResponseResult add(String[] userId, String minute) throws Exception {
 
         String message = CommonUtil.checkParam("members",userId,PATH,CheckMethod.ADD);
         if(null != message){
-            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
         message = CommonUtil.checkParam("minute",minute,PATH, CheckMethod.ADD);
         if(null != message){
-            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -67,7 +67,7 @@ public class Global {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/ban/add.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 
     /**
@@ -88,15 +88,15 @@ public class Global {
      *
      * @param  userId:用户 Id。（必传）
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult remove(String userId) throws Exception {
+    public ResponseResult remove(String userId) throws Exception {
         if (userId == null) {
             throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/chatroom/user/ban/remove","Paramer 'userId' is required");
         }
         String message = CommonUtil.checkParam("userId",userId,PATH,CheckMethod.REMOVE);
         if(null != message){
-            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -109,7 +109,7 @@ public class Global {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/ban/remove.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 }
 

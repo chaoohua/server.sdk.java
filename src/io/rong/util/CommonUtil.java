@@ -62,7 +62,7 @@ public class CommonUtil {
             }
             String[] fileds = {};
             String checkObjectKey = "";
-            Map<String,String[]> checkInfo = getCheckInfo(path,method);
+            Map<String,String[]> checkInfo = getCheckInfo(apiPath,method);
             for (Map.Entry<String,String[]> entry : checkInfo.entrySet()) {
                 fileds = entry.getValue();
                 checkObjectKey = entry.getKey();

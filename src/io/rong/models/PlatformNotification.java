@@ -7,9 +7,15 @@ import java.util.Map;
  * 设备中的推送内容。（非必传）
  */
 public class PlatformNotification {
-	// 默认推送消息内容，如填写了 ios 或 android 下的 alert 时，则推送内容以对应平台系统的 alert 为准。（必传）
+	/**
+	 * 默认推送消息内容，如填写了 ios 或 android 下的 alert 时，则推送内容以对应平台系统的 alert 为准。（必传）
+	 *
+	 */
 	String alert;
-	// ios 或 android 不同平台下的附加信息，如果开发者自己需要，可以自己在 App 端进行解析。（非必传）
+	/**
+	 * ios 或 android 不同平台下的附加信息，如果开发者自己需要，可以自己在 App 端进行解析。（非必传）
+	 *
+	 */
 	Map<String,String> extras;
 	
 	public PlatformNotification(String alert, Map<String,String> extras) {

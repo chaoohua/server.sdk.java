@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class TemplateMessage {
 	// 发送人用户 Id。（必传）
-	String fromUserId;
+	String senderUserId;
 	// 接收用户 Id，提供多个本参数可以实现向多人发送消息，上限为 1000 人。（必传）
-	String[] toUserId;
+	String[] targetIds;
 	// 发送消息内容，内容中定义标识通过 values 中设置的标识位内容进行替换，参考融云消息类型表.示例说明；如果 objectName 为自定义消息类型，该参数可自定义格式。（必传）
 	String content;
 	// 消息内容中，标识位对应内容。（必传）
@@ -24,10 +24,11 @@ public class TemplateMessage {
 	String[] pushData;
 	// 是否过滤发送人黑名单列表，0 为不过滤、 1 为过滤，默认为 0 不过滤。（可选）
 	Integer verifyBlacklist;
-	
-	public TemplateMessage(String fromUserId, String[] toUserId, String content, List<Map<String, String>> values, String objectName, String[] pushContent, String[] pushData, Integer verifyBlacklist) {
-		this.fromUserId = fromUserId;
-		this.toUserId = toUserId;
+
+	public TemplateMessage(String senderUserId, String[] targetIds, String content, List<Map<String, String>> values, String objectName,
+						   String[] pushContent, String[] pushData, Integer verifyBlacklist) {
+		this.senderUserId = senderUserId;
+		this.targetIds = targetIds;
 		this.content = content;
 		this.values = values;
 		this.objectName = objectName;
@@ -35,41 +36,30 @@ public class TemplateMessage {
 		this.pushData = pushData;
 		this.verifyBlacklist = verifyBlacklist;
 	}
-	
+
 	/**
-	 * 设置fromUserId
-	 *
-	 */	
-	public void setFromUserId(String fromUserId) {
-		this.fromUserId = fromUserId;
-	}
-	
-	/**
-	 * 获取fromUserId
+	 * 获取SenderUserId
 	 *
 	 * @return String
 	 */
-	public String getFromUserId() {
-		return fromUserId;
+	public String getSenderUserId() {
+		return this.senderUserId;
 	}
-	
 	/**
-	 * 设置toUserId
+	 * 设置SenderUserId
 	 *
-	 */	
-	public void setToUserId(String[] toUserId) {
-		this.toUserId = toUserId;
-	}
-	
-	/**
-	 * 获取toUserId
-	 *
-	 * @return String[]
 	 */
-	public String[] getToUserId() {
-		return toUserId;
+	public void setSenderUserId(String senderUserId) {
+		this.senderUserId = senderUserId;
 	}
-	
+
+	public String[] getTargetIds() {
+		return this.targetIds;
+	}
+
+	public void setTargetIds(String[] targetIds) {
+		this.targetIds = targetIds;
+	}
 	/**
 	 * 设置content
 	 *

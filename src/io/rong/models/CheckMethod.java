@@ -25,7 +25,7 @@ public class CheckMethod {
     public static final String BATCH_DELETE = "batchDelete";
     public static final String GET_IMAGE = "getImage";
     public static final String VERIFY = "verify";
-    public static final String SEND = "SEND";
+    public static final String SEND = "send";
     public static final String GET_TOKEN = "getToken";
     public static final String CHECK = "check";
     public static final String QUERY = "query";

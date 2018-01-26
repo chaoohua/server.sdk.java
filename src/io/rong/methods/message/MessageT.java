@@ -1,14 +1,12 @@
 package io.rong.methods.message;
 
 import io.rong.RongCloud;
-import io.rong.exception.ParamException;
-import io.rong.models.CodeSuccessResult;
+import io.rong.models.ResponseResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HttpUtil;
 import io.rong.models.message.Message;
 import java.net.HttpURLConnection;
-import java.net.URLEncoder;
 
 public class MessageT {
     private static final String UTF8 = "UTF-8";
@@ -37,9 +35,9 @@ public class MessageT {
      *
      * @param type
      * @param message
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult send(Integer type,Message message) throws Exception {
+    public ResponseResult send(Integer type, Message message) throws Exception {
         String url = "";
         switch (type) {
             case 1:
@@ -122,6 +120,6 @@ public class MessageT {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, url, "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 }

@@ -1,14 +1,12 @@
 package io.rong.methods.push;
 
 import io.rong.RongCloud;
-import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
-import io.rong.models.CodeSuccessResult;
+import io.rong.models.ResponseResult;
 import io.rong.models.PushMessage;
 import io.rong.models.UserTag;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
-import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
@@ -44,18 +42,18 @@ public class Push {
 	 * 
 	 * @param  userTag:用户标签。
 	 *
-	 * @return CodeSuccessResult
+	 * @return ResponseResult
 	 **/
-	public CodeSuccessResult setUserTag(UserTag userTag) throws Exception {
+	public ResponseResult setUserTag(UserTag userTag) throws Exception {
 		String message = CommonUtil.checkFiled(userTag,PATH, CheckMethod.SET_USER_TAG);
 		if(null != message){
-			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 		
 	    HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/user/tag/set.json", "application/json");
 	    HttpUtil.setBodyParameter(userTag.toString(), conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH, CheckMethod.SET_TAG,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH, CheckMethod.SET_TAG,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 	
 	/**
@@ -63,18 +61,18 @@ public class Push {
 	 * 
 	 * @param  pushMessage:json数据
 	 *
-	 * @return CodeSuccessResult
+	 * @return ResponseResult
 	 **/
-	public CodeSuccessResult send(PushMessage pushMessage) throws Exception {
+	public ResponseResult send(PushMessage pushMessage) throws Exception {
 		String message = CommonUtil.checkFiled(pushMessage,PATH, CheckMethod.SEND);
 		if(null != message){
-			return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 		
 	    HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/push.json", "application/json");
 	    HttpUtil.setBodyParameter(pushMessage.toString(), conn);
 	    
-	    return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.SEND,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.SEND,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 
 	 

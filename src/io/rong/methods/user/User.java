@@ -81,13 +81,13 @@ public class User {
 	 *
 	 * @param user 用户信息 id name(必传)
 	 *
-	 * @return CodeSuccessResult
+	 * @return ResponseResult
 	 **/
-	public ResponseResult refresh(UserModel user) throws Exception {
+	public Result refresh(UserModel user) throws Exception {
 		//需要校验的字段
 		String message = CommonUtil.checkFiled(user,PATH,CheckMethod.REFRESH);
 		if(null != message){
-			return (ResponseResult)GsonUtil.fromJson(message,TokenResult.class);
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 
 		StringBuilder sb = new StringBuilder();

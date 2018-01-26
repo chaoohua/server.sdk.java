@@ -5,6 +5,7 @@ import io.rong.messages.BaseMessage;
 public class GroupMessage {
     public String senderUserId;
     public String[] targetIds;
+    public String objectName;
     public BaseMessage content;
     public String pushContent;
     public String pushData;
@@ -13,6 +14,7 @@ public class GroupMessage {
     public Integer isIncludeSender;
     public Integer isMentioned;
     private Integer contentAvailable;
+
     /**
      * @param  senderUserId:发送人用户 Id 。（必传）
      * @param  targetIds:接收群Id，提供多个本参数可以实现向多群发送消息，最多不超过 3 个群组。（必传）
@@ -24,10 +26,11 @@ public class GroupMessage {
      * @param  isIncludeSender:发送用户自已是否接收消息，0 表示为不接收，1 表示为接收，默认为 0 不接收。（可选）
      *
      * */
-    public GroupMessage(String senderUserId, String[] targetIds, BaseMessage content, String pushContent, String pushData,
+    public GroupMessage(String senderUserId, String[] targetIds, String objectName, BaseMessage content, String pushContent, String pushData,
                         Integer isPersisted, Integer isCounted, Integer isIncludeSender, Integer isMentioned, Integer contentAvailable) {
         this.senderUserId = senderUserId;
         this.targetIds = targetIds;
+        this.objectName = objectName;
         this.content = content;
         this.pushContent = pushContent;
         this.pushData = pushData;
@@ -37,6 +40,7 @@ public class GroupMessage {
         this.isMentioned = isMentioned;
         this.contentAvailable = contentAvailable;
     }
+
 
     public String getSenderUserId() {
         return this.senderUserId;
@@ -116,5 +120,13 @@ public class GroupMessage {
 
     public void setContentAvailable(Integer contentAvailable) {
         this.contentAvailable = contentAvailable;
+    }
+
+    public String getObjectName() {
+        return this.objectName;
+    }
+
+    public void setObjectName(String objectName) {
+        this.objectName = objectName;
     }
 }

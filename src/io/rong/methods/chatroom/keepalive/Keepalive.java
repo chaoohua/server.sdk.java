@@ -1,13 +1,10 @@
 package io.rong.methods.chatroom.keepalive;
 
 import io.rong.RongCloud;
-import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
-import io.rong.models.CodeSuccessResult;
-import io.rong.models.CommonConstrants;
+import io.rong.models.ResponseResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
-import io.rong.util.HostType;
 import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
@@ -41,13 +38,13 @@ public class Keepalive {
      *
      * @param  chatroomId:低优先级的消息类型，每次最多提交 5 个，设置的消息类型最多不超过 20 个。（必传）
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult add(String chatroomId) throws Exception {
+    public ResponseResult add(String chatroomId) throws Exception {
 
         String message = CommonUtil.checkParam("id",chatroomId,PATH, CheckMethod.ADD);
         if(null != message){
-            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
         StringBuilder sb = new StringBuilder();
         sb.append("&chatroomId=").append(URLEncoder.encode(chatroomId, UTF8));
@@ -59,19 +56,19 @@ public class Keepalive {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/keepalive/add.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
     /**
      * 删除聊天室保活方法
      *
      * @param  chatroomId:低优先级的消息类型，每次最多提交 5 个，设置的消息类型最多不超过 20 个。（必传）
      *remove
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult remove(String chatroomId) throws Exception {
+    public ResponseResult remove(String chatroomId) throws Exception {
         String message = CommonUtil.checkParam("id",chatroomId,PATH,CheckMethod.REMOVE);
         if(null != message){
-            return (CodeSuccessResult)GsonUtil.fromJson(message,CodeSuccessResult.class);
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -84,19 +81,19 @@ public class Keepalive {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/keepalive/remove.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), ResponseResult.class);
 
     }
     /**
      * 获取聊天室保活
      *
      *
-     * @return CodeSuccessResult
+     * @return ResponseResult
      **/
-    public CodeSuccessResult get() throws Exception {
+    public ResponseResult get() throws Exception {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/keepalive/query.json", "application/x-www-form-urlencoded");
         //HttpUtil.setBodyParameter(body, conn);
 
-        return (CodeSuccessResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), CodeSuccessResult.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 }
