@@ -1,0 +1,23 @@
+{
+  "user": {
+    "id": "userId",
+    "name": "userName",
+    "portrait": "userPortrait",
+    "minute": "minute",
+    "blackIds": "blackIds"
+  },
+  "chatroom": {
+    "id": "chatromId01",
+    "name": "chatroomName",
+    "member": ["memberId1","memberId2"],
+    "minute": "minute",
+    "count": 10,
+    "order": 1
+  },
+  "group":{
+    "memberIds": ["aFo990k","aFo991k"],
+    "id": "10001",
+    "name": "TestGroup",
+    "minute": "minute"
+  }
+}
