@@ -2,9 +2,9 @@ package io.rong.methods.push;
 
 import io.rong.RongCloud;
 import io.rong.models.CheckMethod;
+import io.rong.models.push.PushMessage;
+import io.rong.models.push.UserTag;
 import io.rong.models.response.ResponseResult;
-import io.rong.models.PushMessage;
-import io.rong.models.UserTag;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HttpUtil;

@@ -1,9 +1,6 @@
 package io.rong.models.message;
 
 import io.rong.messages.BaseMessage;
-import io.rong.models.MsgObj;
-import io.rong.models.Notification;
-import io.rong.models.TagObj;
 
 public class SystemMessage {
 

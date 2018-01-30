@@ -12,6 +12,7 @@ import io.rong.models.chatroom.*;
 import io.rong.models.chatroom.ChatRoom;
 import io.rong.models.response.ChatroomQueryResult;
 import io.rong.models.response.ChatroomUserQueryResult;
+import io.rong.models.response.CheckChatRoomUserResult;
 import io.rong.models.response.ResponseResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -234,10 +235,10 @@ public class Chatroom {
 	 *
 	 * @return ResponseResult
 	 **/
-	public CheckChatRoomUser isExist(Member member) throws Exception {
+	public CheckChatRoomUserResult isExist(Member member) throws Exception {
 		String message = CommonUtil.checkFiled(member,PATH,CheckMethod.ISEXIST);
 		if(null != message){
-			return (CheckChatRoomUser)GsonUtil.fromJson(message,ResponseResult.class);
+			return (CheckChatRoomUserResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -251,6 +252,6 @@ public class Chatroom {
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/exist.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 
-		return (CheckChatRoomUser) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ISEXIST,HttpUtil.returnResult(conn)), CheckChatRoomUser.class);
+		return (CheckChatRoomUserResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ISEXIST,HttpUtil.returnResult(conn)), CheckChatRoomUserResult.class);
 	}
 }

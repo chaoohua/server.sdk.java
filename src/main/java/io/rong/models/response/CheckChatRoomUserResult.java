@@ -1,10 +1,10 @@
-package io.rong.models.chatroom;
+package io.rong.models.response;
 
-public class CheckChatRoomUser {
+public class CheckChatRoomUserResult {
     public String code;
     public Boolean isInChrm;
 
-    public CheckChatRoomUser(String code, Boolean isInChrm) {
+    public CheckChatRoomUserResult(String code, Boolean isInChrm) {
         this.code = code;
         this.isInChrm = isInChrm;
     }

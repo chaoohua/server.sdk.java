@@ -1,4 +1,4 @@
-package io.rong.models;
+package io.rong.models.push;
 
 import io.rong.util.GsonUtil;
 
@@ -12,21 +12,21 @@ public class Notification {
 	PlatformNotification ios;
 	// 设置 Android 平台下的推送及附加信息。
 	PlatformNotification android;
-	
+
 	public Notification(String alert, PlatformNotification ios, PlatformNotification android) {
 		this.alert = alert;
 		this.ios = ios;
 		this.android = android;
 	}
-	
+
 	/**
 	 * 设置alert
 	 *
-	 */	
+	 */
 	public void setAlert(String alert) {
 		this.alert = alert;
 	}
-	
+
 	/**
 	 * 获取alert
 	 *
@@ -35,15 +35,15 @@ public class Notification {
 	public String getAlert() {
 		return alert;
 	}
-	
+
 	/**
 	 * 设置ios
 	 *
-	 */	
+	 */
 	public void setIos(PlatformNotification ios) {
 		this.ios = ios;
 	}
-	
+
 	/**
 	 * 获取ios
 	 *
@@ -52,11 +52,11 @@ public class Notification {
 	public PlatformNotification getIos() {
 		return ios;
 	}
-	
+
 	/**
 	 * 设置android
 	 *
-	 */	
+	 */
 	public void setAndroid(PlatformNotification android) {
 		this.android = android;
 	}

@@ -147,8 +147,8 @@ public class ChatroomExample {
      * */
     public static void testIsExist(RongCloud rongCloud) throws Exception {
 
-        CheckChatRoomUser checkChatroomUserResult = rongCloud.chatroom.isExist(new Member("userId1", "","chatroomId"));
-        System.out.println("checkChatroomUserResult:  " + checkChatroomUserResult.isInChrm);
+        CheckChatRoomUserResult result = rongCloud.chatroom.isExist(new Member("userId1", "","chatroomId"));
+        System.out.println("checkChatroomUserResult:  " + result.isInChrm);
     }
 
       /**

@@ -2,9 +2,9 @@ package io.rong.example.push;
 
 import io.rong.RongCloud;
 import io.rong.example.Example;
+import io.rong.models.push.PushMessage;
+import io.rong.models.push.UserTag;
 import io.rong.models.response.ResponseResult;
-import io.rong.models.PushMessage;
-import io.rong.models.UserTag;
 import io.rong.util.GsonUtil;
 import org.junit.Before;
 import org.junit.Test;

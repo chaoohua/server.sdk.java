@@ -1,4 +1,4 @@
-package io.rong.models;
+package io.rong.models.push;
 
 import io.rong.util.GsonUtil;
 

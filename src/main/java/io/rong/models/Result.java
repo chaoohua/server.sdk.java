@@ -3,9 +3,15 @@ package io.rong.models;
  *  基础 http 成功返回结果
  */
 public abstract class Result {
-    // 返回码，200 为正常。
+    /**
+     * 返回码，200 为正常。
+     *
+     */
     public Integer code;
-    // 错误信息。
+    /**
+     * 错误信息。
+     *
+     */
     public String errorMessage;
 
     public Result(Integer code, String errorMessage) {
@@ -49,5 +55,6 @@ public abstract class Result {
         return errorMessage;
     }
 
+    @Override
     public abstract String toString();
 }
