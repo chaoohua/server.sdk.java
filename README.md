@@ -11,7 +11,7 @@ Rong Cloud Server SDK in Java.
 
 ## sdk封装接口
 
-### User
+### [User](src/main/java/io/rong/methods/user)
 - getToken  获取 Token 
 - refresh  刷新用户信息
   #### black
@@ -25,7 +25,7 @@ Rong Cloud Server SDK in Java.
   #### online-status
   - check 检查用户在线状态 
 
-### Message
+### [Message](src/main/java/io/rong/methods/message)
 - 消息发送
   #### private
    - publish  发送单聊消息
@@ -45,13 +45,13 @@ Rong Cloud Server SDK in Java.
     - get  消息历史记录下载地址获取 消息历史记录下载地址获取。获取 APP 内指定某天某小时内的所有会话消息记录的下载地址
     - remove  消息历史记录删除
 
-### SensitiveWord
+### [SensitiveWord](src/main/java/io/rong/methods/sensitive)
 - add  添加敏感词
 - delete  移除敏感词
 - batchDelete 批量移除敏感词
 - getList  查询敏感词列表
 
-### Group
+### [Group](src/main/java/io/rong/methods/group)
 - create  创建群组
 - sync  同步用户所属群组
 - refresh  刷新群组信息
@@ -65,7 +65,7 @@ Rong Cloud Server SDK in Java.
   - remove  移除禁言群成员
 
 
-### Chatroom
+### [Chatroom](src/main/java/io/rong/methods/chatroom)
 - create  创建聊天室
 - join  加入聊天室
 - query  查询聊天室信息
@@ -99,11 +99,11 @@ Rong Cloud Server SDK in Java.
     - add 添加保活聊天室方法
     - remove 移除保活聊天室方法
     - getList 查询保活聊天室方法
-### Push
+### [Push](src/main/java/io/rong/methods/push)
 - setUserTag  添加 Push 标签
 - send  广播消息
 
-### SMS
+### [SMS](src/main/java/io/rong/methods/sms)
 - 验证码和通知类短信
   ##### Code
   - getImage  获取图片验证码
