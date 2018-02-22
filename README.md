@@ -3,16 +3,13 @@ server-sdk-java
 
 Rong Cloud Server SDK in Java.
 
-# 版本说明
-为方便开发者的接入使用，更好的对融云 Server SDK 进行维护管理，融云 Server SDK 2.0 统一规范了命名及调用方式，结构更加清晰。老版本的 Server SDK 已经切入v1分支，仍然可以使用，但不会再做新的功能更新。
-如果您是新接入的开发者，建议您使用 Server SDK 2.0 版本。 对已集成使用老版本 Server SDK 的开发者，不能直接升级使用，强烈建议您重新测试后使用
 # API文档
 - 官方文档(http://www.rongcloud.cn/docs/server.html)
 
 # 使用教程
-* 请参考 Example 里面提供了所有的 API 接口的调用用例。
+* 请参考 [Example](./src/main/java/io/rong/example/chatroom/ChatroomExample.java) 里面提供了所有的 API 接口的调用用例。
 
-## 高级API接口
+## sdk封装接口
 
 ### User
 - getToken  获取 Token 
@@ -114,3 +111,6 @@ Rong Cloud Server SDK in Java.
   - verify  验证码验证
   ##### Notify
   - send  发送通知类短信
+# 版本说明
+为方便开发者的接入使用，更好的对融云 Server SDK 进行维护管理，融云 Server SDK 2.0 统一规范了命名及调用方式，结构更加清晰。老版本的 Server SDK 已经切入v1分支，仍然可以使用，但不会再做新的功能更新。
+如果您是新接入的开发者，建议您使用 Server SDK 2.0 版本。 对已集成使用老版本 Server SDK 的开发者，不能直接升级使用，强烈建议您重新测试后使用
