@@ -4,6 +4,10 @@ public class ConversationModel {
     public String type;
     public String userId;
     public String targetId;
+
+    public ConversationModel() {
+    }
+
     /**
      * 构造函数。
      *
@@ -22,23 +26,26 @@ public class ConversationModel {
         return this.type;
     }
 
-    public void setType(String type) {
+    public ConversationModel setType(String type) {
         this.type = type;
+        return this;
     }
 
     public String getUserId() {
         return this.userId;
     }
 
-    public void setUserId(String userId) {
+    public ConversationModel setUserId(String userId) {
         this.userId = userId;
+        return this;
     }
 
     public String getTargetId() {
         return this.targetId;
     }
 
-    public void setTargetId(String targetId) {
+    public ConversationModel setTargetId(String targetId) {
         this.targetId = targetId;
+        return this;
     }
 }

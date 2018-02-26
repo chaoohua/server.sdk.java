@@ -15,6 +15,9 @@ public class GroupMessage {
     public Integer isMentioned;
     private Integer contentAvailable;
 
+    public GroupMessage() {
+    }
+
     /**
      * @param  senderUserId:发送人用户 Id 。（必传）
      * @param  targetIds:接收群Id，提供多个本参数可以实现向多群发送消息，最多不超过 3 个群组。（必传）
@@ -46,87 +49,98 @@ public class GroupMessage {
         return this.senderUserId;
     }
 
-    public void setSenderUserId(String senderUserId) {
+    public GroupMessage setSenderUserId(String senderUserId) {
         this.senderUserId = senderUserId;
+        return this;
     }
 
     public String[] getTargetIds() {
         return this.targetIds;
     }
 
-    public void setTargetIds(String[] targetIds) {
+    public GroupMessage setTargetIds(String[] targetIds) {
         this.targetIds = targetIds;
+        return this;
     }
 
     public BaseMessage getContent() {
         return this.content;
     }
 
-    public void setContent(BaseMessage content) {
+    public GroupMessage setContent(BaseMessage content) {
         this.content = content;
+        return this;
     }
 
     public String getPushContent() {
         return this.pushContent;
     }
 
-    public void setPushContent(String pushContent) {
+    public GroupMessage setPushContent(String pushContent) {
         this.pushContent = pushContent;
+        return this;
     }
 
     public String getPushData() {
         return this.pushData;
     }
 
-    public void setPushData(String pushData) {
+    public GroupMessage setPushData(String pushData) {
         this.pushData = pushData;
+        return this;
     }
 
     public Integer getIsPersisted() {
         return this.isPersisted;
     }
 
-    public void setIsPersisted(Integer isPersisted) {
+    public GroupMessage setIsPersisted(Integer isPersisted) {
         this.isPersisted = isPersisted;
+        return this;
     }
 
     public Integer getIsCounted() {
         return this.isCounted;
     }
 
-    public void setIsCounted(Integer isCounted) {
+    public GroupMessage setIsCounted(Integer isCounted) {
         this.isCounted = isCounted;
+        return this;
     }
 
     public Integer getIsIncludeSender() {
         return this.isIncludeSender;
     }
 
-    public void setIsIncludeSender(Integer isIncludeSender) {
+    public GroupMessage setIsIncludeSender(Integer isIncludeSender) {
         this.isIncludeSender = isIncludeSender;
+        return this;
     }
 
     public Integer getIsMentioned() {
         return this.isMentioned;
     }
 
-    public void setIsMentioned(Integer isMentioned) {
+    public GroupMessage setIsMentioned(Integer isMentioned) {
         this.isMentioned = isMentioned;
+        return this;
     }
 
     public Integer getContentAvailable() {
         return this.contentAvailable;
     }
 
-    public void setContentAvailable(Integer contentAvailable) {
+    public GroupMessage setContentAvailable(Integer contentAvailable) {
         this.contentAvailable = contentAvailable;
+        return this;
     }
 
     public String getObjectName() {
         return this.objectName;
     }
 
-    public void setObjectName(String objectName) {
+    public GroupMessage setObjectName(String objectName) {
         this.objectName = objectName;
+        return this;
     }
 }

@@ -15,9 +15,14 @@ public class SensitiveExample {
         String appSecret = "secret";//替换成匹配上面key的secret
 
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);*/
-        String appKey = "e0x9wycfx7flq";
-        String appSecret = "STCevzDS6Xy18n";
-        String api = "http://192.168.155.13:9200";
+        String appKey = "z3v5yqkbvy9f0";
+        String appSecret = "plhr2PA386a";
+
+        //pp 租车
+       // String appKey = "pkfcgjstp23u8";
+        //String appSecret = "kfsV9pcmPz";
+        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+        //String api = "http://192.168.155.13:9200";
 /*
         String appKey = "8luwapkvucoil";
         String appSecret = "y0icysjl4h3LWz";
@@ -25,7 +30,7 @@ public class SensitiveExample {
 
         //RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
 
-        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret, api);
+       // RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret, api);
 
 
 

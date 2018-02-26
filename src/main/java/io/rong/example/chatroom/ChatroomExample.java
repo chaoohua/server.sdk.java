@@ -17,8 +17,8 @@ public class ChatroomExample {
         //RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         /*String appKey = "6tnym1br6cew7";
         String appSecret = "cxf9v1xazAa";*/
-        String appKey = "uwd1c0sxdyvm1";
-        String appSecret = "6lPjEsAtg6db3";
+        String appKey = "z3v5yqkbvy9f0";
+        String appSecret = "plhr2PA386a";
 
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         /*String appKey = "e0x9wycfx7flq";
@@ -114,10 +114,13 @@ public class ChatroomExample {
      */
     public static void testCreateChatRoom(RongCloud rongCloud) throws Exception {
 
-        ChatRoom[] chatroomCreateChatRoomInfo = {new ChatRoom("chatroomId1", "chatroomName1"), new ChatRoom("chatroomId2", "chatroomName2"), new ChatRoom("chatroomId3", "chatroomName3")};
+        ChatRoom[] chatroomCreateChatRoomInfo = {
+                new ChatRoom().setId("chatroomId1").setName("chatroomName1"),
+                new ChatRoom().setId("chatroomId2").setName("chatroomName2")
+        };
 
-        ResponseResult chatroomCreateResult = rongCloud.chatroom.create(chatroomCreateChatRoomInfo);
-        System.out.println("create:  " + chatroomCreateResult.toString());
+        ResponseResult result = rongCloud.chatroom.create(chatroomCreateChatRoomInfo);
+        System.out.println("create:  " + result.toString());
 
     }
 
@@ -125,7 +128,7 @@ public class ChatroomExample {
      * 查询聊天室信息方法
      */
     public static void testQueryChatroomInfo(RongCloud rongCloud) throws Exception {
-        String[] chatroomQueryChatroomId = {"de0b2058751896848b67360332c7260c"};
+        String[] chatroomQueryChatroomId = {"d7ec7a8b8d8546c98b0973417209a548"};
 
         ChatroomQueryResult chatroomQueryResult = rongCloud.chatroom.query(chatroomQueryChatroomId);
 
@@ -136,7 +139,9 @@ public class ChatroomExample {
      * */
     public static void testGetChatroomMembers(RongCloud rongCloud) throws Exception {
 
-        chatRoom = new ChatRoom("chatroomId1", 500, 1);
+        chatRoom = new ChatRoom().setId("d7ec7a8b8d8546c98b0973417209a548")
+                .setCount(500)
+                .setOrder(1);
 
         ChatroomUserQueryResult chatroomQueryUserResult = rongCloud.chatroom.getMembers(chatRoom);
         System.out.println("queryUser:  " + chatroomQueryUserResult.toString());
@@ -147,7 +152,11 @@ public class ChatroomExample {
      * */
     public static void testIsExist(RongCloud rongCloud) throws Exception {
 
-        CheckChatRoomUserResult result = rongCloud.chatroom.isExist(new Member("userId1", "","chatroomId"));
+       Member member = new Member().setId("137385")
+               .setChatroomId("d7ec7a8b8d8546c98b0973417209a548")
+               .setTime("8888");
+
+        CheckChatRoomUserResult result = rongCloud.chatroom.isExist(member);
         System.out.println("checkChatroomUserResult:  " + result.isInChrm);
     }
 
@@ -157,9 +166,9 @@ public class ChatroomExample {
      */
     public static void testStopDistributionMessage(RongCloud rongCloud) throws Exception {
 
-        ResponseResult chatroomStopDistributionMessageResult = rongCloud.chatroom.stopDistribution("chatroomId1");
+        ResponseResult result = rongCloud.chatroom.stopDistribution("chatroomId1");
 
-        System.out.println("stopDistributionMessage:  " + chatroomStopDistributionMessageResult.toString());
+        System.out.println("stopDistributionMessage:  " + result.toString());
 
     }
 
@@ -168,8 +177,8 @@ public class ChatroomExample {
      */
     public static void testResumeDistributionMessage(RongCloud rongCloud) throws Exception {
 
-        ResponseResult chatroomResumeDistributionMessageResult = rongCloud.chatroom.resumeDistribution("chatroomId1");
-        System.out.println("resumeDistributionMessage:  " + chatroomResumeDistributionMessageResult.toString());
+        ResponseResult result = rongCloud.chatroom.resumeDistribution("chatroomId1");
+        System.out.println("resumeDistributionMessage:  " + result.toString());
 
     }
 
@@ -179,10 +188,15 @@ public class ChatroomExample {
      */
     public static void testAddGag(RongCloud rongCloud) throws Exception {
 
-        Member[] members = {new Member("userId1", ""), new Member("userId2", "")};
-        ChatRoom chatRoom = new ChatRoom("chatroomId1", "chatroomName1", members);
-        ResponseResult chatroomAddGagUserResult = rongCloud.chatroom.gag.members.add(chatRoom, 1);
-        System.out.println("addGagUser:  " + chatroomAddGagUserResult.toString());
+        Member[] members = {
+                new Member().setId("userId1").setTime(""),
+                new Member().setId("userId2").setTime("")
+        };
+        ChatRoom chatRoom = new ChatRoom().setId("chatroomId1")
+                .setName("chatroomName1")
+                .setMembers(members);
+        ResponseResult result = rongCloud.chatroom.gag.members.add(chatRoom, 1);
+        System.out.println("addGagUser:  " + result.toString());
     }
 
     /**
@@ -190,7 +204,7 @@ public class ChatroomExample {
      */
     public static void testGetGagMembersList(RongCloud rongCloud) throws Exception {
 
-        ListGagChatroomUserResult chatroomListGagUserResult = rongCloud.chatroom.gag.members.getList("de0b2058751896848b67360332c7260c");
+        ListGagChatroomUserResult chatroomListGagUserResult = rongCloud.chatroom.gag.members.getList("d7ec7a8b8d8546c98b0973417209a548");
         System.out.println("ListGagUser:  " + chatroomListGagUserResult.toString());
     }
 
@@ -198,10 +212,15 @@ public class ChatroomExample {
      * 移除禁言聊天室成员
      */
     public static void testRemoveMembersGag(RongCloud rongCloud) throws Exception {
-        Member[] members = {new Member("userId1", ""), new Member("userId2", "")};
-        ChatRoom chatRoom = new ChatRoom("chatroomId1", "chatroomName1", members);
-        ResponseResult chatroomRollbackGagUserResult = rongCloud.chatroom.gag.members.remove(chatRoom);
-        System.out.println("rollbackGagUser:  " + chatroomRollbackGagUserResult.toString());
+        Member[] members = {
+                new Member().setId("userId1").setTime(""),
+                new Member().setId("userId2").setTime("")
+        };
+        ChatRoom chatRoom = new ChatRoom().setId("chatroomId1")
+                .setName("chatroomName1")
+                .setMembers(members);
+        ResponseResult result = rongCloud.chatroom.gag.members.remove(chatRoom);
+        System.out.println("rollbackGagUser:  " + result.toString());
 
     }
 
@@ -209,8 +228,8 @@ public class ChatroomExample {
      * 添加封禁聊天室成员方法
      */
     public static void testAddChatroomBlock(RongCloud rongCloud) throws Exception {
-        ResponseResult chatroomAddBlockUserResult = rongCloud.chatroom.block.add(chatRoom, 1);
-        System.out.println("addBlockUser:  " + chatroomAddBlockUserResult.toString());
+        ResponseResult result = rongCloud.chatroom.block.add(chatRoom, 1);
+        System.out.println("addBlockUser:  " + result.toString());
 
     }
 
@@ -218,8 +237,8 @@ public class ChatroomExample {
      * 移除封禁聊天室成员方法
      */
     public static void testRemoveChatroomBlock(RongCloud rongCloud) throws Exception {
-        ResponseResult chatroomRollbackBlockUserResult = rongCloud.chatroom.block.remove(chatRoom);
-        System.out.println("rollbackBlockUser:  " + chatroomRollbackBlockUserResult.toString());
+        ResponseResult result = rongCloud.chatroom.block.remove(chatRoom);
+        System.out.println("rollbackBlockUser:  " + result.toString());
 
     }
     /**
@@ -227,8 +246,8 @@ public class ChatroomExample {
      */
     public static void testGetChatroomBlockList(RongCloud rongCloud) throws Exception {
         //
-        ListBlockChatroomUserResult chatroomGetListBlockUserResult = rongCloud.chatroom.block.getList("chatroomId1");
-        System.out.println("getListBlockUser:  " + chatroomGetListBlockUserResult.toString());
+        ListBlockChatroomUserResult result = rongCloud.chatroom.block.getList("chatroomId1");
+        System.out.println("getListBlockUser:  " + result.toString());
 
     }
 
@@ -239,8 +258,8 @@ public class ChatroomExample {
 
 
         String[] chatroomAddPriorityObjectName = {"RC:VcMsg", "RC:ImgTextMsg", "RC:ImgMsg"};
-        ResponseResult chatroomAddPriorityResult = rongCloud.chatroom.priority.add(chatroomAddPriorityObjectName);
-        System.out.println("addPriority:  " + chatroomAddPriorityResult.toString());
+        ResponseResult result = rongCloud.chatroom.priority.add(chatroomAddPriorityObjectName);
+        System.out.println("addPriority:  " + result.toString());
 
 
     }
@@ -250,7 +269,7 @@ public class ChatroomExample {
     public static void testAddChatroomWhiteList(RongCloud rongCloud) throws Exception {
 
         String[] chatroomAddWhiteListUserUserId = {"userId1", "userId2", "userId3", "userId4", "userId5"};
-        ResponseResult chatroomAddWhiteListUserResult = rongCloud.chatroom.whiteList.add("chatroomId", chatroomAddWhiteListUserUserId);
-        System.out.println("addWhiteListUser:  " + chatroomAddWhiteListUserResult.toString());
+        ResponseResult result = rongCloud.chatroom.whiteList.add("chatroomId", chatroomAddWhiteListUserUserId);
+        System.out.println("addWhiteListUser:  " + result.toString());
     }
 }

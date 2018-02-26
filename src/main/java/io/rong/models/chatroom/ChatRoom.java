@@ -35,6 +35,12 @@ public class ChatRoom {
 	/**
 	 * 聊天室构造函数 聊天室信息
 	 * */
+	public ChatRoom() {
+		super();
+	}
+	/**
+	 * 聊天室构造函数 聊天室信息
+	 * */
 	public ChatRoom(String id, String name) {
 		this.id = id;
 		this.name = name;
@@ -80,8 +86,9 @@ public class ChatRoom {
 	 * 设置chrmId
 	 *
 	 */	
-	public void setId(String id) {
+	public ChatRoom setId(String id) {
 		this.id = id;
+		return this;
 	}
 	
 	/**
@@ -97,8 +104,9 @@ public class ChatRoom {
 	 * 设置name
 	 *
 	 */	
-	public void setName(String name) {
+	public ChatRoom setName(String name) {
 		this.name = name;
+		return this;
 	}
 	
 	/**
@@ -114,8 +122,9 @@ public class ChatRoom {
 	 * 设置time
 	 *
 	 */	
-	public void setTime(String time) {
+	public ChatRoom setTime(String time) {
 		this.time = time;
+		return this;
 	}
 	
 	/**
@@ -131,24 +140,27 @@ public class ChatRoom {
 		return this.members;
 	}
 
-	public void setMembers(Member[] members) {
+	public ChatRoom setMembers(Member[] members) {
 		this.members = members;
+		return this;
 	}
 
 	public Integer getCount() {
 		return this.count;
 	}
 
-	public void setCount(Integer count) {
+	public ChatRoom setCount(Integer count) {
 		this.count = count;
+		return this;
 	}
 
 	public Integer getOrder() {
 		return this.order;
 	}
 
-	public void setOrder(Integer order) {
+	public ChatRoom setOrder(Integer order) {
 		this.order = order;
+		return this;
 	}
 
 	@Override

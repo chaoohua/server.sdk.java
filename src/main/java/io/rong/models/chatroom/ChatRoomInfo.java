@@ -20,8 +20,9 @@ public class ChatRoomInfo {
 	 * 设置id
 	 *
 	 */	
-	public void setId(String id) {
+	public ChatRoomInfo setId(String id) {
 		this.id = id;
+		return this;
 	}
 	
 	/**
@@ -37,8 +38,9 @@ public class ChatRoomInfo {
 	 * 设置name
 	 *
 	 */	
-	public void setName(String name) {
+	public ChatRoomInfo setName(String name) {
 		this.name = name;
+		return this;
 	}
 	
 	/**

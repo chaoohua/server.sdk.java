@@ -20,8 +20,9 @@ public class GagChatRoomUser {
 	 * 设置time
 	 *
 	 */	
-	public void setTime(String time) {
+	public GagChatRoomUser setTime(String time) {
 		this.time = time;
+		return this;
 	}
 	
 	/**
@@ -37,8 +38,9 @@ public class GagChatRoomUser {
 	 * 设置userId
 	 *
 	 */	
-	public void setUserId(String userId) {
+	public GagChatRoomUser setUserId(String userId) {
 		this.userId = userId;
+		return this;
 	}
 	
 	/**

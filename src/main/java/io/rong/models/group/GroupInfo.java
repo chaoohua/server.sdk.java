@@ -20,8 +20,9 @@ public class GroupInfo {
 	 * 设置id
 	 *
 	 */	
-	public void setId(String id) {
+	public GroupInfo setId(String id) {
 		this.id = id;
+		return this;
 	}
 	
 	/**
@@ -37,8 +38,9 @@ public class GroupInfo {
 	 * 设置name
 	 *
 	 */	
-	public void setName(String name) {
+	public GroupInfo setName(String name) {
 		this.name = name;
+		return this;
 	}
 	
 	/**

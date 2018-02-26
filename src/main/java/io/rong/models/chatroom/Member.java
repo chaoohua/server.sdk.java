@@ -11,7 +11,9 @@ public class Member {
      * 聊天室ID
      * */
     public String chatroomId;
-
+    public Member() {
+        super();
+    }
     public Member(String id, String time) {
         this.id = id;
         this.time = time;
@@ -27,8 +29,9 @@ public class Member {
      * 设置id
      *
      */
-    public void setId(String id) {
+    public Member setId(String id) {
         this.id = id;
+        return this;
     }
 
     /**
@@ -44,8 +47,9 @@ public class Member {
      * 设置time
      *
      */
-    public void setTime(String time) {
+    public Member setTime(String time) {
         this.time = time;
+        return this;
     }
 
     /**
@@ -61,8 +65,9 @@ public class Member {
         return this.chatroomId;
     }
 
-    public void setChatroomId(String chatroomId) {
+    public Member setChatroomId(String chatroomId) {
         this.chatroomId = chatroomId;
+        return this;
     }
 
     @Override

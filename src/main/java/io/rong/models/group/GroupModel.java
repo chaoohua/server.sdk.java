@@ -16,6 +16,10 @@ public class GroupModel {
      * 群组名
      **/
     public String name;
+
+    public GroupModel() {
+    }
+
     /**
      * 构造方法
      *
@@ -33,16 +37,18 @@ public class GroupModel {
         return this.id;
     }
 
-    public void setId(String id) {
+    public GroupModel setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String[] getMerberIds() {
         return this.merberIds;
     }
 
-    public void setMerberIds(String[] merberIds) {
+    public GroupModel setMerberIds(String[] merberIds) {
         this.merberIds = merberIds;
+        return this;
     }
 
 
@@ -50,7 +56,8 @@ public class GroupModel {
         return this.name;
     }
 
-    public void setName(String ame) {
+    public GroupModel setName(String ame) {
         this.name = name;
+        return this;
     }
 }

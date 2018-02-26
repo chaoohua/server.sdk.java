@@ -14,6 +14,9 @@ public class SystemMessage {
     private Integer isCounted;
     private Integer contentAvailable;
 
+    public SystemMessage() {
+    }
+
     /**
      * @param  senderUserId:发送人用户 Id。（必传）
      * @param  targetIds:接收用户 Id，提供多个本参数可以实现向多人发送消息，上限为 1000 人。（必传）
@@ -42,71 +45,81 @@ public class SystemMessage {
         return this.senderUserId;
     }
 
-    public void setSenderUserId(String senderUserId) {
+    public SystemMessage setSenderUserId(String senderUserId) {
         this.senderUserId = senderUserId;
+        return this;
     }
 
     public String[] getTargetIds() {
         return this.targetIds;
     }
 
-    public void setTargetIds(String[] targetIds) {
+    public SystemMessage setTargetIds(String[] targetIds) {
         this.targetIds = targetIds;
+        return this;
     }
 
     public BaseMessage getContent() {
         return this.content;
     }
 
-    public void setContent(BaseMessage content) {
+    public SystemMessage setContent(BaseMessage content) {
         this.content = content;
+        return this;
+
     }
 
     public String getPushContent() {
         return this.pushContent;
     }
 
-    public void setPushContent(String pushContent) {
+    public SystemMessage setPushContent(String pushContent) {
         this.pushContent = pushContent;
+        return this;
     }
 
     public String getPushData() {
         return this.pushData;
     }
 
-    public void setPushData(String pushData) {
+    public SystemMessage setPushData(String pushData) {
         this.pushData = pushData;
+        return this;
     }
 
     public Integer getIsPersisted() {
         return this.isPersisted;
     }
 
-    public void setIsPersisted(Integer isPersisted) {
+    public SystemMessage setIsPersisted(Integer isPersisted) {
         this.isPersisted = isPersisted;
+        return this;
     }
 
     public Integer getIsCounted() {
         return this.isCounted;
     }
 
-    public void setIsCounted(Integer isCounted) {
+    public SystemMessage setIsCounted(Integer isCounted) {
         this.isCounted = isCounted;
+        return this;
     }
 
     public Integer getContentAvailable() {
         return this.contentAvailable;
     }
 
-    public void setContentAvailable(Integer contentAvailable) {
+    public SystemMessage setContentAvailable(Integer contentAvailable) {
         this.contentAvailable = contentAvailable;
+        return this;
     }
 
     public String getObjectName() {
         return this.objectName;
     }
 
-    public void setObjectName(String objectName) {
+    public SystemMessage setObjectName(String objectName) {
         this.objectName = objectName;
+        return this;
     }
 }

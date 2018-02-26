@@ -24,7 +24,8 @@ public class GagModel extends GroupModel{
         return this.munite;
     }
 
-    public void setMunite(String munite) {
+    public GagModel setMunite(String munite) {
         this.munite = munite;
+        return this;
     }
 }

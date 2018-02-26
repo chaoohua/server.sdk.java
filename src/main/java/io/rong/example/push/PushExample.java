@@ -21,10 +21,17 @@ public class PushExample {
 
     @Before
     public void setUp() throws Exception {
-        String appKey = "e0x9wycfx7flq";
+       /* String appKey = "e0x9wycfx7flq";
         String appSecret = "STCevzDS6Xy18n";
         String api = "http://192.168.155.13:9200";
         rongCloud = RongCloud.getInstance(appKey, appSecret,api);
+*/
+
+        String appKey = "z3v5yqkbvy9f0";
+        String appSecret = "plhr2PA386a";
+
+        rongCloud = RongCloud.getInstance(appKey, appSecret);
+
     }
     /**
      * 为用户打标签测试

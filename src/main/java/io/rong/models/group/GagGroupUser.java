@@ -20,8 +20,9 @@ public class GagGroupUser {
 	 * 设置time
 	 *
 	 */	
-	public void setTime(String time) {
+	public GagGroupUser setTime(String time) {
 		this.time = time;
+		return this;
 	}
 	
 	/**
@@ -37,8 +38,9 @@ public class GagGroupUser {
 	 * 设置userId
 	 *
 	 */	
-	public void setUserId(String userId) {
+	public GagGroupUser setUserId(String userId) {
 		this.userId = userId;
+		return this;
 	}
 	
 	/**

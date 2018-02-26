@@ -12,6 +12,9 @@ import io.rong.models.user.UserModel;
  * @date 2017/12/30
  */
 public class UserExample {
+    public static UserModel user = new UserModel().setId("userId1")
+            .setName("username")
+            .setPortraitUri("http://www.rongcloud.cn/images/logo.png");
 
     public static void main(String[] args) throws Exception {
 
@@ -32,10 +35,9 @@ public class UserExample {
 
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret,api);
 
-        UserModel user = new UserModel("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
 
         //System.out.println("************************user getToken********************");
-        getToken(rongCloud);
+       // getToken(rongCloud);
 
         //System.out.println("************************user userRefresh********************");
         //userRefresh(rongCloud);
@@ -50,7 +52,7 @@ public class UserExample {
         //userUnBlock(rongCloud);
 
         //System.out.println("************************user userQueryBlock*******************");
-        //userQueryBlock(rongCloud);
+        testUserQueryBlock(rongCloud);
 
         //System.out.println("************************user addBlacklist*******************");
         //addBlacklist(rongCloud);
@@ -64,8 +66,10 @@ public class UserExample {
      *
      * 检查用户在线状态 方法
      */
-    public static void test_checkOnline(RongCloud rongCloud) throws Exception {
-        UserModel user = new UserModel("userId",null,null);
+    public static void testCheckOnline(RongCloud rongCloud) throws Exception {
+        UserModel user = new UserModel();
+        user.setId("userId");
+
         CheckOnlineResult result = rongCloud.user.onlineStatus.check(user);
         System.out.println("checkOnline:  " + result.toString());
     }
@@ -74,8 +78,7 @@ public class UserExample {
      *
      * 获取 Token 方法
      */
-    public static void getToken(RongCloud rongCloud) throws Exception {
-        UserModel user = new UserModel("userId1华发商都发货速度符合实际发货就是房价是否就是房价是否就是分数就会飞机是否就是方法就是发生", "username", "http://www.rongcloud.cn/images/logo.png");
+    public static void testGetToken(RongCloud rongCloud) throws Exception {
         TokenResult result = rongCloud.user.getToken(user);
         System.out.println("getToken:  " + result.toString());
     }
@@ -83,8 +86,7 @@ public class UserExample {
     /**
      *  刷新用户信息方法
      */
-    public static void userRefresh(RongCloud rongCloud) throws Exception {
-        UserModel user = new UserModel("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
+    public static void testUserRefresh(RongCloud rongCloud) throws Exception {
         Result result = (ResponseResult)rongCloud.user.refresh(user);
         System.out.println("refresh:  " + result.toString());
 
@@ -92,21 +94,21 @@ public class UserExample {
     /**
      *解除用户封禁方法（每秒钟限 100 次）
      */
-    public static void userAddBlock(RongCloud rongCloud) throws Exception {
+    public static void testUserAddBlock(RongCloud rongCloud) throws Exception {
         Result userUnBlockResult = (ResponseResult)rongCloud.user.block.add("userId2",10000000);
         System.out.println("userAddBlock:  " + userUnBlockResult.toString());
     }
     /**
      *解除用户封禁方法（每秒钟限 100 次）
      */
-    public static void userUnBlock(RongCloud rongCloud) throws Exception {
+    public static void testUserUnBlock(RongCloud rongCloud) throws Exception {
         ResponseResult result = (ResponseResult)rongCloud.user.block.remove("userId2");
         System.out.println("unBlock:  " + result.toString());
     }
     /**
      *  获取被封禁用户方法（每秒钟限 100 次）
      */
-    public static void userQueryBlock(RongCloud rongCloud) throws Exception {
+    public static void testUserQueryBlock(RongCloud rongCloud) throws Exception {
 
         BlockUserResult result = (BlockUserResult)rongCloud.user.block.getList();
         System.out.println("queryBlock:  " + result.toString());
@@ -115,7 +117,7 @@ public class UserExample {
     /**
      * 添加用户到黑名单方法（每秒钟限 100 次）
      */
-    public static void addBlacklist(RongCloud rongCloud) throws Exception {
+    public static void testAddBlacklist(RongCloud rongCloud) throws Exception {
 
         Result userAddBlacklistResult = (Result)rongCloud.user.blackList.add("userId1", "userId2");
         System.out.println("addBlacklist:  " + userAddBlacklistResult.toString());
@@ -123,7 +125,7 @@ public class UserExample {
     /**
      *  获取某用户的黑名单列表方法（每秒钟限 100 次）
      */
-    public static void queryBlacklist(RongCloud rongCloud) throws Exception {
+    public static void testQueryBlacklist(RongCloud rongCloud) throws Exception {
 
         BlackListResult result = rongCloud.user.blackList.query("userId1");
         System.out.println("queryBlacklist:  " + result.toString());
@@ -133,7 +135,7 @@ public class UserExample {
      *
      *  从黑名单中移除用户方法（每秒钟限 100 次）
      */
-    public static void removeBlacklist(RongCloud rongCloud) throws Exception {
+    public static void testRemoveBlacklist(RongCloud rongCloud) throws Exception {
         Result result = (Result)rongCloud.user.blackList.remove("userId1", "userId2");
         System.out.println("removeBlacklist:  " + result.toString());
     }

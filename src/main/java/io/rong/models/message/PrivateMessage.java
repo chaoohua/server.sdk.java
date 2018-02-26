@@ -26,6 +26,9 @@ public class PrivateMessage extends Message{
   //发送用户自已是否接收消息，0 表示为不接收，1 表示为接收，默认为 0 不接收。（可选）
   public Integer isIncludeSender;
 
+    public PrivateMessage() {
+    }
+
     public PrivateMessage(String senderUserId, String[] targetIds, String objectName, BaseMessage content, String pushContent, String pushData, String count,
                           Integer verifyBlacklist, Integer isPersisted, Integer isCounted, Integer isIncludeSender) {
         this.senderUserId = senderUserId;
@@ -45,87 +48,98 @@ public class PrivateMessage extends Message{
         return this.senderUserId;
     }
 
-    public void setSenderUserId(String senderUserId) {
+    public PrivateMessage setSenderUserId(String senderUserId) {
         this.senderUserId = senderUserId;
+        return this;
     }
 
     public String[] getTargetIds() {
         return this.targetIds;
     }
 
-    public void setTargetIds(String[] targetIds) {
+    public PrivateMessage setTargetIds(String[] targetIds) {
         this.targetIds = targetIds;
+        return this;
     }
 
     public BaseMessage getContent() {
         return this.content;
     }
 
-    public void setContent(BaseMessage content) {
+    public PrivateMessage setContent(BaseMessage content) {
         this.content = content;
+        return this;
     }
 
     public String getPushContent() {
         return this.pushContent;
     }
 
-    public void setPushContent(String pushContent) {
+    public PrivateMessage setPushContent(String pushContent) {
         this.pushContent = pushContent;
+        return this;
     }
 
     public String getPushData() {
         return this.pushData;
     }
 
-    public void setPushData(String pushData) {
+    public PrivateMessage setPushData(String pushData) {
         this.pushData = pushData;
+        return this;
     }
 
     public String getCount() {
         return this.count;
     }
 
-    public void setCount(String count) {
+    public PrivateMessage setCount(String count) {
         this.count = count;
+        return this;
     }
 
     public Integer getVerifyBlacklist() {
         return this.verifyBlacklist;
     }
 
-    public void setVerifyBlacklist(Integer verifyBlacklist) {
+    public PrivateMessage setVerifyBlacklist(Integer verifyBlacklist) {
         this.verifyBlacklist = verifyBlacklist;
+        return this;
     }
 
     public Integer getIsPersisted() {
         return this.isPersisted;
     }
 
-    public void setIsPersisted(Integer isPersisted) {
+    public PrivateMessage setIsPersisted(Integer isPersisted) {
         this.isPersisted = isPersisted;
+        return this;
     }
 
     public Integer getIsCounted() {
         return this.isCounted;
     }
 
-    public void setIsCounted(Integer isCounted) {
+    public PrivateMessage setIsCounted(Integer isCounted) {
         this.isCounted = isCounted;
+        return this;
     }
 
     public Integer getIsIncludeSender() {
         return this.isIncludeSender;
     }
 
-    public void setIsIncludeSender(Integer isIncludeSender) {
+    public PrivateMessage setIsIncludeSender(Integer isIncludeSender) {
         this.isIncludeSender = isIncludeSender;
+        return this;
     }
 
     public String getObjectName() {
         return this.objectName;
     }
 
-    public void setObjectName(String objectName) {
+    public PrivateMessage setObjectName(String objectName) {
         this.objectName = objectName;
+        return this;
     }
 }

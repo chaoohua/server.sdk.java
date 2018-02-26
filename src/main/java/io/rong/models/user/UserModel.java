@@ -1,5 +1,7 @@
 package io.rong.models.user;
 
+import io.rong.util.GsonUtil;
+
 /**
 *
 * 用户信息
@@ -22,6 +24,9 @@ public class UserModel {
      */
     public String portraitUri;
 
+    public UserModel() {
+    }
+
     public UserModel(String id, String name, String portraitUri) {
         this.id = id;
         this.name = name;
@@ -32,23 +37,32 @@ public class UserModel {
         return this.id;
     }
 
-    public void setId(String id) {
+    public UserModel setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public void setName(String name) {
+    public UserModel setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getPortraitUri() {
         return this.portraitUri;
     }
 
-    public void setPortraitUri(String portraitUri) {
+    public UserModel setPortraitUri(String portraitUri) {
         this.portraitUri = portraitUri;
+        return this;
+    }
+
+
+    @Override
+    public String toString() {
+        return GsonUtil.toJson(this, UserModel.class);
     }
 }

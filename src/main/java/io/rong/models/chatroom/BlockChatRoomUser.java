@@ -20,8 +20,9 @@ public class BlockChatRoomUser {
 	 * 设置userId
 	 *
 	 */	
-	public void setUserId(String userId) {
+	public BlockChatRoomUser setUserId(String userId) {
 		this.userId = userId;
+		return this;
 	}
 	
 	/**
@@ -37,8 +38,9 @@ public class BlockChatRoomUser {
 	 * 设置time
 	 *
 	 */	
-	public void setTime(String time) {
+	public BlockChatRoomUser setTime(String time) {
 		this.time = time;
+		return this;
 	}
 	
 	/**

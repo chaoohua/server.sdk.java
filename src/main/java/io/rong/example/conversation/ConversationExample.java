@@ -15,7 +15,9 @@ public class ConversationExample {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         //RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret,api);
 
-        ConversationModel conversation = new ConversationModel("1","UgYzcDZSisNyYaZ83WXcEk11","2iXiqVWUAWwaKA55FuZvY31");
+        ConversationModel conversation = new ConversationModel().setType("1")
+                .setUserId("UgYzcDZSisNyYaZ83WXcEk11")
+                .setTargetId("2iXiqVWUAWwaKA55FuZvY31");
 
         /**
          * 获取免打扰

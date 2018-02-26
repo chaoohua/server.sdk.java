@@ -8,6 +8,9 @@ public class ChatroomMessage {
     public String objectName;
     public BaseMessage content;
 
+    public ChatroomMessage() {
+    }
+
     public ChatroomMessage(String senderUserId, String[] targetIds, String objectName, BaseMessage content) {
         this.senderUserId = senderUserId;
         this.targetIds = targetIds;
@@ -19,31 +22,35 @@ public class ChatroomMessage {
         return this.senderUserId;
     }
 
-    public void setSenderUserId(String senderUserId) {
+    public ChatroomMessage setSenderUserId(String senderUserId) {
         this.senderUserId = senderUserId;
+        return this;
     }
 
     public String[] getTargetIds() {
         return this.targetIds;
     }
 
-    public void setTargetIds(String[] targetIds) {
+    public ChatroomMessage setTargetIds(String[] targetIds) {
         this.targetIds = targetIds;
+        return this;
     }
 
     public String getObjectName() {
         return this.objectName;
     }
 
-    public void setObjectName(String objectName) {
+    public ChatroomMessage setObjectName(String objectName) {
         this.objectName = objectName;
+        return this;
     }
 
     public BaseMessage getContent() {
         return this.content;
     }
 
-    public void setContent(BaseMessage content) {
+    public ChatroomMessage setContent(BaseMessage content) {
         this.content = content;
+        return this;
     }
 }

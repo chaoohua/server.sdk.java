@@ -31,6 +31,7 @@ public class Example {
 	private static final TxtMessage txtMessage = new TxtMessage("hello", "helloExtra");
 	private static final VoiceMessage voiceMessage = new VoiceMessage("hello", "helloExtra", 20L);
 	SmsModel sms = new SmsModel("13500000000", "dsfdsfd", "86", "1408706337", "1408706337");
+	private static final String[] targetIds = {"userId2","userid3","userId4"};
 
 	@Before
 	public void setUp() throws Exception {
@@ -44,10 +45,15 @@ public class Example {
 	 */
 	@Test
 	public void testPublishSystem() throws Exception {
-		String[] targetIds = {"userId2","userid3","userId4"};
-		//系统消息方法
-		SystemMessage systemMessage = new SystemMessage("userId1", targetIds,txtMessage.getType(),txtMessage,"thisisapush",
-				"{\"pushData\":\"hello\"}", 0, 0,0);
+		SystemMessage systemMessage = new SystemMessage().setSenderUserId("usetId")
+					.setTargetIds(targetIds)
+					.setObjectName(txtMessage.getType())
+					.setContent(txtMessage)
+					.setPushContent("this is a push")
+					.setPushData("{'pushData':'hello'}")
+					.setIsPersisted(0)
+					.setIsCounted(0)
+					.setContentAvailable(0);
 		ResponseResult result = rongCloud.message.system.publish(systemMessage);
 		System.out.println("publishSystem:  " + result.toString());
 
@@ -104,10 +110,18 @@ public class Example {
 	@Test
 	public void testPublishPrivate() throws Exception {
 		Reader reader = null ;
-		String[] targetIds = {"userId2","userid3","userId4"};
-		VoiceMessage voiceMessage = new VoiceMessage("hello", "helloExtra", 20L);
-		PrivateMessage privateMessage = new PrivateMessage("userId1", targetIds, voiceMessage.getType(),voiceMessage, "thisisapush",
-				"{\"pushData\":\"hello\"}", "4", 0, 0, 0, 0);
+		PrivateMessage  privateMessage = new PrivateMessage().setSenderUserId("userId")
+				.setTargetIds(targetIds)
+				.setObjectName(voiceMessage.getType())
+				.setContent(voiceMessage)
+				.setPushContent("")
+				.setPushData("{\"pushData\":\"hello\"}")
+				.setCount("4")
+				.setVerifyBlacklist(0)
+				.setIsPersisted(0)
+				.setIsCounted(0)
+				.setIsIncludeSender(0);
+
 		//发送单聊方法
 		ResponseResult publishPrivateResult = rongCloud.message.aPrivate.publish(privateMessage);
 		System.out.println("publishPrivate:  " + publishPrivateResult.toString());
@@ -120,9 +134,17 @@ public class Example {
 	@Test
 	public void testPublishGroup() throws Exception {
 		//群组消息
-		String[] targetIds = {"groupId2","groupId3","groupId4"};
-		GroupMessage groupMessage = new GroupMessage("userId1", targetIds,txtMessage.getType(), txtMessage,"thisisapush",
-				"{\"pushData\":\"hello\"}", 0, 0,0,0,0);
+		GroupMessage groupMessage = new GroupMessage().setSenderUserId("userId")
+				.setTargetIds(targetIds)
+				.setObjectName(txtMessage.getType())
+				.setContent(txtMessage)
+				.setPushContent("this is a push")
+				.setPushData("{\"pushData\":\"hello\"}")
+				.setIsPersisted(0)
+				.setIsCounted(0)
+				.setIsIncludeSender(0)
+				.setIsMentioned(0)
+				.setContentAvailable(0);
 		ResponseResult result = rongCloud.message.group.publish(groupMessage);
 		System.out.println("publishGroup:  " + result.toString());
 
@@ -135,9 +157,10 @@ public class Example {
 	@Test
 	public void testPublishChatroomPrivate() throws Exception {
 		//聊天室消息
-		TxtMessage txtMessage = new TxtMessage("hello", "helloExtra");
-		String[] targetIds2 = {"chatroomId2","chatroomId3","chatroomId4"};
-		ChatroomMessage message = new ChatroomMessage("userId1",targetIds2,txtMessage.getType(),txtMessage);
+		ChatroomMessage message = new ChatroomMessage().setSenderUserId("targetIds")
+				.setTargetIds(targetIds)
+				.setContent(txtMessage)
+				.setObjectName(txtMessage.getType());
 		ResponseResult result = rongCloud.message.chatroom.publish(message);
 		System.out.println("publishChatroomPrivate:  " + result.toString());
 
@@ -276,8 +299,4 @@ public class Example {
 		System.out.println("notify:  " + result.toString());
 		assertEquals("200",result.getCode().toString());
 	}
-
-
-
-
 }
