@@ -2,9 +2,9 @@ package io.rong.methods.chatroom.block;
 
 import io.rong.RongCloud;
 import io.rong.models.*;
-import io.rong.models.chatroom.ChatRoom;
+import io.rong.models.chatroom.ChatroomModel;
+import io.rong.models.chatroom.ChatroomMember;
 import io.rong.models.response.ListBlockChatroomUserResult;
-import io.rong.models.chatroom.Member;
 import io.rong.models.response.ResponseResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -40,35 +40,28 @@ public class Block {
     /**
      * 添加封禁聊天室成员方法
      *
-     * @param  chatroom:封禁的聊天室信息，其中聊天室 Id。（必传）,用户 Id。（必传支持多个最多20个）
-     * @param  minute:封禁时长，以分钟为单位，最大值为43200分钟。（必传）
+     * @param  chatroom:聊天室信息，memberIds（必传支持多个最多20个）,minute:封禁时长，以分钟为单位，最大值为43200分钟。（必传）
      *
      * @return ResponseResult
      **/
-    public ResponseResult add(ChatRoom chatroom, Integer minute) throws Exception {
+    public ResponseResult add(ChatroomModel chatroom) throws Exception {
         String message = CommonUtil.checkFiled(chatroom,PATH, CheckMethod.ADD);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
-        message = CommonUtil.checkParam("minute",minute,PATH,CheckMethod.ADD);
-        if(null != message){
-            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
-        }
-
         StringBuilder sb = new StringBuilder();
-        Member[] users = chatroom.getMembers();
-        for(Member user : users){
-            sb.append("&userId=").append(URLEncoder.encode(user.getId().toString(), UTF8));
+        String[] memberIds = chatroom.getMemberIds();
+        for(String memberId : memberIds){
+            sb.append("&userId=").append(URLEncoder.encode(memberId, UTF8));
         }
-
-        sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
-        sb.append("&minute=").append(URLEncoder.encode(minute.toString(), UTF8));
+        sb.append("&minute=").append(URLEncoder.encode(chatroom.getMunite().toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());
         }
 
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/block/add.json", "application/x-www-form-urlencoded");
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret,
+                "/chatroom/user/block/add.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
         return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), ResponseResult.class);
@@ -106,16 +99,16 @@ public class Block {
      *
      * @return ResponseResult
      **/
-    public ResponseResult remove(ChatRoom chatroom) throws Exception {
+    public ResponseResult remove(ChatroomModel chatroom) throws Exception {
         String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.REMOVE);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
-        Member[] users = chatroom.getMembers();
-        for(Member user : users){
-            sb.append("&userId=").append(URLEncoder.encode(user.getId().toString(), UTF8));
+        String[] memberIds = chatroom.getMemberIds();
+        for(String memberId : memberIds){
+            sb.append("&userId=").append(URLEncoder.encode(memberId, UTF8));
         }
         sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
         String body = sb.toString();

@@ -5,6 +5,7 @@ import io.rong.models.Result;
 import io.rong.models.CheckMethod;
 import io.rong.models.group.GroupModel;
 import io.rong.models.response.ListGagGroupUserResult;
+import io.rong.models.response.ResponseResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HttpUtil;
@@ -38,20 +39,20 @@ public class Gag {
     /**
      * 添加禁言群成员方法（在 App 中如果不想让某一用户在群中发言时，可将此用户在群组中禁言，被禁言用户可以接收查看群组中用户聊天信息，但不能发送消息。）
      *
-     * @param group:群组信息。（必传）
-     * @param munite :禁言时间
+     * @param group:群组信息。id , munite , memberIds（必传）
+     *
      * @return Result
      **/
-    public Result add(GroupModel group, String munite) throws Exception {
+    public Result add(GroupModel group) throws Exception {
         String message = CommonUtil.checkFiled(group,PATH,CheckMethod.ADD);
         if(null != message){
-            return (Result)GsonUtil.fromJson(message,Result.class);
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
-        message = CommonUtil.checkParam("munite",munite,PATH,CheckMethod.ADD);
+       /* message = CommonUtil.checkParam("munite",munite,PATH,CheckMethod.ADD);
         if(null != message){
             return (Result)GsonUtil.fromJson(message,Result.class);
-        }
+        }*/
 
         StringBuilder sb = new StringBuilder();
         String[] merberIds = group.getMerberIds();
@@ -59,7 +60,7 @@ public class Gag {
             sb.append("&userId=").append(URLEncoder.encode(group.getMerberIds().toString(), UTF8));
         }
         sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
-        sb.append("&minute=").append(URLEncoder.encode(munite, UTF8));
+        sb.append("&minute=").append(URLEncoder.encode(group.getMunite().toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());
@@ -104,23 +105,19 @@ public class Gag {
      * @return ResponseResult
      **/
     public Result remove(GroupModel group) throws Exception {
-        //需要校验的字段
+        //参数校验
         String message = CommonUtil.checkFiled(group,PATH, CheckMethod.REMOVE);
-        System.out.println("message:"+message);
-
         if(null != message){
-            return (Result)GsonUtil.fromJson(message,Result.class);
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
-
-
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0 ; i< group.merberIds.length; i++) {
-            String child  = group.merberIds[i];
+        for (int i = 0 ; i< group.getMerberIds().length; i++) {
+            String child  = group.getMerberIds()[i];
             sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
         }
 
-        sb.append("&groupId=").append(URLEncoder.encode(group.id.toString(), UTF8));
+        sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());

@@ -3,6 +3,7 @@ package io.rong.methods.chatroom.gag.global;
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
+import io.rong.models.chatroom.ChatroomModel;
 import io.rong.models.response.ResponseResult;
 import io.rong.models.CommonConstrants;
 import io.rong.models.response.ListGagChatroomUserResult;
@@ -38,27 +39,31 @@ public class Global {
     }
 
     /**
-     * 添加聊天室全局禁言方法
+     * 添加用户聊天室全局禁言方法
      *
-     * @param  userId:用户 Id。（必传）
-     * @param  minute:禁言时长，以分钟为单位，最大值为43200分钟。（必传）
+     * @param  chatroom : Id,minute。（必传）
      *
      * @return ResponseResult
      **/
-    public ResponseResult add(String[] userId, String minute) throws Exception {
+    public ResponseResult add(ChatroomModel chatroom) throws Exception {
 
-        String message = CommonUtil.checkParam("members",userId,PATH,CheckMethod.ADD);
+        /*String message = CommonUtil.checkParam("members",userId,PATH,CheckMethod.ADD);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
         message = CommonUtil.checkParam("minute",minute,PATH, CheckMethod.ADD);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+        }*/
+
+        String errMsg = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.ADD);
+        if(null != errMsg){
+            return (ResponseResult)GsonUtil.fromJson(errMsg,ResponseResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("&userId=").append(URLEncoder.encode(userId.toString(), UTF8));
-        sb.append("&minute=").append(URLEncoder.encode(minute.toString(), UTF8));
+        sb.append("&userId=").append(URLEncoder.encode(chatroom.getMemberIds().toString(), UTF8));
+        sb.append("&minute=").append(URLEncoder.encode(chatroom.getMunite().toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());
@@ -71,7 +76,7 @@ public class Global {
     }
 
     /**
-     * 查询聊天室全局禁言用户方法
+     * 查询被聊天室全局禁言用户方法
      *
      * @return ListGagChatroomUserResult
      **/
@@ -84,7 +89,7 @@ public class Global {
     }
 
     /**
-     * 移除聊天室全局禁言方法
+     * 移除用户聊天室全局禁言方法
      *
      * @param  userId:用户 Id。（必传）
      *

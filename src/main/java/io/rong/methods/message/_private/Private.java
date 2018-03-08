@@ -2,6 +2,9 @@ package io.rong.methods.message._private;
 
 import io.rong.RongCloud;
 import io.rong.models.CheckMethod;
+import io.rong.models.Result;
+import io.rong.models.message.RecallMessage;
+import io.rong.models.message.Template;
 import io.rong.models.response.ResponseResult;
 import io.rong.models.TemplateMessage;
 import io.rong.models.message.PrivateMessage;
@@ -11,6 +14,10 @@ import io.rong.util.HttpUtil;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 发送单聊消息方法
  * docs : http://www.rongcloud.cn/docs/server.html#message_private_publish
@@ -45,9 +52,9 @@ public class Private {
 	 *
 	 * @return ResponseResult
 	 **/
-	public ResponseResult publish(PrivateMessage privateMessage) throws Exception {
+	public ResponseResult send(PrivateMessage privateMessage) throws Exception {
 
-		String message = CommonUtil.checkFiled(privateMessage,PATH, CheckMethod.PUBLISH);
+		String message = CommonUtil.checkFiled(privateMessage,PATH, CheckMethod.SEND);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
@@ -104,21 +111,72 @@ public class Private {
 	/**
 	 * 发送单聊模板消息方法（一个用户向多个用户发送不同消息内容，单条消息最大 128k。每分钟最多发送 6000 条信息，每次发送用户上限为 1000 人。） 
 	 * 
-	 * @param  templateMessage:单聊模版消息。
+	 * @param  template:单聊模版消息。
 	 *
 	 * @return ResponseResult
 	 **/
-	public ResponseResult publishTemplate(TemplateMessage templateMessage) throws Exception {
+	public ResponseResult sendTemplate(Template template) throws Exception {
 
-		String message = CommonUtil.checkFiled(templateMessage,PATH, CheckMethod.PUBLISH);
+		String message = CommonUtil.checkFiled(template,PATH, CheckMethod.SEND);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
-		
-	    HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/private/publish_template.json", "application/json");
+
+		TemplateMessage templateMessage = new TemplateMessage();
+
+		ArrayList<String> toUserIds = new ArrayList<>();
+		List<Map<String,String>> values = new ArrayList<>();
+		List<String> push = new ArrayList<>();
+
+		for(Map.Entry<String, Template.Data> vo : template.getContent().entrySet()){
+			toUserIds.add(vo.getKey());
+			values.add(vo.getValue().getDate());
+			push.add(vo.getValue().getPush());
+		}
+		templateMessage.setFromUserId(template.getSenderId());
+		templateMessage.setToUserId(toUserIds.toArray(new String[toUserIds.size()]));
+		templateMessage.setObjectName(template.getObjectName());
+		templateMessage.setContent(template.getTemplate());
+		templateMessage.setValues(values);
+		templateMessage.setPushContent(push.toArray(new String[push.size()]));
+		templateMessage.setPushData(template.getPushData());
+		templateMessage.setVerifyBlacklist(template.getVerifyBlacklist());
+		templateMessage.setContentAvailable(template.getContentAvailable());
+
+
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/private/publish_template.json", "application/json");
 	    HttpUtil.setBodyParameter(templateMessage.toString(), conn);
 	    
 	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.PUBLISHTEMPLATE,HttpUtil.returnResult(conn)), ResponseResult.class);
+	}
+
+	/**
+	 * 设置用户某会话接收新消息时是否进行消息提醒。
+	 *
+	 *@param recallMessage
+	 *
+	 * @return ResponseResult
+	 **/
+	public Result recall(RecallMessage recallMessage) throws Exception {
+		//需要校验的字段
+		String message = CommonUtil.checkFiled(recallMessage,PATH,CheckMethod.RECALL);
+		if(null != message){
+			return (Result)GsonUtil.fromJson(message,Result.class);
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append("&conversationType=").append(URLEncoder.encode("1", UTF8));
+		sb.append("&fromUserId=").append(URLEncoder.encode(recallMessage.senderUserId.toString(), UTF8));
+		sb.append("&targetId=").append(URLEncoder.encode(recallMessage.targetId.toString(), UTF8));
+		sb.append("&messageUID=").append(URLEncoder.encode(recallMessage.messageUid.toString(), UTF8));
+		sb.append("&sentTime=").append(URLEncoder.encode(recallMessage.sentTime.toString(), UTF8));
+		String body = sb.toString();
+		if (body.indexOf("&") == 0) {
+			body = body.substring(1, body.length());
+		}
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/conversation/notification/get.json", "application/x-www-form-urlencoded");
+		HttpUtil.setBodyParameter(body, conn);
+
+		return (Result) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.RECALL,HttpUtil.returnResult(conn)), Result.class);
 	}
 	 
 }

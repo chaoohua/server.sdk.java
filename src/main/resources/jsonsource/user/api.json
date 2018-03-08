@@ -1,5 +1,5 @@
 {
-	"getToken": {
+	"register": {
 		"docs": "http://rongcloud.cn/docs/server.html#user_get_token",
 		"url": "user/getToken",
 		"params": {

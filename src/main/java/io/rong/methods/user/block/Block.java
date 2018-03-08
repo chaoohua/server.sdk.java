@@ -5,6 +5,8 @@ import io.rong.models.response.BlockUserResult;
 import io.rong.models.Result;
 import io.rong.models.CheckMethod;
 import io.rong.models.response.ResponseResult;
+import io.rong.models.response.TokenResult;
+import io.rong.models.user.UserModel;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HttpUtil;
@@ -39,26 +41,20 @@ public class Block {
     /**
      * 封禁用户方法（每秒钟限 100 次）
      *
-     * @param  userId:用户 Id。（必传）
-     * @param  minute:封禁时长,单位为分钟，最大值为43200分钟。（必传）
+     * @param  user :用户信息 Id，minute（必传）
      *
      * @return Result
      **/
-    public Result add(String userId, Integer minute) throws Exception {
+    public Result add(UserModel user) throws Exception {
 
-        String message = CommonUtil.checkParam("id",userId,PATH, CheckMethod.ADD);
+        String message = CommonUtil.checkFiled(user,PATH,CheckMethod.ADD);
         if(null != message){
-            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
-        }
-
-        message = CommonUtil.checkParam("minute",minute,PATH,CheckMethod.ADD);
-        if(null != message){
-            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+            return (ResponseResult)GsonUtil.fromJson(message,TokenResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("&userId=").append(URLEncoder.encode(userId.toString(), UTF8));
-        sb.append("&minute=").append(URLEncoder.encode(minute.toString(), UTF8));
+        sb.append("&userId=").append(URLEncoder.encode(user.getId().toString(), UTF8));
+        sb.append("&minute=").append(URLEncoder.encode(user.getMinute().toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());

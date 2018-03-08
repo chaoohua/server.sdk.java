@@ -4,10 +4,13 @@
 		"docs": "http://rongcloud.cn/docs/server.html#group_sync",
 		"url": "group/sync",
 		"params": {
-			"userId": "123werm98",
-			"groups": [
-				{"id": "wer987","name":"greoupName1"},{"id":"wer989","name": "greoupName2"}
-			]
+			"user": {
+				"id": "123werm98",
+				"groups": [
+					{"id": "wer987","name":"greoupName1"},
+					{"id":"wer989","name": "greoupName2"}
+				]
+			}
 		},
 		"response": {
 			"success": {
@@ -22,6 +25,14 @@
 				"20003": {
 					"code": "20003",
 					"msg": "{{name}} 长度超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
+				},
+				"20005": {
+					"code": "20005",
+					"msg": "{{name}} 参数为必传项"
+				},
+				"20006": {
+					"code": "20006",
+					"msg": "user 类型不正确，请检查参数类型,应该为 {{type}} 传入为 {{currentType}} "
 				},
 				"1004": {
 					"code": "20000",
@@ -39,31 +50,84 @@
 		"url": "group/create",
 		"params": {
 			"group": {
+				"id": "10001",
+				"name": "TestGroup",
+				"memberIds": ["aFo990k","aFo991k"]
+			}
+		},
+		"response": {
+			"success": {
+				"code": "200",
+				"msg": "成功返回"
+			},
+			"fail": {
+				"20002": {
+					"code": "20002",
+					"msg": "{{name}} 个数超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
+				},
+				"20003": {
+					"code": "20003",
+					"msg": "{{name}} 长度超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
+				},
+				"20005": {
+					"code": "20005",
+					"msg": "{{name}} 参数为必传项"
+				},
+				"20006": {
+					"code": "20006",
+					"msg": "user 类型不正确，请检查参数类型,应该为 {{type}} 传入为 {{currentType}} "
+				},
+				"1004": {
+					"code": "20000",
+					"msg": "签名错误, 请排查 Appkey、Secret 是否正确"
+				},
+				"1008": {
+					"code": "20001",
+					"msg": "调用频率超限，每秒钟限制 100 次，调整频率上限请移步至专有云 http://www.rongcloud.cn/pricing#pay"
+				}
+			}
+		}
+	},
+	"invite": {
+		"docs": "http://rongcloud.cn/docs/server.html#group_join",
+		"url": "group/join",
+		"params": {
+			"group": {
 				"memberIds": ["aFo990k","aFo991k"],
 				"id": "10001",
 				"name": "TestGroup"
 			}
 		},
-		"success": {
-			"code": "200",
-			"msg": "成功返回"
-		},
-		"fail": {
-			"20002": {
-				"code": "20002",
-				"msg": "{{name}} 个数超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
+		"response":{
+			"success": {
+				"code": "200",
+				"msg": "成功返回"
 			},
-			"20003": {
-				"code": "20003",
-				"msg": "{{name}} 长度超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
-			},
-			"1004": {
-				"code": "20000",
-				"msg": "签名错误, 请排查 Appkey、Secret 是否正确"
-			},
-			"1008": {
-				"code": "20001",
-				"msg": "调用频率超限，每秒钟限制 100 次，调整频率上限请移步至专有云 http://www.rongcloud.cn/pricing#pay"
+			"fail": {
+				"20002": {
+					"code": "20002",
+					"msg": "{{name}} 个数超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
+				},
+				"20005": {
+					"code": "20005",
+					"msg": "{{name}} 参数为必传项"
+				},
+				"20006": {
+					"code": "20006",
+					"msg": "{{name}} 类型不正确，请检查参数类型,应该为 {{type}} 传入为 {{currentType}} "
+				},
+				"20003": {
+					"code": "20003",
+					"msg": "{{name}} 长度超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
+				},
+				"1004": {
+					"code": "20000",
+					"msg": "签名错误, 请排查 Appkey、Secret 是否正确"
+				},
+				"1008": {
+					"code": "20001",
+					"msg": "调用频率超限，每秒钟限制 100 次，调整频率上限请移步至专有云 http://www.rongcloud.cn/pricing#pay"
+				}
 			}
 		}
 	},
@@ -87,6 +151,14 @@
 					"code": "20002",
 					"msg": "{{name}} 个数超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
 				},
+				"20005": {
+					"code": "20005",
+					"msg": "{{name}} 参数为必传项"
+				},
+				"20006": {
+					"code": "20006",
+					"msg": "{{name}} 类型不正确，请检查参数类型,应该为 {{type}} 传入为 {{currentType}} "
+				},
 				"20003": {
 					"code": "20003",
 					"msg": "{{name}} 长度超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
@@ -108,7 +180,7 @@
 		"params": {
 			"group": {
 				"id": "10001",
-				"memberId": "aFo990k"
+				"memberIds": "aFo990k"
 			}
 		},
 		"response":{
@@ -120,6 +192,14 @@
 				"20003": {
 					"code": "20003",
 					"msg": "{{name}} 长度超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
+				},
+				"20005": {
+					"code": "20005",
+					"msg": "{{name}} 参数为必传项"
+				},
+				"20006": {
+					"code": "20006",
+					"msg": "user 类型不正确，请检查参数类型,应该为 {{type}} 传入为 {{currentType}} "
 				},
 				"1004": {
 					"code": "20000",
@@ -151,6 +231,14 @@
 					"code": "20003",
 					"msg": "{{name}} 长度超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
 				},
+				"20005": {
+					"code": "20005",
+					"msg": "{{name}} 参数为必传项"
+				},
+				"20006": {
+					"code": "20006",
+					"msg": "user 类型不正确，请检查参数类型,应该为 {{type}} 传入为 {{currentType}} "
+				},
 				"1004": {
 					"code": "20000",
 					"msg": "签名错误, 请排查 Appkey、Secret 是否正确"
@@ -166,10 +254,11 @@
 		"docs": "http://rongcloud.cn/docs/server.html#group_dismiss",
 		"url": "group/dismiss",
 		"params": {
-			"group": {
+			"group":{
 				"id": "10001",
-				"memberId": "aFo990k"
+				"operator": "aFo990k"
 			}
+
 		},
 		"response":{
 			"success": {
@@ -180,6 +269,14 @@
 				"20003": {
 					"code": "20003",
 					"msg": "{{name}} 长度超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
+				},
+				"20005": {
+					"code": "20005",
+					"msg": "{{name}} 参数为必传项"
+				},
+				"20006": {
+					"code": "20006",
+					"msg": "user 类型不正确，请检查参数类型,应该为 {{type}} 传入为 {{currentType}} "
 				},
 				"1004": {
 					"code": "20000",
@@ -210,6 +307,14 @@
 				"20003": {
 					"code": "20003",
 					"msg": "{{name}} 长度超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
+				},
+				"20005": {
+					"code": "20005",
+					"msg": "{{name}} 参数为必传项"
+				},
+				"20006": {
+					"code": "20006",
+					"msg": "user 类型不正确，请检查参数类型,应该为 {{type}} 传入为 {{currentType}} "
 				},
 				"1004": {
 					"code": "20000",
@@ -247,6 +352,14 @@
 				"20003": {
 					"code": "20003",
 					"msg": "{{name}} 长度超限, {{name}} >= {{min}} 且 {{name}} <= {{max}}"
+				},
+				"20005": {
+					"code": "20005",
+					"msg": "{{name}} 参数为必传项"
+				},
+				"20006": {
+					"code": "20006",
+					"msg": "user 类型不正确，请检查参数类型,应该为 {{type}} 传入为 {{currentType}} "
 				},
 				"1004": {
 					"code": "20000",

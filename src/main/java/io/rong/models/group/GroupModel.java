@@ -7,15 +7,20 @@ public class GroupModel {
     /**
      * 群组id
      **/
-    public String id;
+    private String id;
     /**
      * 群组成员
      **/
-    public String[] merberIds;
+    private String[] merberIds;
     /**
      * 群组名
      **/
-    public String name;
+    private String name;
+
+    /**
+     * 禁言时间
+     * */
+    private Integer munite;
 
     public GroupModel() {
     }
@@ -56,8 +61,17 @@ public class GroupModel {
         return this.name;
     }
 
-    public GroupModel setName(String ame) {
+    public GroupModel setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public Integer getMunite() {
+        return this.munite;
+    }
+
+    public GroupModel setMunite(Integer munite) {
+        this.munite = munite;
         return this;
     }
 }

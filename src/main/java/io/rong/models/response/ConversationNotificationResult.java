@@ -12,7 +12,7 @@ public class ConversationNotificationResult extends Result {
         super(code,errorMessage);
         this.code = code;
         this.isMuted = isMuted;
-        this.errorMessage = errorMessage;
+        this.msg = errorMessage;
     }
 
     /**
@@ -46,23 +46,6 @@ public class ConversationNotificationResult extends Result {
      */
     public void setIsMuted(Integer isMuted) {
         this.isMuted = isMuted;
-    }
-
-    /**
-     * 设置errorMessage
-     *
-     */
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-    /**
-     * 获取errorMessage
-     *
-     * @return String
-     */
-    public String getErrorMessage() {
-        return errorMessage;
     }
 
     @Override

@@ -22,15 +22,18 @@ public class UserModel {
      * portraitUri:用户头像 URI，最大长度 1024 字节。
      * 用来在 Push 推送时显示。（可选，提供即刷新，不提供忽略)
      */
-    public String portraitUri;
+    public String portrait;
+
+    private Integer minute;
+
 
     public UserModel() {
     }
 
-    public UserModel(String id, String name, String portraitUri) {
+    public UserModel(String id, String name, String portrait) {
         this.id = id;
         this.name = name;
-        this.portraitUri = portraitUri;
+        this.portrait = portrait;
     }
 
     public String getId() {
@@ -51,15 +54,23 @@ public class UserModel {
         return this;
     }
 
-    public String getPortraitUri() {
-        return this.portraitUri;
+    public String getPortrait() {
+        return this.portrait;
     }
 
-    public UserModel setPortraitUri(String portraitUri) {
-        this.portraitUri = portraitUri;
+    public UserModel setPortrait(String portrait) {
+        this.portrait = portrait;
         return this;
     }
 
+    public Integer getMinute() {
+        return this.minute;
+    }
+
+    public UserModel setMinute(Integer minute) {
+        this.minute = minute;
+        return this;
+    }
 
     @Override
     public String toString() {

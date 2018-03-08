@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class TemplateMessage {
 	// 发送人用户 Id。（必传）
-	String senderUserId;
+	String fromUserId;
 	// 接收用户 Id，提供多个本参数可以实现向多人发送消息，上限为 1000 人。（必传）
-	String[] targetIds;
+	String[] toUserId;
 	// 发送消息内容，内容中定义标识通过 values 中设置的标识位内容进行替换，参考融云消息类型表.示例说明；如果 objectName 为自定义消息类型，该参数可自定义格式。（必传）
 	String content;
 	// 消息内容中，标识位对应内容。（必传）
@@ -25,10 +25,14 @@ public class TemplateMessage {
 	// 是否过滤发送人黑名单列表，0 为不过滤、 1 为过滤，默认为 0 不过滤。（可选）
 	Integer verifyBlacklist;
 
-	public TemplateMessage(String senderUserId, String[] targetIds, String content, List<Map<String, String>> values, String objectName,
-						   String[] pushContent, String[] pushData, Integer verifyBlacklist) {
-		this.senderUserId = senderUserId;
-		this.targetIds = targetIds;
+	Integer contentAvailable;
+
+	public TemplateMessage() {
+	}
+
+	public TemplateMessage(String fromUserId, String[] toUserId, String content, List<Map<String, String>> values, String objectName, String[] pushContent, String[] pushData, Integer verifyBlacklist) {
+		this.fromUserId = fromUserId;
+		this.toUserId = toUserId;
 		this.content = content;
 		this.values = values;
 		this.objectName = objectName;
@@ -38,36 +42,47 @@ public class TemplateMessage {
 	}
 
 	/**
-	 * 获取SenderUserId
+	 * 设置fromUserId
+	 *
+	 */
+	public void setFromUserId(String fromUserId) {
+		this.fromUserId = fromUserId;
+	}
+
+	/**
+	 * 获取fromUserId
 	 *
 	 * @return String
 	 */
-	public String getSenderUserId() {
-		return this.senderUserId;
+	public String getFromUserId() {
+		return fromUserId;
 	}
+
 	/**
-	 * 设置SenderUserId
+	 * 设置toUserId
 	 *
 	 */
-	public void setSenderUserId(String senderUserId) {
-		this.senderUserId = senderUserId;
+	public void setToUserId(String[] toUserId) {
+		this.toUserId = toUserId;
 	}
 
-	public String[] getTargetIds() {
-		return this.targetIds;
+	/**
+	 * 获取toUserId
+	 *
+	 * @return String[]
+	 */
+	public String[] getToUserId() {
+		return toUserId;
 	}
 
-	public void setTargetIds(String[] targetIds) {
-		this.targetIds = targetIds;
-	}
 	/**
 	 * 设置content
 	 *
-	 */	
+	 */
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 	/**
 	 * 获取content
 	 *
@@ -76,15 +91,15 @@ public class TemplateMessage {
 	public String getContent() {
 		return content;
 	}
-	
+
 	/**
 	 * 设置values
 	 *
-	 */	
+	 */
 	public void setValues(List<Map<String, String>> values) {
 		this.values = values;
 	}
-	
+
 	/**
 	 * 获取values
 	 *
@@ -93,15 +108,15 @@ public class TemplateMessage {
 	public List<Map<String, String>> getValues() {
 		return values;
 	}
-	
+
 	/**
 	 * 设置objectName
 	 *
-	 */	
+	 */
 	public void setObjectName(String objectName) {
 		this.objectName = objectName;
 	}
-	
+
 	/**
 	 * 获取objectName
 	 *
@@ -110,15 +125,15 @@ public class TemplateMessage {
 	public String getObjectName() {
 		return objectName;
 	}
-	
+
 	/**
 	 * 设置pushContent
 	 *
-	 */	
+	 */
 	public void setPushContent(String[] pushContent) {
 		this.pushContent = pushContent;
 	}
-	
+
 	/**
 	 * 获取pushContent
 	 *
@@ -127,15 +142,15 @@ public class TemplateMessage {
 	public String[] getPushContent() {
 		return pushContent;
 	}
-	
+
 	/**
 	 * 设置pushData
 	 *
-	 */	
+	 */
 	public void setPushData(String[] pushData) {
 		this.pushData = pushData;
 	}
-	
+
 	/**
 	 * 获取pushData
 	 *
@@ -144,15 +159,15 @@ public class TemplateMessage {
 	public String[] getPushData() {
 		return pushData;
 	}
-	
+
 	/**
 	 * 设置verifyBlacklist
 	 *
-	 */	
+	 */
 	public void setVerifyBlacklist(Integer verifyBlacklist) {
 		this.verifyBlacklist = verifyBlacklist;
 	}
-	
+
 	/**
 	 * 获取verifyBlacklist
 	 *
@@ -161,7 +176,23 @@ public class TemplateMessage {
 	public Integer getVerifyBlacklist() {
 		return verifyBlacklist;
 	}
-	
+
+	/**
+	 * 获取contentAvailable
+	 *
+	 * @return Integer
+	 */
+	public Integer getContentAvailable() {
+		return this.contentAvailable;
+	}
+	/**
+	 * 设置contentAvailable
+	 *
+	 */
+	public void setContentAvailable(Integer contentAvailable) {
+		this.contentAvailable = contentAvailable;
+	}
+
 	@Override
 	public String toString() {
 		return GsonUtil.toJson(this, TemplateMessage.class);

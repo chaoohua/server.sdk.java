@@ -1,7 +1,7 @@
 package io.rong.models.response;
 
 import io.rong.models.Result;
-import io.rong.models.sensitiveword.Sensitivewords;
+import io.rong.models.sensitiveword.SensitiveWordModel;
 import io.rong.util.GsonUtil;
 
 import java.util.List;
@@ -11,13 +11,13 @@ import java.util.List;
  */
 public class ListWordfilterResult extends Result {
 	// 敏感词内容。
-	List<Sensitivewords> words;
+	List<SensitiveWordModel> words;
 
-	public ListWordfilterResult(Integer code, List<Sensitivewords> words, String errorMessage) {
+	public ListWordfilterResult(Integer code, List<SensitiveWordModel> words, String errorMessage) {
 		super(code, errorMessage);
 		this.code = code;
 		this.words = words;
-		this.errorMessage = errorMessage;
+		this.msg = errorMessage;
 	}
 	
 	/**
@@ -41,36 +41,19 @@ public class ListWordfilterResult extends Result {
 	 * 设置words
 	 *
 	 */	
-	public void setWords(List<Sensitivewords> words) {
+	public void setWords(List<SensitiveWordModel> words) {
 		this.words = words;
 	}
 	
 	/**
 	 * 获取words
 	 *
-	 * @return List<Sensitivewords>
+	 * @return List<SensitiveWordModel>
 	 */
-	public List<Sensitivewords> getWords() {
+	public List<SensitiveWordModel> getWords() {
 		return words;
 	}
-	
-	/**
-	 * 设置errorMessage
-	 *
-	 */	
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
-	
-	/**
-	 * 获取errorMessage
-	 *
-	 * @return String
-	 */
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-	
+
 	@Override
 	public String toString() {
 		return GsonUtil.toJson(this, ListWordfilterResult.class);

@@ -22,7 +22,7 @@ public class ContactNtfMessage extends BaseMessage {
 		this.targetUserId = targetUserId;
 		this.message = message;
 	}
-	
+	@Override
 	public String getType() {
 		return TYPE;
 	}

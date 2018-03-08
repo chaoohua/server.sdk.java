@@ -14,7 +14,7 @@ public class SMSVerifyCodeResult extends Result {
 		super(code, errorMessage);
 		this.code = code;
 		this.success = success;
-		this.errorMessage = errorMessage;
+		this.msg = errorMessage;
 	}
 	public void setSuccess(Boolean success) {
 		this.success = success;

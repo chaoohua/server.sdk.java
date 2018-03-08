@@ -80,9 +80,9 @@ public class BlackList {
      *
      * @return QueryBlacklistUserResult
      **/
-    public BlackListResult query(String userId) throws Exception {
+    public BlackListResult getList(String userId) throws Exception {
         //参数校验
-        String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.QUERY);
+        String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.GETLIST);
         if(null != message){
             return (BlackListResult)GsonUtil.fromJson(message,BlackListResult.class);
         }

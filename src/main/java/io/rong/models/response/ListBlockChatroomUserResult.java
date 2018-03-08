@@ -15,7 +15,7 @@ public class ListBlockChatroomUserResult extends Result{
 	public ListBlockChatroomUserResult(Integer code, List<BlockChatRoomUser> users, String errorMessage) {
 		this.code = code;
 		this.users = users;
-		this.errorMessage = errorMessage;
+		this.msg = errorMessage;
 	}
 
 	/**

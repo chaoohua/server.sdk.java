@@ -1,7 +1,6 @@
 package io.rong.models.message;
 
 import io.rong.messages.BaseMessage;
-import io.rong.util.ParamNotNull;
 
 public class PrivateMessage extends Message{
   //发送人用户 Id。（必传）
@@ -25,6 +24,8 @@ public class PrivateMessage extends Message{
   public Integer isCounted;
   //发送用户自已是否接收消息，0 表示为不接收，1 表示为接收，默认为 0 不接收。（可选）
   public Integer isIncludeSender;
+
+  public Integer contentAvailable;
 
     public PrivateMessage() {
     }
@@ -133,13 +134,21 @@ public class PrivateMessage extends Message{
         this.isIncludeSender = isIncludeSender;
         return this;
     }
-
     public String getObjectName() {
         return this.objectName;
     }
 
     public PrivateMessage setObjectName(String objectName) {
         this.objectName = objectName;
+        return this;
+    }
+
+    public Integer getContentAvailable() {
+        return this.contentAvailable;
+    }
+
+    public PrivateMessage setContentAvailable(Integer contentAvailable) {
+        this.contentAvailable = contentAvailable;
         return this;
     }
 }

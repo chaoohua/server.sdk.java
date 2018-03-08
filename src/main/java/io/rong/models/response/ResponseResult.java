@@ -8,10 +8,10 @@ import io.rong.util.GsonUtil;
  */
 public class ResponseResult extends Result {
 
-	public ResponseResult(Integer code, String errorMessage) {
-		super(code, errorMessage);
+	public ResponseResult(Integer code, String msg) {
+		super(code, msg);
 		this.code = code;
-		this.errorMessage = errorMessage;
+		this.msg = msg;
 	}
 
 	@Override

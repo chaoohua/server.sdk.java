@@ -15,13 +15,14 @@ public class ListGagChatroomUserResult extends Result{
 	public ListGagChatroomUserResult(Integer code, List<GagChatRoomUser> users, String errorMessage) {
 		this.code = code;
 		this.users = users;
-		this.errorMessage = errorMessage;
+		this.msg = errorMessage;
 	}
 	
 	/**
 	 * 设置code
 	 *
 	 */	
+	@Override
 	public void setCode(Integer code) {
 		this.code = code;
 	}
@@ -31,6 +32,7 @@ public class ListGagChatroomUserResult extends Result{
 	 *
 	 * @return Integer
 	 */
+	@Override
 	public Integer getCode() {
 		return code;
 	}
@@ -51,23 +53,8 @@ public class ListGagChatroomUserResult extends Result{
 	public List<GagChatRoomUser> getUsers() {
 		return users;
 	}
-	
-	/**
-	 * 设置errorMessage
-	 *
-	 */	
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
-	
-	/**
-	 * 获取errorMessage
-	 *
-	 * @return String
-	 */
-	public String getErrorMessage() {
-		return errorMessage;
-	}
+
+
 	
 	@Override
 	public String toString() {

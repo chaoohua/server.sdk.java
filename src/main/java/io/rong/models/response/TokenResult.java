@@ -16,7 +16,7 @@ public class TokenResult extends Result{
 		this.code = code;
 		this.token = token;
 		this.userId = userId;
-		this.errorMessage = errorMessage;
+		this.msg = errorMessage;
 	}
 
 	/**

@@ -14,7 +14,7 @@ import io.rong.methods.conversation.Conversation;
 import io.rong.methods.group.Group;
 import io.rong.methods.message.Message;
 import io.rong.methods.push.Push;
-import io.rong.methods.sensitive.Sensitiveword;
+import io.rong.methods.sensitive.SensitiveWord;
 import io.rong.methods.sensitive.Wordfilter;
 import io.rong.methods.sms.SMS;
 import io.rong.methods.user.User;
@@ -27,7 +27,7 @@ public class RongCloud {
 	public User user;
 	public Message message;
 	public Wordfilter wordfilter;
-	public Sensitiveword sensitiveword;
+	public SensitiveWord sensitiveword;
 	public Group group;
 	public Chatroom chatroom;
 	public Push push;
@@ -60,7 +60,7 @@ public class RongCloud {
 		message.setRongCloud(this);
 		wordfilter = new Wordfilter(appKey, appSecret);
 		wordfilter.setRongCloud(this);
-		sensitiveword = new Sensitiveword(appKey, appSecret);
+		sensitiveword = new SensitiveWord(appKey, appSecret);
 		sensitiveword.setRongCloud(this);
 		group = new Group(appKey, appSecret);
 		group.setRongCloud(this);

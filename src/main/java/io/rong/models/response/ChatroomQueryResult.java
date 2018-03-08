@@ -1,7 +1,7 @@
 package io.rong.models.response;
 
 import io.rong.models.Result;
-import io.rong.models.chatroom.ChatRoom;
+import io.rong.models.chatroom.ChatroomModel;
 import io.rong.util.GsonUtil;
 
 import java.util.List;
@@ -10,8 +10,8 @@ import java.util.List;
  *  chatroomQuery 返回结果
  */
 public class ChatroomQueryResult extends Result {
-	List<ChatRoom> chatRooms;
-	public ChatroomQueryResult(Integer code, String errorMessage, List<ChatRoom> chatRooms) {
+	List<ChatroomModel> chatRooms;
+	public ChatroomQueryResult(Integer code, String errorMessage, List<ChatroomModel> chatRooms) {
 		super(code, errorMessage);
 		this.chatRooms = chatRooms;
 	}
@@ -19,7 +19,7 @@ public class ChatroomQueryResult extends Result {
 	 * 设置chatRooms
 	 *
 	 */
-	public void setChatRooms(List<ChatRoom> chatRooms) {
+	public void setChatRooms(List<ChatroomModel> chatRooms) {
 		this.chatRooms = chatRooms;
 	}
 	
@@ -28,7 +28,7 @@ public class ChatroomQueryResult extends Result {
 	 *
 	 * @return chatRooms
 	 */
-	public List<ChatRoom> getChatRooms() {
+	public List<ChatroomModel> getChatRooms() {
 		return chatRooms;
 	}
 

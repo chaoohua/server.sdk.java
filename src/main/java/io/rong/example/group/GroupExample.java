@@ -1,8 +1,10 @@
 package io.rong.example.group;
 
 import io.rong.RongCloud;
+import io.rong.methods.group.Group;
 import io.rong.models.Result;
 import io.rong.models.group.GroupModel;
+import io.rong.models.group.UserGroup;
 import io.rong.models.response.GroupUserQueryResult;
 import io.rong.models.response.ListGagGroupUserResult;
 
@@ -11,6 +13,11 @@ import io.rong.models.response.ListGagGroupUserResult;
  */
 public class GroupExample {
 	private static final String JSONFILE = GroupExample.class.getClassLoader().getResource("jsonsource").getPath()+"/";
+	private static final String appKey = "z3v5yqkbvy9f0";
+	private static final String appSecret = "plhr2PA386a";
+	private static final RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+	private static final Group Group = rongCloud.group;
+
 	/**
 	 * 本地调用测试
 	 * 
@@ -19,79 +26,125 @@ public class GroupExample {
 	 */
 	public static void main(String[] args) throws Exception {
 
-		/*String appKey = "appkey";//替换成您的appkeypwe86ga5pilt6
+		/**
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#create
+		 *
+		 * 创建群组方法
+		 *
+		 */
+		String[] members = {"userId1","userid2","userId3"};
 
-		String appSecret = "secret";//替换成匹配上面key的secret ngx3lbOishj1R
-
-		String api = "http://api.cn.ronghub.com";*/
-
-		String appKey = "pwe86ga5pilt6";//替换成您的appkey
-
-		String appSecret = "ngx3lbOishj1R";//替换成匹配上面key的secret
-
-		String api = "http://api.cn.ronghub.com";
-
-/*
-		String appKey = "e0x9wycfx7flq";
-		String appSecret = "STCevzDS6Xy18n";
-		String api = "http://192.168.155.13:9200";*/
-		
-		RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
-
-		//RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret,api);
-
-		String[] groupCreateUserId = {"userId1","userid2","userId3"};
-		System.out.println("************************Group********************");
+		GroupModel group = new GroupModel()
+				.setId("groupId")
+				.setMerberIds(members)
+				.setName("groupName");
+		Result groupCreateResult = (Result)Group.create(group);
+		System.out.println("group create result:  " + groupCreateResult.toString());
 
 		/**
-		 *  创建群组
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#sync
+		 *
+		 * 	同步用户所属群组方法
 		 */
-		//groupCreate(rongCloud);
+
+		GroupModel group1 = new GroupModel()
+				.setId("groupId1")
+				.setName("groupName1");
+		GroupModel group2 = new GroupModel()
+				.setId("groupId2")
+				.setName("groupName2");
+		GroupModel[] groups = {group1,group2};
+		UserGroup user = new UserGroup()
+				.setId("jhkoi90jj")
+				.setGroups(groups);
+
+		Result syncResult = (Result)Group.sync(user);
+		System.out.println("group sync:  " + syncResult.toString());
+
 
 		/**
-		 *  同步用户所属群组方
+		 *
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#refresh
+		 *  刷新群组信息方法
 		 */
-		//groupSync(rongCloud);
+		String[] memberIds = {"userId2","userid3","userId4"};
+		group = new GroupModel()
+				.setId("groupId")
+				.setMerberIds(memberIds)
+				.setName("groupName");
+		Result refreshResult = (Result)Group.refresh(group);
+		System.out.println("refresh:  " + refreshResult.toString());
 
 		/**
-		 *   刷新群组信息方
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#join
+		 *
+		 * 邀请用户加入群组
+		 *
 		 */
-		//groupRefresh(rongCloud);
+		group = new GroupModel().setId("hdiuj87jj")
+				.setMerberIds(memberIds)
+				.setName("groupName");
+		Result groupInviteResult = (Result)rongCloud.group.invite(group);
+		System.out.println("invite:  " + groupInviteResult.toString());
 
 		/**
-		 *  将用户加入指定群组，
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#join
+		 *
+		 * 用户加入指定群组
+		 *
 		 */
-		//testGroupJoin(rongCloud);
+		group = new GroupModel().setId("groupId")
+				.setMerberIds(memberIds)
+				.setName("groupName");
+		Result groupJoinResult = (Result)rongCloud.group.join(group);
+		System.out.println("join:  " + groupJoinResult.toString());
 
 		/**
-		 *  查询群成员方法
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#getMembers
+		 *
+		 * 查询群成员方法
+		 *
 		 */
-		testGroupQueryUser(rongCloud);
+		group = new GroupModel().setId("figk97h");
+		GroupUserQueryResult getMemberesult = rongCloud.group.getMemberList(group);
+		System.out.println("group getMember:  " + getMemberesult.toString());
 
 		/**
-		 *  退出群组
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#quit
+		 *
+		 * 退出群组
+		 *
 		 */
-		//groupQuit(rongCloud);
+		group = new GroupModel()
+				.setId("groupId")
+				.setMerberIds(memberIds)
+				.setName("groupName");
+		Result groupQuitResult = (Result)rongCloud.group.quit(group);
+		System.out.println("quit:  " + groupQuitResult.toString());
 
 		/**
-		 *  添加禁言群成员方
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#quit
+		 *
+		 * 移除群组
+		 *
 		 */
-		//groupAddGagUser(rongCloud);
+		group = new GroupModel()
+				.setId("groupId")
+				.setMerberIds(memberIds)
+				.setName("groupName");
+		Result kickResult = (Result)rongCloud.group.kick(group);
+		System.out.println("kick Result:  " + kickResult.toString());
+
 
 		/**
-		 *  查询被禁言群成员
+		 *
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#dismiss
+		 *
+		 * 解散群组
+		 *
 		 */
-		testGroupLisGagUser(rongCloud);
-
-		/**
-		 *  移除禁言群成员方法
-		 */
-		//groupRollBackGagUser(rongCloud);
-
-		/**
-		 *  解散群组方法
-		 */
-		//groupDismissR(rongCloud);
+		Result groupDismissResult = (Result)rongCloud.group.dismiss("hjkl876yh", "hjikkjd97y");
+		System.out.println("dismiss:  " + groupDismissResult.toString());
 
 	 }
 
@@ -119,13 +172,19 @@ public class GroupExample {
 	 */
 	public static void testGroupSync(RongCloud rongCloud) throws Exception {
 
-		GroupModel group1 = new GroupModel().setId("groupId1").setName("groupName1");
+		GroupModel group1 = new GroupModel()
+				.setId("groupId1")
+				.setName("groupName1");
 		GroupModel group2 = new GroupModel().setId("groupId2").setName("groupName2");
 		GroupModel[] groupSyncGroups = {group1,group2};
 
-		Result groupSyncResult = (Result)rongCloud.group.sync("userId1", groupSyncGroups);
+		UserGroup user = new UserGroup().setId("jhkoi90jj").setGroups(groupSyncGroups);
 
-		System.out.println("sync:  " + groupSyncResult.toString());
+
+		Result result = (Result)rongCloud.group.sync(user);
+
+		System.out.println("sync:  " + result.toString());
+
 	 }
 
 	/**
@@ -158,8 +217,10 @@ public class GroupExample {
 	// 查询群成员方法
 	public static void testGroupQueryUser(RongCloud rongCloud) throws Exception {
 
-		GroupUserQueryResult groupQueryUserResult = rongCloud.group.getMemberList("25");
-		System.out.println("queryUser:  " + groupQueryUserResult.toString());
+		GroupModel group = new GroupModel().setId("figk97h");
+
+		GroupUserQueryResult result = rongCloud.group.getMemberList(group);
+		System.out.println("groupQueryUser:  " + result.toString());
 	}
 
 	// 退出群组方法（将用户从群中移除，不再接收该群组的消息.）
@@ -173,32 +234,7 @@ public class GroupExample {
 		System.out.println("quit:  " + groupQuitResult.toString());
 	}
 
-	// 添加禁言群成员方法（在 App 中如果不想让某一用户在群中发言时，可将此用户在群组中禁言，被禁言用户可以接收查看群组中用户聊天信息，但不能发送消息。）
-	public static void testGroupAddGagUser(RongCloud rongCloud) throws Exception {
 
-		String[] memberIds = {"userId1","userid2","userId3"};
-		GroupModel group = new GroupModel().setMerberIds(memberIds);
-		String munite = "1";
-
-		Result groupAddGagUserResult = (Result)rongCloud.group.gag.add(group, "1");
-		System.out.println("group.gag.add(:  " + groupAddGagUserResult.toString());
-
-	}
-
-	// 查询被禁言群成员方法
-	public static void testGroupLisGagUser(RongCloud rongCloud) throws Exception {
-		ListGagGroupUserResult groupLisGagUserResult = rongCloud.group.gag.getList("25");
-		System.out.println("group.gag.getList:  " + groupLisGagUserResult.toString());
-	}
-
-	// 移除禁言群成员方法
-	public static void testGroupRollBackGagUser(RongCloud rongCloud) throws Exception {
-		String[] memberIds = {"userId2","userid3","userId4"};
-		GroupModel group = new GroupModel().setMerberIds(memberIds);
-
-		Result groupRollBackGagUserResult = (Result)rongCloud.group.gag.remove(group);
-		System.out.println("group.gag.remove:  " + groupRollBackGagUserResult.toString());
-	}
 
 	// 解散群组方法。（将该群解散，所有用户都无法再接收该群的消息。）
 	public static void testGroupDismissR(RongCloud rongCloud) throws Exception {

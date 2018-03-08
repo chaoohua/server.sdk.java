@@ -43,9 +43,9 @@ public class Chatroom {
      *
      * @return ResponseResult
      **/
-    public ResponseResult publish(ChatroomMessage message) throws Exception {
+    public ResponseResult send(ChatroomMessage message) throws Exception {
 
-        String code = CommonUtil.checkFiled(message,PATH, CheckMethod.PUBLISH);
+        String code = CommonUtil.checkFiled(message,PATH, CheckMethod.SEND);
         if(null != code){
             return (ResponseResult)GsonUtil.fromJson(code,ResponseResult.class);
         }

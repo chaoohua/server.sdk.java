@@ -4,12 +4,11 @@ import io.rong.RongCloud;
 import io.rong.exception.ParamException;
 import io.rong.methods.chatroom.gag.Gag;
 import io.rong.methods.chatroom.keepalive.Keepalive;
-import io.rong.methods.chatroom.priority.Priority;
+import io.rong.methods.chatroom.demotion.Demotion;
 import io.rong.methods.chatroom.whitelist.WhiteList;
 import io.rong.methods.chatroom.block.Block;
 import io.rong.models.*;
 import io.rong.models.chatroom.*;
-import io.rong.models.chatroom.ChatRoom;
 import io.rong.models.response.ChatroomQueryResult;
 import io.rong.models.response.ChatroomUserQueryResult;
 import io.rong.models.response.CheckChatRoomUserResult;
@@ -35,9 +34,11 @@ public class Chatroom {
 	public 	 Block block;
 	public Gag gag;
 	public Keepalive keepalive;
-	public Priority priority;
+	public Demotion demotion;
 	public WhiteList whiteList;
+	public Distribute distribute;
 	private RongCloud rongCloud;
+
 
 	public RongCloud getRongCloud() {
 		return rongCloud;
@@ -47,9 +48,10 @@ public class Chatroom {
 		this.rongCloud = rongCloud;
 		gag.setRongCloud(rongCloud);
 		keepalive.setRongCloud(rongCloud);
-		priority.setRongCloud(rongCloud);
+		demotion.setRongCloud(rongCloud);
 		whiteList.setRongCloud(rongCloud);
 		block.setRongCloud(rongCloud);
+		demotion.setRongCloud(rongCloud);
 
 	}
 	public Chatroom(String appKey, String appSecret) {
@@ -57,27 +59,28 @@ public class Chatroom {
 		this.appSecret = appSecret;
 		this.gag = new Gag(appKey,appSecret);
 		this.keepalive = new Keepalive(appKey,appSecret);
-		this.priority = new Priority(appKey,appSecret);
+		this.demotion = new Demotion(appKey,appSecret);
 		this.whiteList = new WhiteList(appKey,appSecret);
 		this.block = new Block(appKey,appSecret);
+		this.distribute = new Distribute(appKey,appSecret);
 
 	}
 	/**
 	 * 创建聊天室方法 
 	 * 
-	 * @param  chatRoom:id:要创建的聊天室的id；name:要创建的聊天室的name。（必传）
+	 * @param  chatrooms:chatroom.id,name（必传）
 	 *
 	 * @return ResponseResult
 	 **/
-	public ResponseResult create(ChatRoom[] chatRoom) throws Exception {
-		if (chatRoom == null) {
+	public ResponseResult create(ChatroomModel[] chatrooms) throws Exception {
+		if (chatrooms == null) {
 			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/chatroom/create","Paramer 'chatRoomInfo' is required");
 		}
 		
 	   	StringBuilder sb = new StringBuilder();
-		for (int i = 0 ; i< chatRoom.length; i++) {
-			ChatRoom child  = chatRoom[i];
-			sb.append("&chatroom["+child.getId()+"]=").append(URLEncoder.encode(child.getName(), UTF8));
+		for (int i = 0 ; i< chatrooms.length; i++) {
+			ChatroomModel chatroom  = chatrooms[i];
+			sb.append("&chatroom["+chatroom.getId()+"]=").append(URLEncoder.encode(chatroom.getName(), UTF8));
 		}
 		
 	   	String body = sb.toString();
@@ -126,7 +129,7 @@ public class Chatroom {
 	 *
 	 * @return ChatroomQueryResult
 	 **/
-	public ChatroomQueryResult query(String[] chatroomIds) throws Exception {
+	public ChatroomQueryResult get(String[] chatroomIds) throws Exception {
 		if (chatroomIds == null) {
 			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/chatroom/query", "Paramer 'chatroomIds' is required");
 		}
@@ -151,11 +154,11 @@ public class Chatroom {
 	/**
 	 * 查询聊天室内用户方法 
 	 * 
-	 * @param  chatroom:聊天室信息，其中，要查询的聊天室 ID。（必传），要获取的聊天室成员数（必传），加入聊天室的先后顺序（必传）
+	 * @param  chatroom:聊天室.id。count,order（必传）
 	 *
 	 * @return ChatroomUserQueryResult
 	 **/
-	public ChatroomUserQueryResult getMembers(ChatRoom chatroom) throws Exception {
+	public ChatroomUserQueryResult getMembers(ChatroomModel chatroom) throws Exception {
 
 		String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.GET_MEMBERS);
 		if(null != message){
@@ -178,64 +181,13 @@ public class Chatroom {
 	}
 	
 	/**
-	 * 聊天室消息停止分发方法（可实现控制对聊天室中消息是否进行分发，停止分发后聊天室中用户发送的消息，融云服务端不会再将消息发送给聊天室中其他用户。） 
-	 * 
-	 * @param  chatroomId:聊天室 Id。（必传）
-	 *
-	 * @return ResponseResult
-	 **/
-	public ResponseResult stopDistribution(String chatroomId) throws Exception {
-		String message = CommonUtil.checkParam("id",chatroomId,PATH,CheckMethod.STOP_DISTRIBUTION);
-		if(null != message){
-			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
-		}
-		
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("&chatroomId=").append(URLEncoder.encode(chatroomId.toString(), UTF8));
-		String body = sb.toString();
-	   	if (body.indexOf("&") == 0) {
-	   		body = body.substring(1, body.length());
-	   	}
-	   	
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/message/stopDistribution.json", "application/x-www-form-urlencoded");
-		HttpUtil.setBodyParameter(body, conn);
-	    
-	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.STOP_DISTRIBUTION,HttpUtil.returnResult(conn)), ResponseResult.class);
-	}
-	
-	/**
-	 * 聊天室消息恢复分发方法 
-	 * 
-	 * @param  chatroomId:聊天室 Id。（必传）
-	 *
-	 * @return ResponseResult
-	 **/
-	public ResponseResult resumeDistribution(String chatroomId) throws Exception {
-		String message = CommonUtil.checkParam("id",chatroomId,PATH,CheckMethod.RESUME_DISTRIBUTION);
-		if(null != message){
-			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
-		}
-		
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("&chatroomId=").append(URLEncoder.encode(chatroomId.toString(), UTF8));
-		String body = sb.toString();
-	   	if (body.indexOf("&") == 0) {
-	   		body = body.substring(1, body.length());
-	   	}
-	   	
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/message/resumeDistribution.json", "application/x-www-form-urlencoded");
-		HttpUtil.setBodyParameter(body, conn);
-	    
-	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.RESUME_DISTRIBUTION,HttpUtil.returnResult(conn)), ResponseResult.class);
-	}
-	/**
-	 * 聊天室消息恢复分发方法
+	 * 查询用户是否存在聊天室
 	 *
 	 * @param  member:聊天室成员。（必传）
 	 *
 	 * @return ResponseResult
 	 **/
-	public CheckChatRoomUserResult isExist(Member member) throws Exception {
+	public CheckChatRoomUserResult isExist(ChatroomMember member) throws Exception {
 		String message = CommonUtil.checkFiled(member,PATH,CheckMethod.ISEXIST);
 		if(null != message){
 			return (CheckChatRoomUserResult)GsonUtil.fromJson(message,ResponseResult.class);

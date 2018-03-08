@@ -50,13 +50,13 @@ public class User {
 	 * url  "/user/getToken"
 	 * docs "http://rongcloud.cn/docs/server.html#getToken"
 	 *
-	 * @param user 用户信息 id,name,portraitUri(必传)
+	 * @param user 用户信息 id,name,portrait(必传)
 	 *
 	 * @return TokenResult
 	 **/
-	public TokenResult getToken(UserModel user) throws Exception {
+	public TokenResult register(UserModel user) throws Exception {
 		//需要校验的字段
-		String message = CommonUtil.checkFiled(user,PATH,CheckMethod.GET_TOKEN);
+		String message = CommonUtil.checkFiled(user,PATH,CheckMethod.REGISTER);
 		if(null != message){
 			return (TokenResult)GsonUtil.fromJson(message,TokenResult.class);
 		}
@@ -64,7 +64,7 @@ public class User {
 	    StringBuilder sb = new StringBuilder();
 	    sb.append("&userId=").append(URLEncoder.encode(user.id.toString(), UTF8));
 	    sb.append("&name=").append(URLEncoder.encode(user.name.toString(), UTF8));
-	    sb.append("&portraitUri=").append(URLEncoder.encode(user.portraitUri.toString(), UTF8));
+	    sb.append("&portraitUri=").append(URLEncoder.encode(user.portrait.toString(), UTF8));
 		String body = sb.toString();
 	   	if (body.indexOf("&") == 0) {
 	   		body = body.substring(1, body.length());
@@ -81,7 +81,7 @@ public class User {
 	 * url  "/user/refresh"
 	 * docs "http://www.rongcloud.cn/docs/server.html#user_refresh"
 	 *
-	 * @param user 用户信息 id name(必传)
+	 * @param user 用户信息 id name portrait(必传)
 	 *
 	 * @return ResponseResult
 	 **/
@@ -99,8 +99,8 @@ public class User {
 	    	sb.append("&name=").append(URLEncoder.encode(user.name.toString(), UTF8));
 	    }
 	    
-	    if (user.portraitUri != null) {
-	    	sb.append("&portraitUri=").append(URLEncoder.encode(user.portraitUri.toString(), UTF8));
+	    if (user.portrait != null) {
+	    	sb.append("&portraitUri=").append(URLEncoder.encode(user.portrait.toString(), UTF8));
 	    }
 		String body = sb.toString();
 	   	if (body.indexOf("&") == 0) {

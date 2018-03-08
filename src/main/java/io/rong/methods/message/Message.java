@@ -57,33 +57,5 @@ public class Message {
 		this.system = new System(appKey,appSecret);
 
 	}
-	/**
-	 * 设置用户某会话接收新消息时是否进行消息提醒。
-	 *
-	 *@param recallMessage
-	 *
-	 * @return ResponseResult
-	 **/
-	public Result recall(RecallMessage recallMessage) throws Exception {
-		//需要校验的字段
-		String message = CommonUtil.checkFiled(recallMessage,"message","recall");
-		if(null != message){
-			return (Result)GsonUtil.fromJson(message,Result.class);
-		}
-		StringBuilder sb = new StringBuilder();
-		sb.append("&conversationType=").append(URLEncoder.encode(recallMessage.conversationType.toString(), UTF8));
-		sb.append("&fromUserId=").append(URLEncoder.encode(recallMessage.senderUserId.toString(), UTF8));
-		sb.append("&targetId=").append(URLEncoder.encode(recallMessage.targetId.toString(), UTF8));
-		sb.append("&messageUID=").append(URLEncoder.encode(recallMessage.messageUid.toString(), UTF8));
-		sb.append("&sentTime=").append(URLEncoder.encode(recallMessage.sentTime.toString(), UTF8));
-		String body = sb.toString();
-		if (body.indexOf("&") == 0) {
-			body = body.substring(1, body.length());
-		}
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/conversation/notification/get.json", "application/x-www-form-urlencoded");
-		HttpUtil.setBodyParameter(body, conn);
-
-		return (Result) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,method,HttpUtil.returnResult(conn)), Result.class);
-	}
 	 
 }

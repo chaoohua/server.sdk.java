@@ -2,6 +2,7 @@ package io.rong.methods.chatroom.keepalive;
 
 import io.rong.RongCloud;
 import io.rong.models.CheckMethod;
+import io.rong.models.response.ChatroomKeepaliveResult;
 import io.rong.models.response.ResponseResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -62,7 +63,7 @@ public class Keepalive {
      * 删除聊天室保活方法
      *
      * @param  chatroomId:低优先级的消息类型，每次最多提交 5 个，设置的消息类型最多不超过 20 个。（必传）
-     *remove
+     *
      * @return ResponseResult
      **/
     public ResponseResult remove(String chatroomId) throws Exception {
@@ -90,10 +91,9 @@ public class Keepalive {
      *
      * @return ResponseResult
      **/
-    public ResponseResult get() throws Exception {
+    public ChatroomKeepaliveResult getList() throws Exception {
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/keepalive/query.json", "application/x-www-form-urlencoded");
-        //HttpUtil.setBodyParameter(body, conn);
 
-        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), ResponseResult.class);
+        return (ChatroomKeepaliveResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.ADD,HttpUtil.returnResult(conn)), ChatroomKeepaliveResult.class);
     }
 }

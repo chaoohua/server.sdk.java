@@ -16,7 +16,7 @@ public class InfoNtfMessage extends BaseMessage {
 		this.message = message;
 		this.extra = extra;
 	}
-	
+	@Override
 	public String getType() {
 		return TYPE;
 	}

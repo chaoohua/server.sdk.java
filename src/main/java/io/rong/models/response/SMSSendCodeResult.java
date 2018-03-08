@@ -14,7 +14,7 @@ public class SMSSendCodeResult extends Result {
 		super(code, errorMessage);
 		this.code = code;
 		this.sessionId = sessionId;
-		this.errorMessage = errorMessage;
+		this.msg = errorMessage;
 	}
 
 	/**

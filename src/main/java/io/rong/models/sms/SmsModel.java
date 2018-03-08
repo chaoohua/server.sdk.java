@@ -15,6 +15,9 @@ public class SmsModel {
     //图片验证码，开启图片验证功能后此参数必传，否则可以不传。
     public String verifyCode;
 
+    public SmsModel() {
+    }
+
     public SmsModel(String mobile, String templateId, String region, String verifyId, String verifyCode) {
         this.mobile = mobile;
         this.templateId = templateId;
@@ -27,39 +30,44 @@ public class SmsModel {
         return this.mobile;
     }
 
-    public void setMobile(String mobile) {
+    public SmsModel setMobile(String mobile) {
         this.mobile = mobile;
+        return this;
     }
 
     public String getTemplateId() {
         return this.templateId;
     }
 
-    public void setTemplateId(String templateId) {
+    public SmsModel setTemplateId(String templateId) {
         this.templateId = templateId;
+        return this;
     }
 
     public String getRegion() {
         return this.region;
     }
 
-    public void setRegion(String region) {
+    public SmsModel setRegion(String region) {
         this.region = region;
+        return this;
     }
 
     public String getVerifyId() {
         return this.verifyId;
     }
 
-    public void setVerifyId(String verifyId) {
+    public SmsModel setVerifyId(String verifyId) {
         this.verifyId = verifyId;
+        return this;
     }
 
     public String getVerifyCode() {
         return this.verifyCode;
     }
 
-    public void setVerifyCode(String verifyCode) {
+    public SmsModel setVerifyCode(String verifyCode) {
         this.verifyCode = verifyCode;
+        return this;
     }
 }

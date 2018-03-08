@@ -2,7 +2,7 @@ package io.rong.models.message;
 
 import io.rong.messages.BaseMessage;
 
-public class BroadcastMessage {
+public class BroadcastMessage extends Message{
     public String senderUserId;
     //toUserId:接收用户 Id，可以实现向多人发送消息，每次上限为 1000 人。（必传）
     public String objectName;
@@ -33,47 +33,53 @@ public class BroadcastMessage {
         return this.senderUserId;
     }
 
-    public void setSenderUserId(String senderUserId) {
+    public BroadcastMessage setSenderUserId(String senderUserId) {
         this.senderUserId = senderUserId;
+        return this;
     }
 
     public String getObjectName() {
         return this.objectName;
     }
 
-    public void setObjectName(String objectName) {
+    public BroadcastMessage setObjectName(String objectName) {
         this.objectName = objectName;
+        return this;
     }
 
     public BaseMessage getContent() {
         return this.content;
     }
 
-    public void setContent(BaseMessage content) {
+    public BroadcastMessage setContent(BaseMessage content) {
         this.content = content;
+        return this;
     }
 
     public String getPushContent() {
         return this.pushContent;
     }
 
-    public void setPushContent(String pushContent) {
+    public BroadcastMessage setPushContent(String pushContent) {
         this.pushContent = pushContent;
+        return this;
     }
 
     public String getPushData() {
         return this.pushData;
     }
 
-    public void setPushData(String pushData) {
+    public BroadcastMessage setPushData(String pushData) {
         this.pushData = pushData;
+        return this;
     }
 
     public String getOs() {
         return this.os;
     }
 
-    public void setOs(String os) {
+    public BroadcastMessage setOs(String os) {
         this.os = os;
+        return this;
     }
 }

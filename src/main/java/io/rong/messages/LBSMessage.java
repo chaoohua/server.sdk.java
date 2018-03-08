@@ -22,7 +22,7 @@ public class LBSMessage extends BaseMessage {
 		this.longitude = longitude;
 		this.poi = poi;
 	}
-	
+	@Override
 	public String getType() {
 		return TYPE;
 	}

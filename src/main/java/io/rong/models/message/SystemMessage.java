@@ -2,12 +2,26 @@ package io.rong.models.message;
 
 import io.rong.messages.BaseMessage;
 
-public class SystemMessage {
+public class SystemMessage extends Message{
 
-    private String senderUserId;
+    /**
+     * 发送人用户 Id。（必传）
+     * */
+    String senderUserId;
+    /**
+     * targetIds:接收用户 Id，可以实现向多人发送消息，每次上限为 1000 人。（必传）
+     **/
     private String[] targetIds;
+    /**
+     * 消息类型.
+     **/
     private String objectName;
+    /**
+     * 发送消息内容，参考融云消息类型表.
+     * 示例说明；如果 objectName 为自定义消息类型，该参数可自定义格式。（必传）。
+     **/
     private BaseMessage content;
+
     private String pushContent;
     private String pushData;
     private Integer isPersisted;

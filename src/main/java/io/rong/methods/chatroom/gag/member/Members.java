@@ -2,9 +2,9 @@ package io.rong.methods.chatroom.gag.member;
 
 import io.rong.RongCloud;
 import io.rong.models.*;
-import io.rong.models.chatroom.ChatRoom;
+import io.rong.models.chatroom.ChatroomModel;
+import io.rong.models.chatroom.ChatroomMember;
 import io.rong.models.response.ListGagChatroomUserResult;
-import io.rong.models.chatroom.Member;
 import io.rong.models.response.ResponseResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -38,28 +38,28 @@ public class Members {
 
     /**
      * 添加禁言聊天室成员方法（在 App 中如果不想让某一用户在聊天室中发言时，可将此用户在聊天室中禁言，被禁言用户可以接收查看聊天室中用户聊天信息，但不能发送消息.）
-     * @param  chatroom:封禁的聊天室信息，其中聊天室 Id。（必传）,用户 Id。（必传支持多个最多20个）
-     * @param  minute:禁言时长，以分钟为单位，最大值为43200分钟。（必传）
+     *
+     * @param  chatroom:封禁的聊天室信息，其中聊天室 d（必传）,minute(必传), memberIds（必传支持多个最多20个）
      *
      * @return ResponseResult
      **/
-    public ResponseResult add(ChatRoom chatroom, Integer minute) throws Exception {
+    public ResponseResult add(ChatroomModel chatroom) throws Exception {
         String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.ADD);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
-        message = CommonUtil.checkParam("minute",minute,PATH,CheckMethod.ADD);
+       /* message = CommonUtil.checkParam("minute",minute,PATH,CheckMethod.ADD);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
-        }
+        }*/
 
         StringBuilder sb = new StringBuilder();
-        Member[] users = chatroom.getMembers();
-        for(Member user : users){
-            sb.append("&userId=").append(URLEncoder.encode(user.getId().toString(), UTF8));
+        String[] memberIds = chatroom.getMemberIds();
+        for(String memberId : memberIds){
+            sb.append("&userId=").append(URLEncoder.encode(memberId, UTF8));
         }
         sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
-        sb.append("&minute=").append(URLEncoder.encode(minute.toString(), UTF8));
+        sb.append("&minute=").append(URLEncoder.encode(chatroom.getMunite().toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());
@@ -72,7 +72,7 @@ public class Members {
     }
 
     /**
-     * 查询被禁言聊天室成员方法
+     * 查询聊天室被禁言成员方法
      *
      * @param  chatroomId:聊天室 Id。（必传）
      *
@@ -103,16 +103,15 @@ public class Members {
      * @param  chatroom:封禁的聊天室信息，其中聊天室 Id。（必传）,用户 Id。（必传支持多个最多20个）
      * @return ResponseResult
      **/
-    public ResponseResult remove(ChatRoom chatroom) throws Exception {
+    public ResponseResult remove(ChatroomModel chatroom) throws Exception {
         String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.REMOVE);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
-
         StringBuilder sb = new StringBuilder();
-        Member[] users = chatroom.getMembers();
-        for(Member user : users){
-            sb.append("&userId=").append(URLEncoder.encode(user.getId().toString(), UTF8));
+        String[] memberIds = chatroom.getMemberIds();
+        for(String memberId : memberIds){
+            sb.append("&userId=").append(URLEncoder.encode(memberId, UTF8));
         }
         sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
         String body = sb.toString();

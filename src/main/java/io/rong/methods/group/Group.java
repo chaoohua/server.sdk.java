@@ -65,8 +65,8 @@ public class Group {
 			sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
 		}
 
-	    sb.append("&groupId=").append(URLEncoder.encode(group.id.toString(), UTF8));
-	    sb.append("&groupName=").append(URLEncoder.encode(group.name.toString(), UTF8));
+	    sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
+	    sb.append("&groupName=").append(URLEncoder.encode(group.getName().toString(), UTF8));
 		String body = sb.toString();
 	   	if (body.indexOf("&") == 0) {
 	   		body = body.substring(1, body.length());
@@ -80,25 +80,30 @@ public class Group {
 	/**
 	 * 同步用户所属群组方法（当第一次连接融云服务器时，需要向融云服务器提交 userId 对应的用户当前所加入的所有群组，此接口主要为防止应用中用户群信息同融云已知的用户所属群信息不同步。）
 	 *
-	 * @param  userId:被同步群信息的用户 Id。（必传）
-	 * @param  group:该用户的群信息，如群 Id 已经存在，则不会刷新对应群组名称，如果想刷新群组名称请调用刷新群组信息方法。
+	 * @param  user:用户群组信息
 	 *
 	 * @return ResponseResult
 	 **/
-	public Result sync(String userId, GroupModel[] group) throws Exception {
-		String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.SYNC);
+	public Result sync(UserGroup user) throws Exception {
+
+		if (user == null) {
+			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/group/sync", "Paramer 'user' is required");
+		}
+		String message = CommonUtil.checkFiled(user,PATH,CheckMethod.SYNC);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
-		if (group == null) {
-			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/group/sync", "Paramer 'groupInfo' is required");
-		}
-
 	   	StringBuilder sb = new StringBuilder();
-		sb.append("&userId=").append(URLEncoder.encode(userId, UTF8));
+		sb.append("&userId=").append(URLEncoder.encode(user.getId(), UTF8));
 
-		for (int i = 0 ; i< group.length; i++) {
-			GroupModel child  = group[i];
+		for (int i = 0 ; i< user.getGroups().length; i++) {
+			GroupModel child  = user.getGroups()[i];
+			if (child.getName() == null) {
+				throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/group/sync", "Paramer 'group.name' is required");
+			}
+			if (child.getId() == null) {
+				throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/group/sync", "Paramer 'group.id' is required");
+			}
 			sb.append("&group["+child.getId()+"]=").append(URLEncoder.encode(child.getName(), UTF8));
 		}
 
@@ -126,8 +131,8 @@ public class Group {
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 	    StringBuilder sb = new StringBuilder();
-	    sb.append("&groupId=").append(URLEncoder.encode(group.id.toString(), UTF8));
-	    sb.append("&groupName=").append(URLEncoder.encode(group.name.toString(), UTF8));
+	    sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
+	    sb.append("&groupName=").append(URLEncoder.encode(group.getName().toString(), UTF8));
 		String body = sb.toString();
 	   	if (body.indexOf("&") == 0) {
 	   		body = body.substring(1, body.length());
@@ -136,7 +141,38 @@ public class Group {
 		HttpUtil.setBodyParameter(body, conn);
 	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REFRESH,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
+	/**
+	 * 邀请用户加入指定群组，加入后可以接收该群消息，同一用户最多可加入 500 个群，每个群最大至 3000 人。
+	 *
+	 * @param group 用户加入指定群组参数
+	 *
+	 * @return Result
+	 **/
+	public Result invite(GroupModel group) throws Exception {
+		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.JOIN);
+		if(null != message){
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+		}
 
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0 ; i< group.getMerberIds().length; i++) {
+			String child  = group.getMerberIds()[i];
+			sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
+		}
+
+		sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
+		sb.append("&groupName=").append(URLEncoder.encode(group.getName().toString(), UTF8));
+		String body = sb.toString();
+		if (body.indexOf("&") == 0) {
+			body = body.substring(1, body.length());
+		}
+
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/join.json", "application/x-www-form-urlencoded");
+		HttpUtil.setBodyParameter(body, conn);
+
+		return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.JOIN,HttpUtil.returnResult(conn)), ResponseResult.class);
+	}
 	/**
 	 * 将用户加入指定群组，用户将可以收到该群的消息，同一用户最多可加入 500 个群，每个群最大至 3000 人。
 	 *
@@ -152,13 +188,13 @@ public class Group {
 
 	    StringBuilder sb = new StringBuilder();
 	    
-	    for (int i = 0 ; i< group.merberIds.length; i++) {
-			String child  = group.merberIds[i];
+	    for (int i = 0 ; i< group.getMerberIds().length; i++) {
+			String child  = group.getMerberIds()[i];
 			sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
 		}
 		
-	    sb.append("&groupId=").append(URLEncoder.encode(group.id.toString(), UTF8));
-	    sb.append("&groupName=").append(URLEncoder.encode(group.name.toString(), UTF8));
+	    sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
+	    sb.append("&groupName=").append(URLEncoder.encode(group.getName().toString(), UTF8));
 		String body = sb.toString();
 	   	if (body.indexOf("&") == 0) {
 	   		body = body.substring(1, body.length());
@@ -173,18 +209,18 @@ public class Group {
 	/**
 	 * 查询群成员方法 
 	 * 
-	 * @param  groupId:群组Id。（必传）
+	 * @param  group:群组.Id。（必传）
 	 *
 	 * @return GroupUserQueryResult
 	 **/
-	public GroupUserQueryResult getMemberList(String groupId) throws Exception {
-		//参数校验
-		String message = CommonUtil.checkParam("id",groupId,PATH,CheckMethod.GET_MEMBERS_LIST);
-		if(null != message){
-			return (GroupUserQueryResult)GsonUtil.fromJson(message,GroupUserQueryResult.class);
+	public GroupUserQueryResult getMemberList(GroupModel group) throws Exception {
+
+		String errMsg = CommonUtil.checkFiled(group,PATH,CheckMethod.GET_MEMBERS_LIST);
+		if(null != errMsg){
+			return (GroupUserQueryResult)GsonUtil.fromJson(errMsg,GroupUserQueryResult.class);
 		}
 	    StringBuilder sb = new StringBuilder();
-	    sb.append("&groupId=").append(URLEncoder.encode(groupId.toString(), UTF8));
+	    sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
 		String body = sb.toString();
 	   	if (body.indexOf("&") == 0) {
 	   		body = body.substring(1, body.length());
@@ -199,7 +235,7 @@ public class Group {
 	/**
 	 * 退出群组方法（将用户从群中移除，不再接收该群组的消息.） 
 	 * 
-	 * @param  group:群组.（必传）
+	 * @param  group:群组.id, memberIds（必传）
 	 *
 	 * @return ResponseResult
 	 **/
@@ -210,44 +246,77 @@ public class Group {
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 	    StringBuilder sb = new StringBuilder();
-	    
-	    for (int i = 0 ; i< group.merberIds.length; i++) {
-			String child  = group.merberIds[i];
+
+	    for (int i = 0 ; i< group.getMerberIds().length; i++) {
+			String child  = group.getMerberIds()[i];
 			sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
 		}
-		
-	    sb.append("&groupId=").append(URLEncoder.encode(group.id.toString(), UTF8));
+
+	    sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
 		String body = sb.toString();
 	   	if (body.indexOf("&") == 0) {
 	   		body = body.substring(1, body.length());
 	   	}
-	   	
+
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/quit.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
-	    
+
 	    return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.QUIT,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
+
+	/**
+	 * 将群成员移除群组方法（将用户从群中移除，不再接收该群组的消息.）
+	 *
+	 * @param  group:群组.id, memberIds（必传）
+	 *
+	 * @return ResponseResult
+	 **/
+	public Result kick(GroupModel group) throws Exception {
+
+		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.QUIT);
+		if(null != message){
+			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+		}
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0 ; i< group.getMerberIds().length; i++) {
+			String child  = group.getMerberIds()[i];
+			sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
+		}
+
+		sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
+		String body = sb.toString();
+		if (body.indexOf("&") == 0) {
+			body = body.substring(1, body.length());
+		}
+
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/quit.json", "application/x-www-form-urlencoded");
+		HttpUtil.setBodyParameter(body, conn);
+
+		return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.QUIT,HttpUtil.returnResult(conn)), ResponseResult.class);
+	}
+
 	/**
 	 * 解散群组方法。（将该群解散，所有用户都无法再接收该群的消息。） 
 	 * 
-	 * @param  userId:操作解散群的用户 Id。（必传）
+	 * @param  operator:解散群组操作者。（必传）
 	 * @param  groupId:要解散的群 Id。（必传）
 	 *
 	 * @return ResponseResult
 	 **/
-	public Result dismiss(String userId, String groupId) throws Exception {
+	public Result dismiss(String groupId,String operator) throws Exception {
 		//参数校验
-		String message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.DISMISS);
+		String message = CommonUtil.checkParam("id",groupId,PATH,CheckMethod.DISMISS);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
-		message = CommonUtil.checkParam("id",userId,PATH,CheckMethod.DISMISS);
+		message = CommonUtil.checkParam("operator",operator,PATH,CheckMethod.DISMISS);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 
 	    StringBuilder sb = new StringBuilder();
-	    sb.append("&userId=").append(URLEncoder.encode(userId.toString(), UTF8));
+	    sb.append("&userId=").append(URLEncoder.encode(operator.toString(), UTF8));
 	    sb.append("&groupId=").append(URLEncoder.encode(groupId.toString(), UTF8));
 		String body = sb.toString();
 	   	if (body.indexOf("&") == 0) {

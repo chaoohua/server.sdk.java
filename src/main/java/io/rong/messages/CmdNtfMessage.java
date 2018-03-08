@@ -16,7 +16,7 @@ public class CmdNtfMessage extends BaseMessage {
 		this.name = name;
 		this.data = data;
 	}
-	
+	@Override
 	public String getType() {
 		return TYPE;
 	}

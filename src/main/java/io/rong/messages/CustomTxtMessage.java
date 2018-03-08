@@ -14,7 +14,7 @@ public class CustomTxtMessage extends BaseMessage {
 	public CustomTxtMessage(String content) {
 		this.content = content;
 	}
-	
+	@Override
 	public String getType() {
 		return TYPE;
 	}

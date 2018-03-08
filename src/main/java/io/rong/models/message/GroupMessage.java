@@ -4,6 +4,7 @@ import io.rong.messages.BaseMessage;
 
 public class GroupMessage {
     public String senderUserId;
+    public String targetId;
     public String[] targetIds;
     public String objectName;
     public BaseMessage content;

@@ -6,7 +6,7 @@ import io.rong.util.ParamNotNull;
 public class RecallMessage {
 
     public String senderUserId;
-    public String conversationType;
+    //public String conversationType;
     public String targetId;
     public BaseMessage content;
     public String messageUid;
@@ -22,7 +22,7 @@ public class RecallMessage {
     public RecallMessage(String senderUserId, String conversationType, String targetId,
                          BaseMessage content, String messageUid, String sentTime) {
         this.senderUserId = senderUserId;
-        this.conversationType = conversationType;
+        //this.conversationType = conversationType;
         this.targetId = targetId;
         this.content = content;
         this.messageUid = messageUid;
@@ -37,14 +37,14 @@ public class RecallMessage {
         this.senderUserId = senderUserId;
     }
 
-    public String getConversationType() {
+    /*public String getConversationType() {
         return this.conversationType;
     }
 
     public void setConversationType(String conversationType) {
         this.conversationType = conversationType;
     }
-
+*/
     public String getTargetId() {
         return this.targetId;
     }

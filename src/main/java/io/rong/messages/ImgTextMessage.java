@@ -22,7 +22,7 @@ public class ImgTextMessage extends BaseMessage {
 		this.imageUri = imageUri;
 		this.url = url;
 	}
-	
+	@Override
 	public String getType() {
 		return TYPE;
 	}

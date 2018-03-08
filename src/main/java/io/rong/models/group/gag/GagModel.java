@@ -4,27 +4,31 @@ import io.rong.models.group.GroupModel;
 
 public class GagModel extends GroupModel{
 
-    String munite;
+    Integer munite;
+
+    public GagModel(Integer munite) {
+        this.munite = munite;
+    }
     /**
      * 构造方法
      *
      * @param id
      * @param merberIds
-     * @param groupId
      * @param name
      * @param munite 禁言时间
      */
-    public GagModel(String id, String[] merberIds, String groupId, String name, String munite) {
-        super(groupId, merberIds, name);
-
+    public GagModel(String id, String[] merberIds, String name, Integer munite) {
+        super(id, merberIds, name);
         this.munite = munite;
     }
 
-    public String getMunite() {
+    @Override
+    public Integer getMunite() {
         return this.munite;
     }
 
-    public GagModel setMunite(String munite) {
+    @Override
+    public GagModel setMunite(Integer munite) {
         this.munite = munite;
         return this;
     }

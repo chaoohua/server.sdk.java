@@ -18,7 +18,7 @@ public class ProfileNtfMessage extends BaseMessage {
 		this.data = data;
 		this.extra = extra;
 	}
-	
+	@Override
 	public String getType() {
 		return TYPE;
 	}

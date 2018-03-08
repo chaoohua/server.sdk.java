@@ -42,7 +42,7 @@ public class OnlineStatus {
      * url /user/checkOnline
      * docs http://www.rongcloud.cn/docs/server.html#user_check_online
      *
-     * @param  user:用户
+     * @param  user:用户 id(必传)
      *
      * @return CheckOnlineResult
      **/

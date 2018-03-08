@@ -148,7 +148,7 @@ public class CommonUtil {
                             }
                         }
                         String message = (String)CommonUtil.getErrorMessage(apiPath,method,code,name,String.valueOf(max),"1",type);
-                        message = StringUtils.replace(message,"msg","errorMessage");
+                        message = StringUtils.replace(message,"errorMessage","msg");
                         return message;
 
                     }
@@ -267,11 +267,9 @@ public class CommonUtil {
                             }
 
                         }
-
-
                     }
                     String message = (String)CommonUtil.getErrorMessage(apiPath,method,code,checkFiled,String.valueOf(max),"1",type);
-                    message = StringUtils.replace(message,"msg","errorMessage");
+                    message = StringUtils.replace(message,"errorMessage","msg");
                     return message;
 
                 }
@@ -299,12 +297,12 @@ public class CommonUtil {
         try {
             api = JsonUtil.getJsonObject(path,API_JSON_NAME);
             Set<Map.Entry<String,Object>> keys = api.getJSONObject(method).getJSONObject("response").getJSONObject("fail").entrySet();
-            String[] serchList = {"{{name}}","{{min}}","{{name}}","{{max}}"};
+            String[] serchList = {"{{name}}","{{max}}","{{name}}","{{min}}"};
             String[] replaceList = {name,max,name,min};
             for (Map.Entry<String,Object> entry : keys) {
                 if(errorCode.equals(entry.getKey())){
                     String text = entry.getValue().toString();
-                    StringUtils.replaceEach(text,serchList,replaceList);
+                    //StringUtils.replaceEach(text,serchList,replaceList);
                     return StringUtils.replaceEach(text,serchList,replaceList);
                 }
             }
@@ -327,10 +325,21 @@ public class CommonUtil {
             api = JsonUtil.getJsonObject(path,API_JSON_NAME);
             Set<String> keys = api.getJSONObject(method).getJSONObject("params").keySet();
             String key = keys.iterator().next();
-            Set<String> subkeys = api.getJSONObject(method).getJSONObject("params").getJSONObject(key).keySet();
-            Map<String,String[]> map = new HashMap<>();
-            map.put(key,subkeys.toArray(new String[subkeys.size()]));
-            return map;
+            Set<String> subkeys;
+            try{
+                Object object = api.getJSONObject(method).getJSONObject("params").get(key);
+
+                if(null != object && object instanceof JSONObject){
+                    subkeys = api.getJSONObject(method).getJSONObject("params").getJSONObject(key).keySet();
+                }else{
+                    subkeys = keys;
+                }
+                Map<String,String[]> map = new HashMap<>();
+                map.put(key,subkeys.toArray(new String[subkeys.size()]));
+                return map;
+            }catch(ClassCastException e){
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -341,30 +350,37 @@ public class CommonUtil {
      *
      * @param path   路径 （获取校验文件路径）
      * @param method 校验方法（需要校验的方法）
-     * @param errorMessage 错误信息
+     * @param response 返回信息
      *
-     * @return Map
+     * @return String
      **/
-    public static String getResponseByCode(String path,String method,String errorMessage){
+    public static String getResponseByCode(String path,String method,String response){
         JSONObject api = null;
         try {
-            JSONObject object =  JSON.parseObject(errorMessage);
+            JSONObject object =  JSON.parseObject(response);
             String code = String.valueOf(object.get("code"));
             api = JsonUtil.getJsonObject(path,API_JSON_NAME);
             Set<Map.Entry<String,Object>> keys = api.getJSONObject(method).getJSONObject("response").getJSONObject("fail").entrySet();
-            String[] serchList = {"{{name}}","{{min}}","{{name}}","{{max}}"};
-
+           // String[] serchList = {"{{name}}","{{min}}","{{name}}","{{max}}"};
+            String text = "";
             for (Map.Entry<String,Object> entry : keys) {
                 if(code.equals(entry.getKey())){
-                    String text = entry.getValue().toString();
-                    text = StringUtils.replace(text,"msg","errorMessage");
+                    text = entry.getValue().toString();
+                    //text = StringUtils.replace(text,"msg","errorMessage");
                     return text;
                 }
+            }
+            if(code.equals("200")){
+                text = StringUtils.replace(response,"users","members");
+                return text;
+            }else{
+                text = StringUtils.replace(response,"errorMessage","msg");
+                return text;
             }
         } catch (Exception e) {
 
         }
-        return errorMessage;
+        return response;
     }
 
 }

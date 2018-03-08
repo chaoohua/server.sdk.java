@@ -18,7 +18,7 @@ public class VoiceMessage extends BaseMessage {
 		this.extra = extra;
 		this.duration = duration;
 	}
-	
+	@Override
 	public String getType() {
 		return TYPE;
 	}

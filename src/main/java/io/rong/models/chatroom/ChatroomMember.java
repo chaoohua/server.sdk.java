@@ -2,24 +2,31 @@ package io.rong.models.chatroom;
 
 import io.rong.util.GsonUtil;
 
-public class Member {
-    // 聊天室用户Id。
+public class ChatroomMember {
+    /**
+     * 聊天室用户Id。
+     * */
     public String id;
-    // 加入聊天室时间。
+    /**
+     * 加入聊天室时间。
+     * */
     public String time;
     /**
      * 聊天室ID
      * */
     public String chatroomId;
-    public Member() {
+
+    public Integer munite;
+
+    public ChatroomMember() {
         super();
     }
-    public Member(String id, String time) {
+    public ChatroomMember(String id, String time) {
         this.id = id;
         this.time = time;
     }
 
-    public Member(String id, String chatroomId, String time) {
+    public ChatroomMember(String id, String chatroomId, String time) {
         this.id = id;
         this.chatroomId = chatroomId;
         this.time = time;
@@ -29,7 +36,7 @@ public class Member {
      * 设置id
      *
      */
-    public Member setId(String id) {
+    public ChatroomMember setId(String id) {
         this.id = id;
         return this;
     }
@@ -47,7 +54,7 @@ public class Member {
      * 设置time
      *
      */
-    public Member setTime(String time) {
+    public ChatroomMember setTime(String time) {
         this.time = time;
         return this;
     }
@@ -65,13 +72,29 @@ public class Member {
         return this.chatroomId;
     }
 
-    public Member setChatroomId(String chatroomId) {
+    public ChatroomMember setChatroomId(String chatroomId) {
         this.chatroomId = chatroomId;
         return this;
     }
-
+    /**
+     * 获取禁言时长
+     *
+     * @return String
+     */
+    public Integer getMunite() {
+        return this.munite;
+    }
+    /**
+     * 设置munite
+     *
+     * @return String
+     */
+    public void setMunite(Integer munite) {
+        this.munite = munite;
+    }
     @Override
     public String toString() {
-        return GsonUtil.toJson(this, Member.class);
+        return GsonUtil.toJson(this, ChatroomMember.class);
     }
+
 }

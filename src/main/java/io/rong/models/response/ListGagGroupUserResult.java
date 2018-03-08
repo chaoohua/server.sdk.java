@@ -15,7 +15,7 @@ public class ListGagGroupUserResult extends Result{
 	public ListGagGroupUserResult(Integer code, List<GagGroupUser> users, String errorMessage) {
 		this.code = code;
 		this.users = users;
-		this.errorMessage = errorMessage;
+		this.msg = errorMessage;
 	}
 
 	/**

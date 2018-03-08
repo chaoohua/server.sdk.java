@@ -14,7 +14,7 @@ public class BlackListResult extends Result {
         super(code, errorMessage);
         this.code = code;
         this.users = users;
-        this.errorMessage = errorMessage;
+        this.msg = errorMessage;
     }
     /**
      * 设置users

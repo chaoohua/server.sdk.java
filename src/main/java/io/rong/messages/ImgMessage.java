@@ -18,7 +18,7 @@ public class ImgMessage extends BaseMessage {
 		this.extra = extra;
 		this.imageUri = imageUri;
 	}
-	
+	@Override
 	public String getType() {
 		return TYPE;
 	}

@@ -34,7 +34,7 @@ public class SensitiveExample {
 
 
 
-        System.out.println("************************Sensitiveword********************");
+        System.out.println("************************SensitiveWord********************");
         // 添加敏感词方法（设置敏感词后，App 中用户不会收到含有敏感词的消息内容，默认最多设置 50 个敏感词。）
         //ResponseResult sensitivewordAddResult = rongCloud.sensitiveword.add("money", "****");
 
@@ -58,7 +58,7 @@ public class SensitiveExample {
 
         //敏感词服务已升级，Sensitiveword新敏感词服务。
 
-        System.out.println("************************Sensitiveword********************");
+        System.out.println("************************SensitiveWord********************");
         // 添加敏感词方法（设置敏感词后，App 中用户不会收到含有敏感词的消息内容，默认最多设置 50 个敏感词。）
         //ResponseResult sensitivewordAddResult = rongCloud.sensitiveword.add("money", "****");
        // System.out.println("add:  " + sensitivewordAddResult.toString());

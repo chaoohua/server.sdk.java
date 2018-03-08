@@ -3,15 +3,17 @@ package io.rong.example;
 import io.rong.RongCloud;
 import io.rong.messages.TxtMessage;
 import io.rong.messages.VoiceMessage;
+import io.rong.models.Result;
 import io.rong.models.TemplateMessage;
-import io.rong.models.message.ChatroomMessage;
-import io.rong.models.message.GroupMessage;
-import io.rong.models.message.PrivateMessage;
-import io.rong.models.message.SystemMessage;
+import io.rong.models.group.GroupModel;
+import io.rong.models.group.UserGroup;
+import io.rong.models.message.*;
 import io.rong.models.push.PushMessage;
 import io.rong.models.push.UserTag;
 import io.rong.models.response.*;
+import io.rong.models.sensitiveword.SensitiveWordModel;
 import io.rong.models.sms.SmsModel;
+import io.rong.models.user.UserModel;
 import io.rong.util.GsonUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,14 +25,17 @@ import java.io.Reader;
 import static org.junit.Assert.assertEquals;
 
 /**
- * 一些api的调用示例
+ * 一些api的调用示例和测试
  */
 public class Example {
 	private static final String JSONFILE = Example.class.getClassLoader().getResource("jsonsource").getPath()+"/";
 	private RongCloud rongCloud ;
 	private static final TxtMessage txtMessage = new TxtMessage("hello", "helloExtra");
 	private static final VoiceMessage voiceMessage = new VoiceMessage("hello", "helloExtra", 20L);
-	SmsModel sms = new SmsModel("13500000000", "dsfdsfd", "86", "1408706337", "1408706337");
+	private static final SmsModel sms =new SmsModel().setMobile("13500000000").setRegion("86")
+							.setTemplateId("dsfdsfd").setVerifyCode("1408706337").setVerifyId("1408706337");
+	private static UserModel user = new UserModel().setId("userId1")
+							.setName("username").setPortrait("http://www.rongcloud.cn/images/logo.png");
 	private static final String[] targetIds = {"userId2","userid3","userId4"};
 
 	@Before
@@ -41,11 +46,12 @@ public class Example {
 		rongCloud = RongCloud.getInstance(appKey, appSecret,api);
 	}
 	/**
-	 * 系统模版消息测试
+	 * 系统消息测试
 	 */
 	@Test
-	public void testPublishSystem() throws Exception {
-		SystemMessage systemMessage = new SystemMessage().setSenderUserId("usetId")
+	public void testSendSystem() throws Exception {
+		SystemMessage systemMessage = new SystemMessage()
+					.setSenderUserId("usetId")
 					.setTargetIds(targetIds)
 					.setObjectName(txtMessage.getType())
 					.setContent(txtMessage)
@@ -54,23 +60,26 @@ public class Example {
 					.setIsPersisted(0)
 					.setIsCounted(0)
 					.setContentAvailable(0);
-		ResponseResult result = rongCloud.message.system.publish(systemMessage);
+		ResponseResult result = rongCloud.message.system.send(systemMessage);
 		System.out.println("publishSystem:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
 	}
 	/**
-	 * 系统消息测试
+	 * 发送系统模板消息方法（一个用户向一个或多个用户发送系统消息，单条消息最大 128k，
+	 * 会话类型为 SYSTEM.每秒钟最多发送 100 条消息，每次最多同时向 100 人发送，如：
+	 * 一次发送 100 人时，示为 100 条消息。）
 	 */
 	@Test
-	public void testPublishSystemTemplate() throws Exception {
+	public void testSendSystemTemplate() throws Exception {
 		Reader reader = null ;
-		// 发送系统模板消息方法（一个用户向一个或多个用户发送系统消息，单条消息最大 128k，会话类型为 SYSTEM.每秒钟最多发送 100 条消息，每次最多同时向 100 人发送，如：一次发送 100 人时，示为 100 条消息。）
 		try {
-			reader = new InputStreamReader(new FileInputStream(JSONFILE+"TemplateMessage.json"));
-			TemplateMessage publishSystemTemplateTemplateMessage  =  (TemplateMessage)GsonUtil.fromJson(reader, TemplateMessage.class);
-			ResponseResult result = rongCloud.message.system.publishTemplate(publishSystemTemplateTemplateMessage);
-			System.out.println("publishSystemTemplate:  " + result.toString());
+			reader = new InputStreamReader(new FileInputStream(JSONFILE+"/message/"+"Template.json"));
+
+			Template template = (Template)GsonUtil.fromJson(reader, Template.class);
+
+			ResponseResult result = rongCloud.message.system.sendTemplate(template);
+			System.out.println("sendSystemTemplate:  " + result.toString());
 
 			assertEquals("200",result.getCode().toString());
 		} catch (Exception e) {
@@ -85,14 +94,14 @@ public class Example {
 	 * 测试单聊模板消息
 	 */
 	@Test
-	public void testPublishPrivateTemplate() throws Exception {
+	public void testSendPrivateTemplate() throws Exception {
 		Reader reader = null ;
 		// 发送单聊模板消息方法（一个用户向多个用户发送不同消息内容，单条消息最大 128k。每分钟最多发送 6000 条信息，每次发送用户上限为 1000 人。）
 		try {
-			reader = new InputStreamReader(new FileInputStream(JSONFILE+"TemplateMessage.json"));
-			TemplateMessage publishTemplateTemplateMessage  =  (TemplateMessage) GsonUtil.fromJson(reader, TemplateMessage.class);
-			ResponseResult messagePublishTemplateResult = rongCloud.message.aPrivate.publishTemplate(publishTemplateTemplateMessage);
-			System.out.println("publishPrivateTemplate:  " + messagePublishTemplateResult.toString());
+			reader = new InputStreamReader(new FileInputStream(JSONFILE+"/message/"+"Template.json"));
+			Template template  =  (Template) GsonUtil.fromJson(reader, Template.class);
+			ResponseResult messagePublishTemplateResult = rongCloud.message.aPrivate.sendTemplate(template);
+			System.out.println("sendPrivateTemplate:  " + messagePublishTemplateResult.toString());
 
 			assertEquals("200",messagePublishTemplateResult.getCode().toString());
 
@@ -108,7 +117,7 @@ public class Example {
 	 * 测试单聊消息
 	 * */
 	@Test
-	public void testPublishPrivate() throws Exception {
+	public void testSendPrivate() throws Exception {
 		Reader reader = null ;
 		PrivateMessage  privateMessage = new PrivateMessage().setSenderUserId("userId")
 				.setTargetIds(targetIds)
@@ -123,8 +132,8 @@ public class Example {
 				.setIsIncludeSender(0);
 
 		//发送单聊方法
-		ResponseResult publishPrivateResult = rongCloud.message.aPrivate.publish(privateMessage);
-		System.out.println("publishPrivate:  " + publishPrivateResult.toString());
+		ResponseResult publishPrivateResult = rongCloud.message.aPrivate.send(privateMessage);
+		System.out.println("sendPrivate:  " + publishPrivateResult.toString());
 
 		assertEquals("200",publishPrivateResult.getCode().toString());
 	}
@@ -132,9 +141,10 @@ public class Example {
 	 * 测试群组消息
 	 * */
 	@Test
-	public void testPublishGroup() throws Exception {
+	public void testSendGroup() throws Exception {
 		//群组消息
-		GroupMessage groupMessage = new GroupMessage().setSenderUserId("userId")
+		GroupMessage groupMessage = new GroupMessage()
+				.setSenderUserId("userId")
 				.setTargetIds(targetIds)
 				.setObjectName(txtMessage.getType())
 				.setContent(txtMessage)
@@ -145,7 +155,8 @@ public class Example {
 				.setIsIncludeSender(0)
 				.setIsMentioned(0)
 				.setContentAvailable(0);
-		ResponseResult result = rongCloud.message.group.publish(groupMessage);
+		ResponseResult result = rongCloud.message.group.send(groupMessage);
+
 		System.out.println("publishGroup:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
@@ -155,13 +166,14 @@ public class Example {
 	 * 测试聊天室消息
 	 * */
 	@Test
-	public void testPublishChatroomPrivate() throws Exception {
+	public void testSendChatroomPrivate() throws Exception {
 		//聊天室消息
-		ChatroomMessage message = new ChatroomMessage().setSenderUserId("targetIds")
+		ChatroomMessage message = new ChatroomMessage()
+				.setSenderUserId("targetIds")
 				.setTargetIds(targetIds)
 				.setContent(txtMessage)
 				.setObjectName(txtMessage.getType());
-		ResponseResult result = rongCloud.message.chatroom.publish(message);
+		ResponseResult result = rongCloud.message.chatroom.send(message);
 		System.out.println("publishChatroomPrivate:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
@@ -171,7 +183,7 @@ public class Example {
 	 * 为用户打标签测试
 	 */
 	@Test
-	public void test_setUserTag() throws Exception {
+	public void testSetUserTag() throws Exception {
 		Reader reader = null;
 		// 添加 Push 标签方法
 		try {
@@ -192,21 +204,20 @@ public class Example {
 	}
 
 	/**
-	 * 广播push测试
+	 * 广播push测试fromuserid 和 message为null即为不落地的push）
 	 */
 	@Test
-	public void test_send() throws Exception {
+	public void testSendPush() throws Exception {
 		Reader reader = null;
-		// 广播消息方法（fromuserid 和 message为null即为不落地的push）
 		try {
 			reader = new InputStreamReader(new FileInputStream(JSONFILE + "PushMessage.json"));
 			PushMessage broadcastPushPushMessage = (PushMessage) GsonUtil.fromJson(reader, PushMessage.class);
 
-			ResponseResult pushBroadcastPushResult = rongCloud.push.send(broadcastPushPushMessage);
+			ResponseResult result = rongCloud.push.send(broadcastPushPushMessage);
 
-			System.out.println("broadcastPush:  " + pushBroadcastPushResult.toString());
+			System.out.println("broadcastPush:  " + result.toString());
 
-			assertEquals("200",pushBroadcastPushResult.getCode().toString());
+			assertEquals("200",result.getCode().toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -222,10 +233,11 @@ public class Example {
 	 * */
 	@Test
 	public void testAddSensitiveword() throws Exception {
-
-		ResponseResult result = rongCloud.sensitiveword.add(
-									"money",
-									"****");
+		SensitiveWordModel sentiveWord = new SensitiveWordModel()
+				.setType(0)
+				.setKeyWord("黄赌毒")
+				.setReplace("***");
+		ResponseResult result = rongCloud.sensitiveword.add(sentiveWord);
 		System.out.println("add:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
@@ -237,7 +249,6 @@ public class Example {
 	@Test
 	public void testGetListSensitiveword() throws Exception {
 
-		//
 		ListWordfilterResult result = rongCloud.sensitiveword.getList(1);
 		System.out.println("getList:  " + result.toString());
 		assertEquals("200",result.getCode().toString());
@@ -254,49 +265,316 @@ public class Example {
 
 		assertEquals("200",result.getCode().toString());
 	}
-
 	/**
-	 * 批量移除敏感词方法（从敏感词列表中，批量移除某些敏感词，一次最多移除敏感词不超过 50 个，移除后 2 小时内生效.）
+	 * 短信通知消息
+	 * */
+	@Test
+	public void testSendSmsNotify() throws Exception {
+		SMSSendCodeResult result = rongCloud.sms.notify.send(sms,"aa","bb","cc");
+		System.out.println("notify:  " + result.toString());
+		assertEquals("200",result.getCode().toString());
+	}
+	/**
+	 * 图片验证码方法
 	 * */
 	@Test
 	public void testGetImageCode() throws Exception {
-		// 获取图片验证码方法
+
 		SMSImageCodeResult result = rongCloud.sms.code.getImage("app-key");
 		System.out.println("getImageCode:  " + result.toString());
 		assertEquals("200",result.getCode().toString());
 	}
 
 	/**
-	 * 批量移除敏感词方法（从敏感词列表中，批量移除某些敏感词，一次最多移除敏感词不超过 50 个，移除后 2 小时内生效.）
+	 * 发送短信验证码方法
 	 * */
 	@Test
 	public void testSendCode() throws Exception {
-		// 发送短信验证码方法。
+
 		SMSSendCodeResult result = rongCloud.sms.code.send(sms);
 		System.out.println("sendCode:  " + result.toString());
 		assertEquals("200",result.getCode().toString());
 	}
 
 	/**
-	 * 批量移除敏感词方法（从敏感词列表中，批量移除某些敏感词，一次最多移除敏感词不超过 50 个，移除后 2 小时内生效.）
+	 * 验证码验证方法
 	 * */
 	@Test
 	public void testVerifyCode() throws Exception {
-		// 验证码验证方法
+
 		SMSVerifyCodeResult result = rongCloud.sms.code.verify("2312312", "2312312");
 		System.out.println("verifyCode:  " + result.toString());
 		assertEquals("200",result.getCode().toString());
 	}
+	/**
+	 *
+	 * 检查用户在线状态 方法
+	 */
+	@Test
+	public void testCheckOnline() throws Exception {
+		UserModel user = new UserModel();
+		user.setId("userId");
 
+		CheckOnlineResult result = rongCloud.user.onlineStatus.check(user);
+
+		assertEquals("200",result.getCode().toString());
+		System.out.println("checkOnline:  " + result.toString());
+	}
 
 	/**
-	 * 批量移除敏感词方法（从敏感词列表中，批量移除某些敏感词，一次最多移除敏感词不超过 50 个，移除后 2 小时内生效.）
-	 * */
+	 *
+	 * 永不注册测试
+	 */
 	@Test
-	public void testBatchDeleteSensitiveword() throws Exception {
-		// 验证码验证方法
-		SMSSendCodeResult result = rongCloud.sms.notify.send(sms,"aa","bb","cc");
-		System.out.println("notify:  " + result.toString());
+	public void testRegister() throws Exception {
+		TokenResult result = rongCloud.user.register(user);
+
+		System.out.println("getToken:  " + result.toString());
 		assertEquals("200",result.getCode().toString());
+
+	}
+
+	/**
+	 *  刷新用户信息测试
+	 */
+	@Test
+	public void testUserRefresh() throws Exception {
+		Result result = (ResponseResult)rongCloud.user.refresh(user);
+		System.out.println("refresh:  " + result.toString());
+		assertEquals("200",result.getCode().toString());
+
+
+	}
+	/**
+	 * 测试用户封禁方法（每秒钟限 100 次）
+	 */
+	@Test
+	public void testUserAddBlock() throws Exception {
+		user = new UserModel().setId("hkjo09h").setMinute(1000);
+		Result result = (ResponseResult)rongCloud.user.block.add(user);
+		System.out.println("userAddBlock:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 * 测试解除用户封禁方法（每秒钟限 100 次）
+	 */
+	@Test
+	public void testUserUnBlock() throws Exception {
+		ResponseResult result = (ResponseResult)rongCloud.user.block.remove("userId2");
+		System.out.println("unBlock:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 *  获取被封禁用户方法（每秒钟限 100 次）
+	 */
+	@Test
+	public void testUserQueryBlock() throws Exception {
+
+		BlockUserResult result = (BlockUserResult)rongCloud.user.block.getList();
+		System.out.println("queryBlock:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+
+	}
+	/**
+	 * 添加用户到黑名单方法（每秒钟限 100 次）
+	 */
+	@Test
+	public void testAddBlacklist() throws Exception {
+
+		Result result = (Result)rongCloud.user.blackList.add("userId1", "userId2");
+		System.out.println("addBlacklist:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 *  获取某用户的黑名单列表方法（每秒钟限 100 次）
+	 */
+	@Test
+	public void testGetBlacklist() throws Exception {
+
+		BlackListResult result = rongCloud.user.blackList.getList("userId1");
+		System.out.println("queryBlacklist:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 *
+	 *  从黑名单中移除用户方法（每秒钟限 100 次）
+	 */
+	@Test
+	public void testRemoveBlacklist() throws Exception {
+		Result result = (Result)rongCloud.user.blackList.remove("userId1", "userId2");
+		System.out.println("removeBlacklist:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+	}
+
+	/**
+	 * 创建群组方法（创建群组，并将用户加入该群组，用户将可以收到该群的消息，同一用户最多可加入 500 个群，
+	 * 每个群最大至 3000 人，App 内的群组数量没有限制.注：其实本方法是加入群组方法 /group/join 的别名。）
+	 */
+	@Test
+	public void testGroupCreate() throws Exception {
+
+		String[] members = {"userId1","userid2","userId3"};
+
+		GroupModel group = new GroupModel()
+				.setId("groupId")
+				.setMerberIds(members)
+				.setName("groupName");
+		Result result = (Result)rongCloud.group.create(group);
+		System.out.println("group create result:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 * 	同步用户所属群组方法测试（当第一次连接融云服务器时，需要向融云服务器提交 userId 对应的用户当前所加入的所有群组，
+	 * 	此接口主要为防止应用中用户群信息同融云已知的用户所属群信息不同步。）
+	 */
+	@Test
+	public  void testGroupSync() throws Exception {
+
+		GroupModel group1 = new GroupModel().setId("groupId1").setName("groupName1");
+		GroupModel group2 = new GroupModel().setId("groupId2").setName("groupName2");
+		GroupModel[] groupSyncGroups = {group1,group2};
+
+		UserGroup user = new UserGroup();
+		user.setGroups(groupSyncGroups);
+		user.setId("jhkoi90jj");
+
+		Result result = (Result)rongCloud.group.sync(user);
+
+		System.out.println("sync:  " + result.toString());
+		assertEquals("200",result.getCode().toString());
+
+	}
+
+	/**
+	 *  刷新群组信息方法测试
+	 */
+	@Test
+	public void testGroupRefresh() throws Exception {
+
+		String[] memberIds = {"he4kfpk","he4kfp2","he4kfp4"};
+		GroupModel group = new GroupModel()
+				.setId("hiuyr743k")
+				.setMerberIds(memberIds)
+				.setName("RongCloud");
+		Result result = (Result)rongCloud.group.refresh(group);
+		System.out.println("refresh:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+	}
+
+	/**
+	 * 将用户加入指定群组，用户将可以收到该群的消息，同一用户最多可加入 500 个群，每个群最大至 3000 人。
+	 */
+	@Test
+	public void testGroupJoin() throws Exception {
+		String[] memberIds = {"userId2","userid3","userId4"};
+		GroupModel group = new GroupModel()
+				.setId("hgir769ll")
+				.setMerberIds(memberIds)
+				.setName("RongClooud");
+		Result result = (Result)rongCloud.group.join(group);
+		System.out.println("join:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 *  查询群成员方法
+	 */
+	@Test
+	public  void testGroupQueryUser() throws Exception {
+
+		GroupModel group = new GroupModel().setId("figk97h");
+
+		GroupUserQueryResult result = rongCloud.group.getMemberList(group);
+		System.out.println("groupQueryUser:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 *  退出群组方法测试（将用户从群中移除，不再接收该群组的消息.）
+	 */
+	@Test
+	public void testGroupQuit() throws Exception {
+
+		String[] memberIds = {"userId2","userid3","userId4"};
+		GroupModel group = new GroupModel()
+				.setId("groupId")
+				.setMerberIds(memberIds)
+				.setName("groupName");
+		Result result = (Result)rongCloud.group.quit(group);
+		System.out.println("quit:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 *  添加禁言群成员方法测试
+	 */
+	@Test
+	public void testGroupAddGagUser() throws Exception {
+
+		String[] memberIds = {"userId1","userid2","userId3"};
+		GroupModel group = new GroupModel()
+				.setMerberIds(memberIds)
+				.setMunite(5);
+		Result result = (Result)rongCloud.group.gag.add(group);
+		System.out.println("group.gag.add:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+
+	}
+	/**
+	 *  查询被禁言群成员方法
+	 */
+	@Test
+	public void testGroupLisGagUser() throws Exception {
+		ListGagGroupUserResult result = rongCloud.group.gag.getList("25");
+		System.out.println("group.gag.getList:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 *  移除禁言群成员方法
+	 */
+	@Test
+	public void testGroupRollBackGagUser() throws Exception {
+		String[] memberIds = {"userId2","userid3","userId4"};
+		GroupModel group = new GroupModel()
+				.setMerberIds(memberIds)
+				.setId("jhgui85hh");
+
+		ResponseResult result = (ResponseResult)rongCloud.group.gag.remove(group);
+		System.out.println("group.gag.remove:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 *  解散群组方法
+	 */
+	@Test
+	public void testGroupDismissResult() throws Exception {
+		Result result = (Result)rongCloud.group.dismiss("userId1", null);
+		System.out.println("groupDismissResult:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
 	}
 }

@@ -14,7 +14,11 @@ import io.rong.models.user.UserModel;
 public class UserExample {
     public static UserModel user = new UserModel().setId("userId1")
             .setName("username")
-            .setPortraitUri("http://www.rongcloud.cn/images/logo.png");
+            .setPortrait("http://www.rongcloud.cn/images/logo.png");
+    private static final String appKey = "e0x9wycfx7flq";
+    private static final String appSecret = "STCevzDS6Xy18n";
+    private static final RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+
 
     public static void main(String[] args) throws Exception {
 
@@ -23,17 +27,13 @@ public class UserExample {
         String appSecret = "secret";//替换成匹配上面key的secret
 
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);*/
-        String appKey = "e0x9wycfx7flq";
-        String appSecret = "STCevzDS6Xy18n";
         String api = "http://192.168.155.13:9200";
 
-        /*String appKey = "8luwapkvucoil";
-        String appSecret = "y0icysjl4h3LWz";
-        String api = "http://api.cn.ronghub.com";*/
+
 
         //RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
 
-        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret,api);
+        //RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret,api);
 
 
         //System.out.println("************************user getToken********************");
@@ -67,6 +67,7 @@ public class UserExample {
      * 检查用户在线状态 方法
      */
     public static void testCheckOnline(RongCloud rongCloud) throws Exception {
+
         UserModel user = new UserModel();
         user.setId("userId");
 
@@ -79,7 +80,17 @@ public class UserExample {
      * 获取 Token 方法
      */
     public static void testGetToken(RongCloud rongCloud) throws Exception {
-        TokenResult result = rongCloud.user.getToken(user);
+
+        String appKey = "e0x9wycfx7flq";
+        String appSecret = "STCevzDS6Xy18n";
+        UserModel user = new UserModel()
+                .setId("userId1")
+                .setName("username")
+                .setPortrait("http://www.rongcloud.cn/images/logo.png");
+        TokenResult result = rongCloud.user.register(user);
+
+
+
         System.out.println("getToken:  " + result.toString());
     }
 
@@ -95,7 +106,9 @@ public class UserExample {
      *解除用户封禁方法（每秒钟限 100 次）
      */
     public static void testUserAddBlock(RongCloud rongCloud) throws Exception {
-        Result userUnBlockResult = (ResponseResult)rongCloud.user.block.add("userId2",10000000);
+        user = new UserModel().setId("hkjo09h").setMinute(1000);
+
+        Result userUnBlockResult = (ResponseResult)rongCloud.user.block.add(user);
         System.out.println("userAddBlock:  " + userUnBlockResult.toString());
     }
     /**
@@ -127,7 +140,7 @@ public class UserExample {
      */
     public static void testQueryBlacklist(RongCloud rongCloud) throws Exception {
 
-        BlackListResult result = rongCloud.user.blackList.query("userId1");
+        BlackListResult result = rongCloud.user.blackList.getList("userId1");
         System.out.println("queryBlacklist:  " + result.toString());
 
     }

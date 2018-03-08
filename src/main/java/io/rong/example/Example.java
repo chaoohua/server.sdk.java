@@ -3,12 +3,11 @@ package io.rong.example;
 import io.rong.RongCloud;
 import io.rong.messages.TxtMessage;
 import io.rong.messages.VoiceMessage;
-import io.rong.models.*;
-import io.rong.models.message.ChatroomMessage;
-import io.rong.models.message.GroupMessage;
-import io.rong.models.message.PrivateMessage;
-import io.rong.models.message.SystemMessage;
+import io.rong.models.message.*;
+import io.rong.models.push.PushMessage;
+import io.rong.models.push.UserTag;
 import io.rong.models.response.*;
+import io.rong.models.sensitiveword.SensitiveWordModel;
 import io.rong.models.sms.SmsModel;
 import io.rong.util.GsonUtil;
 import org.junit.Before;
@@ -46,7 +45,7 @@ public class Example {
 		//系统消息方法
 		SystemMessage systemMessage = new SystemMessage("userId1", targetIds,txtMessage.getType(),txtMessage,"thisisapush",
 				"{\"pushData\":\"hello\"}", 0, 0,0);
-		ResponseResult result = rongCloud.message.system.publish(systemMessage);
+		ResponseResult result = rongCloud.message.system.send(systemMessage);
 		System.out.println("publishSystem:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
@@ -57,12 +56,13 @@ public class Example {
 	@Test
 	public void testPublishSystemTemplate() throws Exception {
 		Reader reader = null ;
-		// 发送系统模板消息方法（一个用户向一个或多个用户发送系统消息，单条消息最大 128k，会话类型为 SYSTEM.每秒钟最多发送 100 条消息，每次最多同时向 100 人发送，如：一次发送 100 人时，示为 100 条消息。）
 		try {
-			reader = new InputStreamReader(new FileInputStream(JSONFILE+"TemplateMessage.json"));
-			TemplateMessage publishSystemTemplateTemplateMessage  =  (TemplateMessage)GsonUtil.fromJson(reader, TemplateMessage.class);
-			ResponseResult result = rongCloud.message.system.publishTemplate(publishSystemTemplateTemplateMessage);
-			System.out.println("publishSystemTemplate:  " + result.toString());
+			reader = new InputStreamReader(new FileInputStream(JSONFILE+"/message/"+"Template.json"));
+
+			Template template = (Template)GsonUtil.fromJson(reader, Template.class);
+
+			ResponseResult result = rongCloud.message.system.sendTemplate(template);
+			System.out.println("sendSystemTemplate:  " + result.toString());
 
 			assertEquals("200",result.getCode().toString());
 		} catch (Exception e) {
@@ -81,10 +81,10 @@ public class Example {
 		Reader reader = null ;
 		// 发送单聊模板消息方法（一个用户向多个用户发送不同消息内容，单条消息最大 128k。每分钟最多发送 6000 条信息，每次发送用户上限为 1000 人。）
 		try {
-			reader = new InputStreamReader(new FileInputStream(JSONFILE+"TemplateMessage.json"));
-			TemplateMessage publishTemplateTemplateMessage  =  (TemplateMessage) GsonUtil.fromJson(reader, TemplateMessage.class);
-			ResponseResult messagePublishTemplateResult = rongCloud.message.aPrivate.publishTemplate(publishTemplateTemplateMessage);
-			System.out.println("publishPrivateTemplate:  " + messagePublishTemplateResult.toString());
+			reader = new InputStreamReader(new FileInputStream(JSONFILE+"/message/"+"Template.json"));
+			Template template  =  (Template) GsonUtil.fromJson(reader, Template.class);
+			ResponseResult messagePublishTemplateResult = rongCloud.message.aPrivate.sendTemplate(template);
+			System.out.println("sendPrivateTemplate:  " + messagePublishTemplateResult.toString());
 
 			assertEquals("200",messagePublishTemplateResult.getCode().toString());
 
@@ -107,7 +107,7 @@ public class Example {
 		PrivateMessage privateMessage = new PrivateMessage("userId1", targetIds, voiceMessage.getType(),voiceMessage, "thisisapush",
 				"{\"pushData\":\"hello\"}", "4", 0, 0, 0, 0);
 		//发送单聊方法
-		ResponseResult publishPrivateResult = rongCloud.message.aPrivate.publish(privateMessage);
+		ResponseResult publishPrivateResult = rongCloud.message.aPrivate.send(privateMessage);
 		System.out.println("publishPrivate:  " + publishPrivateResult.toString());
 
 		assertEquals("200",publishPrivateResult.getCode().toString());
@@ -121,7 +121,7 @@ public class Example {
 		String[] targetIds = {"groupId2","groupId3","groupId4"};
 		GroupMessage groupMessage = new GroupMessage("userId1", targetIds,txtMessage.getType(), txtMessage,"thisisapush",
 				"{\"pushData\":\"hello\"}", 0, 0,0,0,0);
-		ResponseResult result = rongCloud.message.group.publish(groupMessage);
+		ResponseResult result = rongCloud.message.group.send(groupMessage);
 		System.out.println("publishGroup:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
@@ -136,7 +136,7 @@ public class Example {
 		TxtMessage txtMessage = new TxtMessage("hello", "helloExtra");
 		String[] targetIds2 = {"chatroomId2","chatroomId3","chatroomId4"};
 		ChatroomMessage message = new ChatroomMessage("userId1",targetIds2,txtMessage.getType(),txtMessage);
-		ResponseResult result = rongCloud.message.chatroom.publish(message);
+		ResponseResult result = rongCloud.message.chatroom.send(message);
 		System.out.println("publishChatroomPrivate:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
@@ -198,9 +198,11 @@ public class Example {
 	@Test
 	public void testAddSensitiveword() throws Exception {
 
-		ResponseResult result = rongCloud.sensitiveword.add(
-									"money",
-									"****");
+		SensitiveWordModel sentiveWord = new SensitiveWordModel()
+				.setType(0)
+				.setKeyWord("黄赌毒")
+				.setReplace("***");
+		ResponseResult result = rongCloud.sensitiveword.add(sentiveWord);
 		System.out.println("add:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());

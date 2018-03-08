@@ -1,8 +1,9 @@
-package io.rong.methods.broadcast;
+package io.rong.methods.message.broadcast;
 
 import io.rong.RongCloud;
-import io.rong.models.response.ResponseResult;
 import io.rong.models.message.BroadcastMessage;
+import io.rong.models.message.Message;
+import io.rong.models.response.ResponseResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HttpUtil;
@@ -40,15 +41,16 @@ public class Broadcast {
      * 发送广播消息方法（发送消息给一个应用下的所有注册用户，如用户未在线会对满足条件（绑定手机终端）的用户发送 Push 信息，单条消息最大 128k，会话类型为 SYSTEM。每小时只能发送 2 次，每天最多发送 3 次。）
      * 该功能开发环境下可免费使用。生产环境下，您需要登录开发者后台，在“应用/IM 服务/高级功能设置”中开通公有云专业版后，在“广播消息和推送”中，开启后才能使用
      *
-     *  @param broadcastMessage
+     *  @param message
      *
      * @return ResponseResult
      **/
-    public ResponseResult send(BroadcastMessage broadcastMessage) throws Exception {
-        String message = CommonUtil.checkFiled(broadcastMessage,PATH,BROADCAST_SEND);
-        if(null != message){
-            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+    public ResponseResult send(Message message) throws Exception {
+        String errMsg = CommonUtil.checkFiled(message,PATH,BROADCAST_SEND);
+        if(null != errMsg){
+            return (ResponseResult)GsonUtil.fromJson(errMsg,ResponseResult.class);
         }
+        BroadcastMessage broadcastMessage = (BroadcastMessage)message;
         StringBuilder sb = new StringBuilder();
         sb.append("&fromUserId=").append(URLEncoder.encode(broadcastMessage.senderUserId.toString(), UTF8));
         sb.append("&objectName=").append(URLEncoder.encode(broadcastMessage.content.getType(), UTF8));

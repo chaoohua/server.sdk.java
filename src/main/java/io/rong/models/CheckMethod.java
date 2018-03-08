@@ -26,12 +26,17 @@ public class CheckMethod {
     public static final String GET_IMAGE = "getImage";
     public static final String VERIFY = "verify";
     public static final String SEND = "send";
+    public static final String REGISTER = "register";
     public static final String GET_TOKEN = "getToken";
+
     public static final String CHECK = "check";
     public static final String QUERY = "query";
-    public static final String PUBLISH = "publish";
-    public static final String PUBLISHTEMPLATE = "publishTemplate";
+    public static final String PUBLISH = "send";
+    public static final String SENDTEMPLATE = "sendTemplate";
+    public static final String PUBLISHTEMPLATE = "sendTemplate";
     public static final String BROADCAST = "broadcast";
     public static final String SET_USER_TAG = "setUserTag";
+    public static final String RECALL = "recall";
+
 
 }
