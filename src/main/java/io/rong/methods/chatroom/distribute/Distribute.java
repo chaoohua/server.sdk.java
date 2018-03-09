@@ -1,4 +1,4 @@
-package io.rong.methods.chatroom;
+package io.rong.methods.chatroom.distribute;
 
 import io.rong.RongCloud;
 import io.rong.models.CheckMethod;
@@ -12,7 +12,7 @@ import java.net.URLEncoder;
 
 public class Distribute {
     private static final String UTF8 = "UTF-8";
-    private static final String PATH = "chatroom/whitelist";
+    private static final String PATH = "chatroom/distribute";
     private String appKey;
     private String appSecret;
     private RongCloud rongCloud;

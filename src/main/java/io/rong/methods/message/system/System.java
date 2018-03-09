@@ -116,13 +116,13 @@ public class System {
 
         for(Map.Entry<String, Template.Data> vo : template.getContent().entrySet()){
             toUserIds.add(vo.getKey());
-            values.add(vo.getValue().getDate());
+            values.add(vo.getValue().getData());
             push.add(vo.getValue().getPush());
         }
         templateMessage.setFromUserId(template.getSenderId());
         templateMessage.setToUserId(toUserIds.toArray(new String[toUserIds.size()]));
         templateMessage.setObjectName(template.getObjectName());
-        templateMessage.setContent(template.getTemplate());
+        templateMessage.setContent(template.getTemplate().toString());
         templateMessage.setValues(values);
         templateMessage.setPushContent(push.toArray(new String[push.size()]));
         templateMessage.setPushData(template.getPushData());

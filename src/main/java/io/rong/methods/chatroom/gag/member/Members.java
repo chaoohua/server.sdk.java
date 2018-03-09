@@ -59,7 +59,7 @@ public class Members {
             sb.append("&userId=").append(URLEncoder.encode(memberId, UTF8));
         }
         sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
-        sb.append("&minute=").append(URLEncoder.encode(chatroom.getMunite().toString(), UTF8));
+        sb.append("&minute=").append(URLEncoder.encode(chatroom.getMinute().toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());

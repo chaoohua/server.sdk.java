@@ -2,18 +2,15 @@ package io.rong.models.message;
 
 import io.rong.messages.BaseMessage;
 
-public class GroupMessage {
-    public String senderUserId;
-    public String targetId;
-    public String[] targetIds;
-    public String objectName;
-    public BaseMessage content;
-    public String pushContent;
-    public String pushData;
-    public Integer isPersisted;
-    public Integer isCounted;
+public class GroupMessage extends Message{
+
+    /**
+     * 发送者自己是否接收此条消息, 0: 不接收, 1: 接收, 默认: 0
+     **/
     public Integer isIncludeSender;
-    public Integer isMentioned;
+    /**
+     * ios静默推送 0关闭 1开启
+     **/
     private Integer contentAvailable;
 
     public GroupMessage() {
@@ -41,69 +38,79 @@ public class GroupMessage {
         this.isPersisted = isPersisted;
         this.isCounted = isCounted;
         this.isIncludeSender = isIncludeSender;
-        this.isMentioned = isMentioned;
         this.contentAvailable = contentAvailable;
     }
 
-
+    @Override
     public String getSenderUserId() {
         return this.senderUserId;
     }
-
+    @Override
     public GroupMessage setSenderUserId(String senderUserId) {
         this.senderUserId = senderUserId;
         return this;
     }
 
+    /**
+     * 获取接收群组Id
+     *
+     * @return String
+     */
+    @Override
     public String[] getTargetIds() {
         return this.targetIds;
     }
-
+    /**
+     * 设置接收群组Id
+     *
+     * @return String
+     */
+    @Override
     public GroupMessage setTargetIds(String[] targetIds) {
         this.targetIds = targetIds;
         return this;
     }
-
+    @Override
     public BaseMessage getContent() {
         return this.content;
     }
-
+    @Override
     public GroupMessage setContent(BaseMessage content) {
         this.content = content;
         return this;
     }
-
+    @Override
     public String getPushContent() {
         return this.pushContent;
     }
-
+    @Override
     public GroupMessage setPushContent(String pushContent) {
         this.pushContent = pushContent;
         return this;
     }
-
+    @Override
     public String getPushData() {
         return this.pushData;
     }
-
+    @Override
     public GroupMessage setPushData(String pushData) {
         this.pushData = pushData;
         return this;
     }
-
+    @Override
     public Integer getIsPersisted() {
         return this.isPersisted;
     }
-
+    @Override
     public GroupMessage setIsPersisted(Integer isPersisted) {
         this.isPersisted = isPersisted;
         return this;
     }
-
+    @Override
     public Integer getIsCounted() {
         return this.isCounted;
     }
-
+    @Override
     public GroupMessage setIsCounted(Integer isCounted) {
         this.isCounted = isCounted;
         return this;
@@ -117,29 +124,20 @@ public class GroupMessage {
         this.isIncludeSender = isIncludeSender;
         return this;
     }
-
-    public Integer getIsMentioned() {
-        return this.isMentioned;
-    }
-
-    public GroupMessage setIsMentioned(Integer isMentioned) {
-        this.isMentioned = isMentioned;
-        return this;
-    }
-
+    @Override
     public Integer getContentAvailable() {
         return this.contentAvailable;
     }
-
+    @Override
     public GroupMessage setContentAvailable(Integer contentAvailable) {
         this.contentAvailable = contentAvailable;
         return this;
     }
-
+    @Override
     public String getObjectName() {
         return this.objectName;
     }
-
+    @Override
     public GroupMessage setObjectName(String objectName) {
         this.objectName = objectName;
         return this;

@@ -1,7 +1,6 @@
 package io.rong.example.push;
 
 import io.rong.RongCloud;
-import io.rong.example.Example;
 import io.rong.models.push.PushMessage;
 import io.rong.models.push.UserTag;
 import io.rong.models.response.ResponseResult;
@@ -16,7 +15,7 @@ import java.io.Reader;
 import static org.junit.Assert.assertEquals;
 
 public class PushExample {
-    private static final String JSONFILE = Example.class.getClassLoader().getResource("jsonsource").getPath()+"/";
+    private static final String JSONFILE = PushExample.class.getClassLoader().getResource("jsonsource").getPath()+"/";
     private RongCloud rongCloud ;
 
     @Before

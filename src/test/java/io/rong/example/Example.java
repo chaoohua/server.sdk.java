@@ -4,7 +4,6 @@ import io.rong.RongCloud;
 import io.rong.messages.TxtMessage;
 import io.rong.messages.VoiceMessage;
 import io.rong.models.Result;
-import io.rong.models.TemplateMessage;
 import io.rong.models.group.GroupModel;
 import io.rong.models.group.UserGroup;
 import io.rong.models.message.*;
@@ -32,19 +31,143 @@ public class Example {
 	private RongCloud rongCloud ;
 	private static final TxtMessage txtMessage = new TxtMessage("hello", "helloExtra");
 	private static final VoiceMessage voiceMessage = new VoiceMessage("hello", "helloExtra", 20L);
-	private static final SmsModel sms =new SmsModel().setMobile("13500000000").setRegion("86")
-							.setTemplateId("dsfdsfd").setVerifyCode("1408706337").setVerifyId("1408706337");
-	private static UserModel user = new UserModel().setId("userId1")
-							.setName("username").setPortrait("http://www.rongcloud.cn/images/logo.png");
 	private static final String[] targetIds = {"userId2","userid3","userId4"};
 
 	@Before
 	public void setUp() throws Exception {
-		String appKey = "e0x9wycfx7flq";
-		String appSecret = "STCevzDS6Xy18n";
-		String api = "http://192.168.155.13:9200";
-		rongCloud = RongCloud.getInstance(appKey, appSecret,api);
+		/*String appKey = "e0x9wycfx7flq";8luwapkv8s7pl
+		String appSecret = "STCevzDS6Xy18n";*/
+		String appKey = "8luwapkv8s7pl";
+		String appSecret = "lmkgpHuXezTjV2";
+		//String api = "http://192.168.155.13:9200";
+		rongCloud = RongCloud.getInstance(appKey, appSecret);
 	}
+
+	/**
+	 *
+	 * 检查用户在线状态 方法
+	 */
+	@Test
+	public void testCheckOnline() throws Exception {
+		UserModel user = new UserModel();
+		user.setId("userId");
+
+		CheckOnlineResult result = rongCloud.user.onlineStatus.check(user);
+
+		assertEquals("200",result.getCode().toString());
+		System.out.println("checkOnline:  " + result.toString());
+	}
+
+	/**
+	 *
+	 * 用户注册测试
+	 */
+	@Test
+	public void testRegister() throws Exception {
+
+		UserModel user = new UserModel()
+				.setId("userId1")
+				.setName("username")
+				.setPortrait("http://www.rongcloud.cn/images/logo.png");
+
+		TokenResult result = rongCloud.user.register(user);
+
+		System.out.println("getToken:  " + result.toString());
+		assertEquals("200",result.getCode().toString());
+
+	}
+
+	/**
+	 *  刷新用户信息测试
+	 */
+	@Test
+	public void testUserRefresh() throws Exception {
+		UserModel user = new UserModel()
+				.setId("userId1")
+				.setName("username")
+				.setPortrait("http://www.rongcloud.cn/images/logo.png");
+
+
+		Result result = (ResponseResult)rongCloud.user.refresh(user);
+		System.out.println("refresh:  " + result.toString());
+		assertEquals("200",result.getCode().toString());
+
+
+	}
+	/**
+	 * 测试用户封禁方法（每秒钟限 100 次）
+	 */
+	@Test
+	public void testUserAddBlock() throws Exception {
+		UserModel user = new UserModel()
+				.setId("hkjo09h")
+				.setMinute(1000);
+		Result result = (ResponseResult)rongCloud.user.block.add(user);
+		System.out.println("userAddBlock:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 * 测试解除用户封禁方法（每秒钟限 100 次）
+	 */
+	@Test
+	public void testUserUnBlock() throws Exception {
+		ResponseResult result = (ResponseResult)rongCloud.user.block.remove("userId2");
+		System.out.println("unBlock:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 *  获取被封禁用户方法（每秒钟限 100 次）
+	 */
+	@Test
+	public void testUserQueryBlock() throws Exception {
+
+		BlockUserResult result = (BlockUserResult)rongCloud.user.block.getList();
+		System.out.println("queryBlock:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+
+	}
+	/**
+	 * 添加用户到黑名单方法（每秒钟限 100 次）
+	 */
+	@Test
+	public void testAddBlacklist() throws Exception {
+
+		Result result = (Result)rongCloud.user.blackList.add("userId1", "userId2");
+		System.out.println("addBlacklist:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 *  获取某用户的黑名单列表方法（每秒钟限 100 次）
+	 */
+	@Test
+	public void testGetBlacklist() throws Exception {
+
+		BlackListResult result = rongCloud.user.blackList.getList("userId1");
+		System.out.println("queryBlacklist:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+
+	}
+	/**
+	 *
+	 *  从黑名单中移除用户方法（每秒钟限 100 次）
+	 */
+	@Test
+	public void testRemoveBlacklist() throws Exception {
+		Result result = (Result)rongCloud.user.blackList.remove("userId1", "userId2");
+		System.out.println("removeBlacklist:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+	}
+
 	/**
 	 * 系统消息测试
 	 */
@@ -91,6 +214,23 @@ public class Example {
 		}
 	}
 	/**
+	 * 系统消息测试
+	 */
+	@Test
+	public void testSendBroadcast() throws Exception {
+		Message message = new BroadcastMessage()
+				.setSenderUserId("Hji8yh76")
+				.setObjectName(txtMessage.getType())
+				.setContent(txtMessage)
+				.setPushContent("this is a push")
+				.setPushData("{'pushData':'hello'}")
+				.setOs("iOS");
+		ResponseResult result = rongCloud.message.system.broadcast(message);
+		System.out.println("send broadcast:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+	}
+	/**
 	 * 测试单聊模板消息
 	 */
 	@Test
@@ -119,7 +259,8 @@ public class Example {
 	@Test
 	public void testSendPrivate() throws Exception {
 		Reader reader = null ;
-		PrivateMessage  privateMessage = new PrivateMessage().setSenderUserId("userId")
+		PrivateMessage  privateMessage = new PrivateMessage()
+				.setSenderUserId("userId")
 				.setTargetIds(targetIds)
 				.setObjectName(voiceMessage.getType())
 				.setContent(voiceMessage)
@@ -138,13 +279,29 @@ public class Example {
 		assertEquals("200",publishPrivateResult.getCode().toString());
 	}
 	/**
+	 * 测试撤回单聊消息
+	 * */
+	@Test
+	public void testRecallPrivate() throws Exception {
+		RecallMessage message = new RecallMessage()
+				.setSenderUserId("sea9901")
+				.setTargetId("markoiwm")
+				.setuId("5GSB-RPM1-KP8H-9JHF")
+				.setSentTime("1519444243981");
+		ResponseResult result = (ResponseResult)rongCloud.message.group.recall(message);
+
+		System.out.println("recall private message:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+	}
+	/**
 	 * 测试群组消息
 	 * */
 	@Test
 	public void testSendGroup() throws Exception {
 		//群组消息
 		GroupMessage groupMessage = new GroupMessage()
-				.setSenderUserId("userId")
+				.setSenderUserId("Hji8yh76")
 				.setTargetIds(targetIds)
 				.setObjectName(txtMessage.getType())
 				.setContent(txtMessage)
@@ -153,11 +310,57 @@ public class Example {
 				.setIsPersisted(0)
 				.setIsCounted(0)
 				.setIsIncludeSender(0)
-				.setIsMentioned(0)
 				.setContentAvailable(0);
 		ResponseResult result = rongCloud.message.group.send(groupMessage);
 
-		System.out.println("publishGroup:  " + result.toString());
+		System.out.println("send group:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+	}
+
+	/**
+	 * 测试群组@消息
+	 * */
+	@Test
+	public void testSendGroupMention() throws Exception {
+
+		//要@的人
+		String[] userIds = {"Hji8yh76","sea9901"};
+		MentionedInfo mentionedInfo = new MentionedInfo(1,userIds,"");
+
+		GroupMentionContent content = new GroupMentionContent(txtMessage,mentionedInfo);
+
+		MentionMessage mentionMessage = new MentionMessage()
+				.setSenderUserId("userId")
+				.setMentionIds(targetIds)
+				.setObjectName(txtMessage.getType())
+				.setContent(content)
+				.setPushContent("this is a push")
+				.setPushData("{\"pushData\":\"hello\"}")
+				.setIsPersisted(0)
+				.setIsCounted(0)
+				.setIsIncludeSender(0)
+				.setIsMentioned(0)
+				.setContentAvailable(0);
+		ResponseResult result = rongCloud.message.group.sendMention(mentionMessage);
+
+		System.out.println("send group:  " + result.toString());
+
+		assertEquals("200",result.getCode().toString());
+	}
+	/**
+	 * 测试群组消息
+	 * */
+	@Test
+	public void testRecallGroup() throws Exception {
+		RecallMessage message = new RecallMessage()
+				.setSenderUserId("sea9901")
+				.setTargetId("markoiwm")
+				.setuId("5GSB-RPM1-KP8H-9JHF")
+				.setSentTime("1519444243981");
+		ResponseResult result = (ResponseResult)rongCloud.message.group.recall(message);
+
+		System.out.println("send recall message:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
 	}
@@ -166,7 +369,7 @@ public class Example {
 	 * 测试聊天室消息
 	 * */
 	@Test
-	public void testSendChatroomPrivate() throws Exception {
+	public void testSendChatroom() throws Exception {
 		//聊天室消息
 		ChatroomMessage message = new ChatroomMessage()
 				.setSenderUserId("targetIds")
@@ -270,6 +473,13 @@ public class Example {
 	 * */
 	@Test
 	public void testSendSmsNotify() throws Exception {
+		SmsModel sms =new SmsModel()
+				.setMobile("13500000000")
+				.setRegion("86")
+				.setTemplateId("dsfdsfd")
+				.setVerifyCode("1408706337")
+				.setVerifyId("1408706337");
+
 		SMSSendCodeResult result = rongCloud.sms.notify.send(sms,"aa","bb","cc");
 		System.out.println("notify:  " + result.toString());
 		assertEquals("200",result.getCode().toString());
@@ -290,7 +500,12 @@ public class Example {
 	 * */
 	@Test
 	public void testSendCode() throws Exception {
-
+		SmsModel sms =new SmsModel()
+				.setMobile("13500000000")
+				.setRegion("86")
+				.setTemplateId("dsfdsfd")
+				.setVerifyCode("1408706337")
+				.setVerifyId("1408706337");
 		SMSSendCodeResult result = rongCloud.sms.code.send(sms);
 		System.out.println("sendCode:  " + result.toString());
 		assertEquals("200",result.getCode().toString());
@@ -304,116 +519,6 @@ public class Example {
 
 		SMSVerifyCodeResult result = rongCloud.sms.code.verify("2312312", "2312312");
 		System.out.println("verifyCode:  " + result.toString());
-		assertEquals("200",result.getCode().toString());
-	}
-	/**
-	 *
-	 * 检查用户在线状态 方法
-	 */
-	@Test
-	public void testCheckOnline() throws Exception {
-		UserModel user = new UserModel();
-		user.setId("userId");
-
-		CheckOnlineResult result = rongCloud.user.onlineStatus.check(user);
-
-		assertEquals("200",result.getCode().toString());
-		System.out.println("checkOnline:  " + result.toString());
-	}
-
-	/**
-	 *
-	 * 永不注册测试
-	 */
-	@Test
-	public void testRegister() throws Exception {
-		TokenResult result = rongCloud.user.register(user);
-
-		System.out.println("getToken:  " + result.toString());
-		assertEquals("200",result.getCode().toString());
-
-	}
-
-	/**
-	 *  刷新用户信息测试
-	 */
-	@Test
-	public void testUserRefresh() throws Exception {
-		Result result = (ResponseResult)rongCloud.user.refresh(user);
-		System.out.println("refresh:  " + result.toString());
-		assertEquals("200",result.getCode().toString());
-
-
-	}
-	/**
-	 * 测试用户封禁方法（每秒钟限 100 次）
-	 */
-	@Test
-	public void testUserAddBlock() throws Exception {
-		user = new UserModel().setId("hkjo09h").setMinute(1000);
-		Result result = (ResponseResult)rongCloud.user.block.add(user);
-		System.out.println("userAddBlock:  " + result.toString());
-
-		assertEquals("200",result.getCode().toString());
-
-	}
-	/**
-	 * 测试解除用户封禁方法（每秒钟限 100 次）
-	 */
-	@Test
-	public void testUserUnBlock() throws Exception {
-		ResponseResult result = (ResponseResult)rongCloud.user.block.remove("userId2");
-		System.out.println("unBlock:  " + result.toString());
-
-		assertEquals("200",result.getCode().toString());
-
-	}
-	/**
-	 *  获取被封禁用户方法（每秒钟限 100 次）
-	 */
-	@Test
-	public void testUserQueryBlock() throws Exception {
-
-		BlockUserResult result = (BlockUserResult)rongCloud.user.block.getList();
-		System.out.println("queryBlock:  " + result.toString());
-
-		assertEquals("200",result.getCode().toString());
-
-
-	}
-	/**
-	 * 添加用户到黑名单方法（每秒钟限 100 次）
-	 */
-	@Test
-	public void testAddBlacklist() throws Exception {
-
-		Result result = (Result)rongCloud.user.blackList.add("userId1", "userId2");
-		System.out.println("addBlacklist:  " + result.toString());
-
-		assertEquals("200",result.getCode().toString());
-
-	}
-	/**
-	 *  获取某用户的黑名单列表方法（每秒钟限 100 次）
-	 */
-	@Test
-	public void testGetBlacklist() throws Exception {
-
-		BlackListResult result = rongCloud.user.blackList.getList("userId1");
-		System.out.println("queryBlacklist:  " + result.toString());
-
-		assertEquals("200",result.getCode().toString());
-
-	}
-	/**
-	 *
-	 *  从黑名单中移除用户方法（每秒钟限 100 次）
-	 */
-	@Test
-	public void testRemoveBlacklist() throws Exception {
-		Result result = (Result)rongCloud.user.blackList.remove("userId1", "userId2");
-		System.out.println("removeBlacklist:  " + result.toString());
-
 		assertEquals("200",result.getCode().toString());
 	}
 
@@ -530,6 +635,7 @@ public class Example {
 
 		String[] memberIds = {"userId1","userid2","userId3"};
 		GroupModel group = new GroupModel()
+				.setId("lmkgpHuXezTjV2")
 				.setMerberIds(memberIds)
 				.setMunite(5);
 		Result result = (Result)rongCloud.group.gag.add(group);
@@ -571,7 +677,7 @@ public class Example {
 	 */
 	@Test
 	public void testGroupDismissResult() throws Exception {
-		Result result = (Result)rongCloud.group.dismiss("userId1", null);
+		Result result = (Result)rongCloud.group.dismiss("hjUkjik11", "hjUkjik");
 		System.out.println("groupDismissResult:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());

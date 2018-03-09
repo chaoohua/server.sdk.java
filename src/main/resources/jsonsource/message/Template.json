@@ -1,17 +1,23 @@
 {
-  "senderId": "2191",
+  "senderId": "kamdnq",
   "objectName": "RC:TxtMsg",
-  "template": "{c}{d}{e}",
+  "template": {
+    "content": "{name}, 语文成绩 {score} 分"
+  },
   "content": {
-    "21": {
-      "{c}": "1",
-      "{d}": "2",
-      "{e}": "3"
+    "sea9901": {
+      "data": {
+        "{name}": "小明",
+        "{score}": "90"
+      },
+      "push": "{name} 你的成绩出来了"
     },
-    "22": {
-      "{c}": "4",
-      "{d}": "5",
-      "{e}": "6"
+    "sea9902": {
+      "data": {
+        "{name}": "小红",
+        "{score}": "95"
+      },
+      "push": "{name} 你的成绩出来了"
     }
   }
 }

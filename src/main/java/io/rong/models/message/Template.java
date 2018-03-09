@@ -2,38 +2,16 @@ package io.rong.models.message;
 
 import java.util.Map;
 
+/**
+ * @author hc
+ */
 public class Template {
-
-    /* {
-          type: 'SYSTEM',
-          senderId: '__SYSTEM__',
-          objectName: 'RC:TxtMsg',
-          template: {
-              content: '{name}, 语文成绩 {score} 分'
-          },
-          content: {
-              sea9901: {
-                  data: {
-                      '{name}': '小明',
-                      '{score}': '90'
-                  },
-                  push: '{name} 考试成绩'
-              },
-              sea9902: {
-                  data: {
-                      '{name}': '小红',
-                      '{score}': '95'
-                  },
-                  push: '{name} 考试成绩'
-              }
-          }
-      };*/
    private String senderId;
    private String objectName;
    /**
     * 模板
     * */
-   private String template;
+   private Object template;
    /**
     * key 用户Id ,value 模板赋值
     *
@@ -62,11 +40,11 @@ public class Template {
         this.objectName = objectName;
     }
 
-    public String getTemplate() {
+    public Object getTemplate() {
         return this.template;
     }
 
-    public void setTemplate(String template) {
+    public void setTemplate(Object template) {
         this.template = template;
     }
 
@@ -103,15 +81,15 @@ public class Template {
     }
 
     public class Data{
-        private Map<String,String> date;
+        private Map<String,String> data;
         private String push;
 
-        public Map<String, String> getDate() {
-            return this.date;
+        public Map<String, String> getData() {
+            return this.data;
         }
 
-        public void setDate(Map<String, String> date) {
-            this.date = date;
+        public void setData(Map<String, String> data) {
+            this.data = data;
         }
 
         public String getPush() {

@@ -1,84 +1,72 @@
 package io.rong.example.sensitive;
 
 import io.rong.RongCloud;
+import io.rong.methods.sensitive.SensitiveWord;
 import io.rong.models.response.ListWordfilterResult;
+import io.rong.models.response.ResponseResult;
+import io.rong.models.sensitiveword.SensitiveWordModel;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
 
 public class SensitiveExample {
+   /**
+    * 此处替换成您的appKey
+    *  */
+    private static final String appKey = "z3v5yqkbvy9f0";
+    /**
+     * 此处替换成您的appSecret
+     * */
+    private static final String appSecret = "plhr2PA386a";
 
     public static void main(String[] args) throws Exception {
 
-       /* String appKey = "appkey";//替换成您的appkey
-
-        String appSecret = "secret";//替换成匹配上面key的secret
-
-        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);*/
-        String appKey = "z3v5yqkbvy9f0";
-        String appSecret = "plhr2PA386a";
-
-        //pp 租车
-       // String appKey = "pkfcgjstp23u8";
-        //String appSecret = "kfsV9pcmPz";
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
-        //String api = "http://192.168.155.13:9200";
-/*
-        String appKey = "8luwapkvucoil";
-        String appSecret = "y0icysjl4h3LWz";
-        String api = "http://api.cn.ronghub.com";*/
 
-        //RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+        SensitiveWord SensitiveWord = rongCloud.sensitiveword;
 
-       // RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret, api);
+        /**
+         *API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/sensitive/sensitive.html#add
+         *
+         * 添加替换敏感词方法
+         *
+         * */
+        SensitiveWordModel sentiveWord = new SensitiveWordModel()
+                .setType(0)
+                .setKeyWord("黄赌毒")
+                .setReplace("***");
+        ResponseResult addesult = SensitiveWord.add(sentiveWord);
+        System.out.println("sentiveWord add:  " + addesult.toString());
 
+        /**
+         *API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/sensitive/sensitive.html#add
+         *
+         * 添加替换敏感词方法
+         *
+         * */
+        sentiveWord = new SensitiveWordModel()
+                .setType(1)
+                .setKeyWord("黄赌毒");
+        ResponseResult addersult = SensitiveWord.add(sentiveWord);
+        System.out.println("sentiveWord add:  " + addersult.toString());
 
+        /**
+         *
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/sensitive/sensitive.html#getList
+         * 查询敏感词列表方法
+         *
+         * */
+        ListWordfilterResult result = SensitiveWord.getList(1);
+        System.out.println("getList:  " + result.toString());
 
-        System.out.println("************************SensitiveWord********************");
-        // 添加敏感词方法（设置敏感词后，App 中用户不会收到含有敏感词的消息内容，默认最多设置 50 个敏感词。）
-        //ResponseResult sensitivewordAddResult = rongCloud.sensitiveword.add("money", "****");
+        /**
+         *
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/sensitive/sensitive.html#remove
+         * 移除敏感词方法（从敏感词列表中，移除某一敏感词。）
+         *
+         * */
 
-        //System.out.println("add:  " + sensitivewordAddResult.toString());
-
-
-        /*System.out.println("************************Wordfilter********************");
-        //敏感词服务已升级，Wordfilter为原敏感词服务。 仍然可以使用，但是不再继续更新。
-        // 添加敏感词方法（设置敏感词后，App 中用户不会收到含有敏感词的消息内容，默认最多设置 50 个敏感词。）
-        ResponseResult wordfilterAddResult = rongCloud.wordfilter.add("money");
-        System.out.println("add:  " + wordfilterAddResult.toString());
-
-        // 查询敏感词列表方法
-        ListWordfilterResult wordfilterGetListResult = rongCloud.wordfilter.getList();
-        System.out.println("getList:  " + wordfilterGetListResult.toString());
-
-        // 移除敏感词方法（从敏感词列表中，移除某一敏感词。）
-        //ResponseResult wordfilterDeleteResult = rongCloud.wordfilter.delete("money");
-        System.out.println("delete:  " + wordfilterDeleteResult.toString());*/
-
-
-        //敏感词服务已升级，Sensitiveword新敏感词服务。
-
-        System.out.println("************************SensitiveWord********************");
-        // 添加敏感词方法（设置敏感词后，App 中用户不会收到含有敏感词的消息内容，默认最多设置 50 个敏感词。）
-        //ResponseResult sensitivewordAddResult = rongCloud.sensitiveword.add("money", "****");
-       // System.out.println("add:  " + sensitivewordAddResult.toString());
-
-        // 查询敏感词列表方法
-        ListWordfilterResult sensitivewordGetListResult = rongCloud.sensitiveword.getList(1);
-        System.out.println("getList:  " + sensitivewordGetListResult.toString());
-
-        // 移除敏感词方法（从敏感词列表中，移除某一敏感词。）
-        //ResponseResult sensitivewordDeleteResult = rongCloud.sensitiveword.delete("money");
-        //System.out.println("delete:  " + sensitivewordDeleteResult.toString());
-
-
-        List<String> list =  new ArrayList<String>();
-        String[] words = {"money","money1"};
-        // 批量移除敏感词方法（从敏感词列表中，批量移除某些敏感词，一次最多移除敏感词不超过 50 个，移除后 2 小时内生效.）
-       // ResponseResult wordfilterBatchDeleteResult = rongCloud.sensitiveword.batchDelete(words);
-        //System.out.println("delete:  " + wordfilterBatchDeleteResult.toString());
-
-
+        ResponseResult removeesult = SensitiveWord.remove("money");
+        System.out.println("SensitivewordDelete:  " + removeesult.toString());
 
     }
 }

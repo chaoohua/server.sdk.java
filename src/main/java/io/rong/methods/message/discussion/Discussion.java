@@ -1,5 +1,6 @@
 package io.rong.methods.message.discussion;
 
+import com.sun.org.apache.regexp.internal.RE;
 import io.rong.RongCloud;
 import io.rong.models.CheckMethod;
 import io.rong.models.Result;
@@ -108,15 +109,15 @@ public class Discussion {
         sb.append("&conversationType=").append(URLEncoder.encode("2", UTF8));
         sb.append("&fromUserId=").append(URLEncoder.encode(recallMessage.senderUserId.toString(), UTF8));
         sb.append("&targetId=").append(URLEncoder.encode(recallMessage.targetId.toString(), UTF8));
-        sb.append("&messageUID=").append(URLEncoder.encode(recallMessage.messageUid.toString(), UTF8));
+        sb.append("&messageUID=").append(URLEncoder.encode(recallMessage.uId.toString(), UTF8));
         sb.append("&sentTime=").append(URLEncoder.encode(recallMessage.sentTime.toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());
         }
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/conversation/notification/get.json", "application/x-www-form-urlencoded");
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/recall.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (Result) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.RECALL,HttpUtil.returnResult(conn)), Result.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.RECALL,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 }

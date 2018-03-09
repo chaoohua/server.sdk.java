@@ -1,70 +1,71 @@
 package io.rong.example.conversation;
 
 import io.rong.RongCloud;
+import io.rong.methods.conversation.Conversation;
 import io.rong.models.response.ConversationNotificationResult;
 import io.rong.models.response.ResponseResult;
 import io.rong.models.conversation.ConversationModel;
-
+/**
+ *
+ * 绘话示例
+ * @author RongCloud
+ * @date 2017/12/30
+ * @version
+ */
 public class ConversationExample {
+    /**
+     * 此处替换成您的appKey
+     * */
+    private static final String appKey = "8luwapkv8s7pl";
+    /**
+     * 此处替换成您的appSecret
+     * */
+    private static final String appSecret = "lmkgpHuXezTjV2";
+    /**
+     * 自定义api地址
+     * */
+    private static final String api = "http://192.168.155.13:9200";
 
     public static void main(String[] args) throws Exception {
 
-        String appKey = "tdrvipkst7v85";
-        String appSecret = "NmzK6kfrpC4";
-        String api = "http://192.168.155.13:9200";
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+
+        Conversation Conversation = rongCloud.conversation;
         //RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret,api);
 
-        ConversationModel conversation = new ConversationModel().setType("1")
+
+        ConversationModel conversation = new ConversationModel()
+                .setType("1")
                 .setUserId("UgYzcDZSisNyYaZ83WXcEk11")
                 .setTargetId("2iXiqVWUAWwaKA55FuZvY31");
-
         /**
-         * 获取免打扰
-         */
-        testGetConversation(rongCloud,conversation);
-
-        /**
+         *
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/conversation/conversation.html#mute
          * 设置消息免打扰
+         *
          */
-        testMute(rongCloud,conversation);
-
-        /**
-         * 解除消息免打扰
-         * */
-        testUnMute(rongCloud,conversation);
-
-
-
-    }
-
-    /**
-     * 获取免打扰
-     */
-    public static void testGetConversation(RongCloud rongCloud,ConversationModel conversation) throws Exception {
-
-        ConversationNotificationResult getConversationResult = rongCloud.conversation.get(conversation);
-
-        System.out.println("getConversationResult:  " + getConversationResult.toString());
-
-    }
-
-    /**
-     * 设置消息免打扰
-     */
-    public static void testMute(RongCloud rongCloud,ConversationModel conversation) throws Exception {
-
-        ResponseResult muteConversationResult = rongCloud.conversation.mute(conversation);
+        ResponseResult muteConversationResult = Conversation.mute(conversation);
 
         System.out.println("muteConversationResult:  " + muteConversationResult.toString());
 
-    }
-    /**
-     * 解除消息免打扰
-     * */
-    public static void testUnMute(RongCloud rongCloud,ConversationModel conversation) throws Exception {
+        /**
+         *
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/conversation/conversation.html#get
+         * 获取免打扰
+         *
+         */
 
-        ResponseResult unMuteConversationResult = rongCloud.conversation.unMute(conversation);
+        ConversationNotificationResult getConversationResult = Conversation.get(conversation);
+
+        System.out.println("getConversationResult:  " + getConversationResult.toString());
+
+        /**
+         *
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/conversation/conversation.html#unmute
+         * 解除消息免打扰
+         *
+         * */
+        ResponseResult unMuteConversationResult = Conversation.unMute(conversation);
 
         System.out.println("unMuteConversationResult:  " + unMuteConversationResult.toString());
     }

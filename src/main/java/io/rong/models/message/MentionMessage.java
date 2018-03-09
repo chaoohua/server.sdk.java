@@ -1,13 +1,11 @@
 package io.rong.models.message;
 
-import io.rong.messages.BaseMessage;
-
 public class MentionMessage {
     public String senderUserId;
     public String targetId;
-    public String[] targetIds;
+    public String[] mentionIds;
     public String objectName;
-    public GroupContent content;
+    public GroupMentionContent content;
     public String pushContent;
     public String pushData;
     public Integer isPersisted;
@@ -16,12 +14,15 @@ public class MentionMessage {
     public Integer isMentioned;
     private Integer contentAvailable;
 
-    public MentionMessage(String senderUserId, String targetId, String[] targetIds, String objectName,
-                          GroupContent content, String pushContent, String pushData, Integer isPersisted,
+    public MentionMessage() {
+    }
+
+    public MentionMessage(String senderUserId, String targetId, String[] mentionIds, String objectName,
+                          GroupMentionContent content, String pushContent, String pushData, Integer isPersisted,
                           Integer isCounted, Integer isIncludeSender, Integer isMentioned, Integer contentAvailable) {
         this.senderUserId = senderUserId;
         this.targetId = targetId;
-        this.targetIds = targetIds;
+        this.mentionIds = mentionIds;
         this.objectName = objectName;
         this.content = content;
         this.pushContent = pushContent;
@@ -38,95 +39,107 @@ public class MentionMessage {
         return this.senderUserId;
     }
 
-    public void setSenderUserId(String senderUserId) {
+    public MentionMessage setSenderUserId(String senderUserId) {
         this.senderUserId = senderUserId;
+        return this;
     }
 
     public String getTargetId() {
         return this.targetId;
     }
 
-    public void setTargetId(String targetId) {
+    public MentionMessage setTargetId(String targetId) {
         this.targetId = targetId;
+        return this;
     }
 
-    public String[] getTargetIds() {
-        return this.targetIds;
+    public String[] getMentionIds() {
+        return this.mentionIds;
     }
 
-    public void setTargetIds(String[] targetIds) {
-        this.targetIds = targetIds;
+    public MentionMessage setMentionIds(String[] mentionIds) {
+        this.mentionIds = mentionIds;
+        return this;
     }
 
     public String getObjectName() {
         return this.objectName;
     }
 
-    public void setObjectName(String objectName) {
+    public MentionMessage setObjectName(String objectName) {
         this.objectName = objectName;
+        return this;
     }
 
-    public GroupContent getContent() {
+    public GroupMentionContent getContent() {
         return this.content;
     }
 
-    public void setContent(GroupContent content) {
+    public MentionMessage setContent(GroupMentionContent content) {
         this.content = content;
+        return this;
     }
 
     public String getPushContent() {
         return this.pushContent;
     }
 
-    public void setPushContent(String pushContent) {
+    public MentionMessage setPushContent(String pushContent) {
         this.pushContent = pushContent;
+        return this;
     }
 
     public String getPushData() {
         return this.pushData;
     }
 
-    public void setPushData(String pushData) {
+    public MentionMessage setPushData(String pushData) {
         this.pushData = pushData;
+        return this;
     }
 
     public Integer getIsPersisted() {
         return this.isPersisted;
     }
 
-    public void setIsPersisted(Integer isPersisted) {
+    public MentionMessage setIsPersisted(Integer isPersisted) {
         this.isPersisted = isPersisted;
+        return this;
     }
 
     public Integer getIsCounted() {
         return this.isCounted;
     }
 
-    public void setIsCounted(Integer isCounted) {
+    public MentionMessage setIsCounted(Integer isCounted) {
         this.isCounted = isCounted;
+        return this;
     }
 
     public Integer getIsIncludeSender() {
         return this.isIncludeSender;
     }
 
-    public void setIsIncludeSender(Integer isIncludeSender) {
+    public MentionMessage setIsIncludeSender(Integer isIncludeSender) {
         this.isIncludeSender = isIncludeSender;
+        return this;
     }
 
     public Integer getIsMentioned() {
         return this.isMentioned;
     }
 
-    public void setIsMentioned(Integer isMentioned) {
+    public MentionMessage setIsMentioned(Integer isMentioned) {
         this.isMentioned = isMentioned;
+        return this;
     }
 
     public Integer getContentAvailable() {
         return this.contentAvailable;
     }
 
-    public void setContentAvailable(Integer contentAvailable) {
+    public MentionMessage setContentAvailable(Integer contentAvailable) {
         this.contentAvailable = contentAvailable;
+        return this;
     }
 }

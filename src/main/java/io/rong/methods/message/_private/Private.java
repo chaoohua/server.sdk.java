@@ -117,7 +117,7 @@ public class Private {
 	 **/
 	public ResponseResult sendTemplate(Template template) throws Exception {
 
-		String message = CommonUtil.checkFiled(template,PATH, CheckMethod.SEND);
+		String message = CommonUtil.checkFiled(template,PATH, CheckMethod.SENDTEMPLATE);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
@@ -130,13 +130,13 @@ public class Private {
 
 		for(Map.Entry<String, Template.Data> vo : template.getContent().entrySet()){
 			toUserIds.add(vo.getKey());
-			values.add(vo.getValue().getDate());
+			values.add(vo.getValue().getData());
 			push.add(vo.getValue().getPush());
 		}
 		templateMessage.setFromUserId(template.getSenderId());
 		templateMessage.setToUserId(toUserIds.toArray(new String[toUserIds.size()]));
 		templateMessage.setObjectName(template.getObjectName());
-		templateMessage.setContent(template.getTemplate());
+		templateMessage.setContent(template.getTemplate().toString());
 		templateMessage.setValues(values);
 		templateMessage.setPushContent(push.toArray(new String[push.size()]));
 		templateMessage.setPushData(template.getPushData());
@@ -167,16 +167,16 @@ public class Private {
 		sb.append("&conversationType=").append(URLEncoder.encode("1", UTF8));
 		sb.append("&fromUserId=").append(URLEncoder.encode(recallMessage.senderUserId.toString(), UTF8));
 		sb.append("&targetId=").append(URLEncoder.encode(recallMessage.targetId.toString(), UTF8));
-		sb.append("&messageUID=").append(URLEncoder.encode(recallMessage.messageUid.toString(), UTF8));
+		sb.append("&messageUID=").append(URLEncoder.encode(recallMessage.uId.toString(), UTF8));
 		sb.append("&sentTime=").append(URLEncoder.encode(recallMessage.sentTime.toString(), UTF8));
 		String body = sb.toString();
 		if (body.indexOf("&") == 0) {
 			body = body.substring(1, body.length());
 		}
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/conversation/notification/get.json", "application/x-www-form-urlencoded");
+		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/recall.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
 
-		return (Result) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.RECALL,HttpUtil.returnResult(conn)), Result.class);
+		return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.RECALL,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 	 
 }

@@ -1,16 +1,24 @@
 package io.rong.example.chatroom;
 
 import io.rong.RongCloud;
-import io.rong.methods.chatroom.Distribute;
+import io.rong.methods.chatroom.distribute.Distribute;
 import io.rong.models.response.ResponseResult;
 
 public class DistributeExample {
-    private static final String appKey = "z3v5yqkbvy9f0";
-    private static final String appSecret = "plhr2PA386a";
-    private static final RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
-    private static final Distribute distribute = rongCloud.chatroom.distribute;
+    /**
+     * 此处替换成您的appKey
+     * */
+    private static final String appKey = "8luwapkv8s7pl";
+    /**
+     * 此处替换成您的appSecret
+     * */
+    private static final String appSecret = "lmkgpHuXezTjV2";
 
     public static void main(String[] args) throws Exception {
+
+        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+        Distribute distribute = rongCloud.chatroom.distribute;
+
         /**
          * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/distribute.html#stop
          *

@@ -6,13 +6,18 @@ import io.rong.models.response.ChatroomDemotionMsgResult;
 import io.rong.models.response.ResponseResult;
 
 public class DemotionExample {
-
-    private static final String appKey = "z3v5yqkbvy9f0";
-    private static final String appSecret = "plhr2PA386a";
-    private static final RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
-    private static final Demotion demotion = rongCloud.chatroom.demotion;
+    /**
+     * 此处替换成您的appKey
+     * */
+    private static final String appKey = "8luwapkv8s7pl";
+    /**
+     * 此处替换成您的appSecret
+     * */
+    private static final String appSecret = "lmkgpHuXezTjV2";
 
     public static void main(String[] args) throws Exception {
+        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+        Demotion demotion = rongCloud.chatroom.demotion;
 
         /**
          *

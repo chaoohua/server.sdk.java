@@ -3,9 +3,17 @@ package io.rong.models.message;
 import io.rong.messages.BaseMessage;
 import io.rong.util.GsonUtil;
 
-public class GroupContent {
+/**
+ * @author RongCloud
+ */
+public class GroupMentionContent {
     private BaseMessage content;
     private MentionedInfo mentionedInfo;
+
+    public GroupMentionContent(BaseMessage content, MentionedInfo mentionedInfo) {
+        this.content = content;
+        this.mentionedInfo = mentionedInfo;
+    }
 
     public BaseMessage getContent() {
         return this.content;
@@ -25,6 +33,6 @@ public class GroupContent {
 
     @Override
     public String toString(){
-        return GsonUtil.toJson(this, GroupContent.class);
+        return GsonUtil.toJson(this, GroupMentionContent.class);
     }
 }

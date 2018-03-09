@@ -8,7 +8,7 @@
     "message": {
         "content":"{\"content\":\"sadfsadfa\",\"extra\":\"www.baidu.com\"}",
         "objectName": "RC:TxtMsg"
-    }
-    //"notification":{"alert":"this is a push"}
+    },
+    "notification":{"alert":"this is a push"}
 }
 

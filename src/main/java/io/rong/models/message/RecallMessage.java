@@ -4,28 +4,39 @@ import io.rong.messages.BaseMessage;
 import io.rong.util.ParamNotNull;
 
 public class RecallMessage {
-
+    /**
+     * 发送人id
+     * */
     public String senderUserId;
-    //public String conversationType;
+    /**
+     * 接收人id
+     * */
     public String targetId;
-    public BaseMessage content;
-    public String messageUid;
+    /**
+     * 消息唯一标识 各端 SDK 发送消息成功后会返回 uId
+     * */
+    public String uId;
+    /**
+     * 消息的发送时间，各端 SDK 发送消息成功后会返回 sentTime
+     * */
     public String sentTime;
+
+    public RecallMessage() {
+    }
+
     /**
      * @param senderUserId	String	消息发送人用户 Id。（必传）
      * @param conversationType	Int	会话类型，二人会话是 1 、讨论组会话是 2 、群组会话是 3 。（必传）
      * @param targetId	String	目标 Id，根据不同的 ConversationType，可能是用户 Id、讨论组 Id、群组 Id。（必传）
-     * @param messageUid	String	消息唯一标识，可通过服务端实时消息路由获取，对应名称为 msgUID。（必传）
+     * @param uId	String	消息唯一标识，可通过服务端实时消息路由获取，对应名称为 msgUID。（必传）
      * @param sentTime
      *
      * */
     public RecallMessage(String senderUserId, String conversationType, String targetId,
-                         BaseMessage content, String messageUid, String sentTime) {
+                         String uId, String sentTime) {
         this.senderUserId = senderUserId;
-        //this.conversationType = conversationType;
         this.targetId = targetId;
-        this.content = content;
-        this.messageUid = messageUid;
+        this.uId = uId;
         this.sentTime = sentTime;
     }
 
@@ -33,47 +44,35 @@ public class RecallMessage {
         return this.senderUserId;
     }
 
-    public void setSenderUserId(String senderUserId) {
+    public RecallMessage setSenderUserId(String senderUserId) {
         this.senderUserId = senderUserId;
+        return this;
     }
 
-    /*public String getConversationType() {
-        return this.conversationType;
-    }
-
-    public void setConversationType(String conversationType) {
-        this.conversationType = conversationType;
-    }
-*/
     public String getTargetId() {
         return this.targetId;
     }
 
-    public void setTargetId(String targetId) {
+    public RecallMessage setTargetId(String targetId) {
         this.targetId = targetId;
+        return this;
     }
 
-    public BaseMessage getContent() {
-        return this.content;
+    public String getuId() {
+        return this.uId;
     }
 
-    public void setContent(BaseMessage content) {
-        this.content = content;
-    }
-
-    public String getMessageUid() {
-        return this.messageUid;
-    }
-
-    public void setMessageUid(String messageUid) {
-        this.messageUid = messageUid;
+    public RecallMessage setuId(String uId) {
+        this.uId = uId;
+        return this;
     }
 
     public String getSentTime() {
         return this.sentTime;
     }
 
-    public void setSentTime(String sentTime) {
+    public RecallMessage setSentTime(String sentTime) {
         this.sentTime = sentTime;
+        return this;
     }
 }

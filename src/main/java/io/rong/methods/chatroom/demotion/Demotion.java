@@ -18,7 +18,7 @@ import java.net.URLEncoder;
  * */
 public class Demotion {
     private static final String UTF8 = "UTF-8";
-    private static final String PATH = "chatroom/priority";
+    private static final String PATH = "chatroom/demotion";
     private String appKey;
     private String appSecret;
     private RongCloud rongCloud;
@@ -81,7 +81,7 @@ public class Demotion {
 
         for (int i = 0 ; i< objectNames.length; i++) {
             String child  = objectNames[i];
-            sb.append("&chatroomId=").append(URLEncoder.encode(child, UTF8));
+            sb.append("&objectName=").append(URLEncoder.encode(child, UTF8));
         }
 
         String body = sb.toString();
@@ -90,7 +90,7 @@ public class Demotion {
         }
 
         HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret,
-                "chatroom/message/priority/remove.json", "application/x-www-form-urlencoded");
+                "/chatroom/message/priority/remove.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
         return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.REMOVE,HttpUtil.returnResult(conn)), ResponseResult.class);

@@ -7,12 +7,18 @@ import io.rong.models.response.ListGagChatroomUserResult;
 import io.rong.models.response.ResponseResult;
 
 public class GagExample {
-    private static final String appKey = "z3v5yqkbvy9f0";
-    private static final String appSecret = "plhr2PA386a";
-    private static final RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
-    private static final Gag gag = rongCloud.chatroom.gag;
+    /**
+     * 此处替换成您的appKey
+     * */
+    private static final String appKey = "8luwapkv8s7pl";
+    /**
+     * 此处替换成您的appSecret
+     * */
+    private static final String appSecret = "lmkgpHuXezTjV2";
 
     public static void main(String[] args) throws Exception {
+        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+        Gag gag = rongCloud.chatroom.gag;
 
         /**
          * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/gag.html#add

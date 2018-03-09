@@ -113,8 +113,8 @@ public class Group {
         StringBuilder sb = new StringBuilder();
         sb.append("&fromUserId=").append(URLEncoder.encode(message.senderUserId.toString(), UTF8));
 
-        for (int i = 0 ; i< message.targetIds.length; i++) {
-            String child  =message.targetIds[i];
+        for (int i = 0 ; i< message.mentionIds.length; i++) {
+            String child  =message.mentionIds[i];
             sb.append("&toGroupId=").append(URLEncoder.encode(child, UTF8));
         }
 
@@ -176,15 +176,15 @@ public class Group {
         sb.append("&conversationType=").append(URLEncoder.encode("3", UTF8));
         sb.append("&fromUserId=").append(URLEncoder.encode(message.senderUserId.toString(), UTF8));
         sb.append("&targetId=").append(URLEncoder.encode(message.targetId.toString(), UTF8));
-        sb.append("&messageUID=").append(URLEncoder.encode(message.messageUid.toString(), UTF8));
+        sb.append("&messageUID=").append(URLEncoder.encode(message.uId.toString(), UTF8));
         sb.append("&sentTime=").append(URLEncoder.encode(message.sentTime.toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());
         }
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/conversation/notification/get.json", "application/x-www-form-urlencoded");
+        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/recall.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (Result) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.RECALL,HttpUtil.returnResult(conn)), Result.class);
+        return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.RECALL,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
 }
