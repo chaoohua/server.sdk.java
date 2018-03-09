@@ -31,7 +31,7 @@ public class GagExample {
                 .setId("hjhf07kk")
                 .setMemberIds(memberIds)
                 .setMinute(5);
-        ResponseResult result = gag.members.add(chatroom);
+        ResponseResult result = gag.add(chatroom);
         System.out.println("addGagUser:  " + result.toString());
 
         /**
@@ -40,7 +40,7 @@ public class GagExample {
          * 查询被禁言聊天室成员方法
          */
 
-        ListGagChatroomUserResult chatroomListGagUserResult = gag.members.getList("d7ec7a8b8d8546c98b0973417209a548");
+        ListGagChatroomUserResult chatroomListGagUserResult = gag.getList("d7ec7a8b8d8546c98b0973417209a548");
         System.out.println("ListGagUser:  " + chatroomListGagUserResult.toString());
 
         /**
@@ -52,7 +52,7 @@ public class GagExample {
         chatroom = new ChatroomModel()
                 .setId("chatroomId1")
                 .setMemberIds(memberIds);
-        ResponseResult removeResult = gag.members.remove(chatroom);
+        ResponseResult removeResult = gag.remove(chatroom);
         System.out.println("rollbackGagUser:  " + result.toString());
 
 

@@ -1,12 +1,12 @@
-package io.rong.methods.chatroom.gag.global;
+package io.rong.methods.chatroom.ban;
 
 import io.rong.RongCloud;
 import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
-import io.rong.models.chatroom.ChatroomModel;
-import io.rong.models.response.ResponseResult;
 import io.rong.models.CommonConstrants;
+import io.rong.models.chatroom.ChatroomModel;
 import io.rong.models.response.ListGagChatroomUserResult;
+import io.rong.models.response.ResponseResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
 import io.rong.util.HttpUtil;
@@ -19,7 +19,7 @@ import java.net.URLEncoder;
  * docs:http://www.rongcloud.cn/docs/server.html#chatroom_user_ban
  *
  * */
-public class Global {
+public class Ban {
     private static final String UTF8 = "UTF-8";
     private static final String PATH = "chatroom/global-gag";
     private String appKey;
@@ -32,12 +32,10 @@ public class Global {
     public void setRongCloud(RongCloud rongCloud) {
         this.rongCloud = rongCloud;
     }
-    public Global(String appKey, String appSecret) {
+    public Ban(String appKey, String appSecret) {
         this.appKey = appKey;
         this.appSecret = appSecret;
-
     }
-
     /**
      * 添加用户聊天室全局禁言方法
      *
@@ -46,16 +44,6 @@ public class Global {
      * @return ResponseResult
      **/
     public ResponseResult add(ChatroomModel chatroom) throws Exception {
-
-        /*String message = CommonUtil.checkParam("members",userId,PATH,CheckMethod.ADD);
-        if(null != message){
-            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
-        }
-        message = CommonUtil.checkParam("minute",minute,PATH, CheckMethod.ADD);
-        if(null != message){
-            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
-        }*/
-
         String errMsg = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.ADD);
         if(null != errMsg){
             return (ResponseResult)GsonUtil.fromJson(errMsg,ResponseResult.class);
@@ -91,21 +79,24 @@ public class Global {
     /**
      * 移除用户聊天室全局禁言方法
      *
-     * @param  userId:用户 Id。（必传）
+     * @param  chatroom: memberIds。（必传）
      *
      * @return ResponseResult
      **/
-    public ResponseResult remove(String userId) throws Exception {
-        if (userId == null) {
-            throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/chatroom/user/ban/remove","Paramer 'userId' is required");
+    public ResponseResult remove(ChatroomModel chatroom) throws Exception {
+        if (chatroom == null) {
+            throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/chatroom/user/ban/remove","Paramer 'chatroom' is required");
         }
-        String message = CommonUtil.checkParam("userId",userId,PATH,CheckMethod.REMOVE);
-        if(null != message){
-            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+
+        String errMsg = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.ADD);
+        if(null != errMsg){
+            return (ResponseResult)GsonUtil.fromJson(errMsg,ResponseResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("&userId=").append(URLEncoder.encode(userId.toString(), UTF8));
+        for (String memberId: chatroom.getMemberIds()) {
+            sb.append("&userId=").append(URLEncoder.encode(memberId, UTF8));
+        }
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());
