@@ -44,8 +44,6 @@ public class GagExample {
         Result result = (Result)rongCloud.group.gag.add(group);
         System.out.println("group.gag.add:  " + result.toString());
 
-
-
         /**
          * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/gag.html#getList
          * 查询被禁言群成员

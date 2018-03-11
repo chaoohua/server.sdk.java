@@ -3,6 +3,7 @@ package io.rong.models.message;
 import io.rong.messages.BaseMessage;
 
 /**
+ * 发送消息的消息体
  * @author RongCloud
  */
 public class Message {
@@ -32,34 +33,19 @@ public class Message {
      * 针对 iOS 平台为 Push 通知时附加到 payload 中，Android 客户端收到推送消息时对应字段名为 pushData。（可选）
      */
     public String pushData;
-    /**
-     * 针对 iOS 平台，Push 时用来控制未读消息显示数，只有在 toUserId 为一个用户 Id 的时候有效。（可选）
-     */
-    public Integer isPersisted;
-    /**
-     * 当前版本有新的自定义消息，而老版本没有该自定义消息时，老版本客户端收到消息后是否进行未读消息计数，
-     * 0 表示为不计数、 1 表示为计数，默认为 1 计数，未读消息数增加 1。（可选）
-     */
-    public Integer isCounted;
 
-    /**
-     * ios静默推送 0关闭 1开启
-     **/
-    public Integer contentAvailable;
 
     public Message() {
     }
 
     public Message(String senderUserId, String[] targetIds, String objectName, BaseMessage content,
-                   String pushContent, String pushData, Integer isPersisted, Integer isCounted) {
+                   String pushContent, String pushData) {
         this.senderUserId = senderUserId;
         this.targetIds = targetIds;
         this.objectName = objectName;
         this.content = content;
         this.pushContent = pushContent;
         this.pushData = pushData;
-        this.isPersisted = isPersisted;
-        this.isCounted = isCounted;
     }
 
     public String[] getTargetIds() {
@@ -107,24 +93,6 @@ public class Message {
         return this;
     }
 
-    public Integer getIsPersisted() {
-        return this.isPersisted;
-    }
-
-    public Message setIsPersisted(Integer isPersisted) {
-        this.isPersisted = isPersisted;
-        return this;
-    }
-
-    public Integer getIsCounted() {
-        return this.isCounted;
-    }
-
-    public Message setIsCounted(Integer isCounted) {
-        this.isCounted = isCounted;
-        return this;
-    }
-
     public String getSenderUserId() {
         return this.senderUserId;
     }
@@ -134,12 +102,5 @@ public class Message {
         return this;
     }
 
-    public Integer getContentAvailable() {
-        return this.contentAvailable;
-    }
 
-    public Message setContentAvailable(Integer contentAvailable) {
-        this.contentAvailable = contentAvailable;
-        return this;
-    }
 }

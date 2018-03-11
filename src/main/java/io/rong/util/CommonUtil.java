@@ -10,6 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * 属性校验公共服务
+ * @date 2018-03-09
+ * @author RongCloud
+ */
 public class CommonUtil {
     public static final String VERIFY_JSON_NAME = "/verify.json";
     public static final String API_JSON_NAME = "/api.json";
@@ -44,7 +49,7 @@ public class CommonUtil {
     /**
      * 参数校验方法
      *
-     * @param model  校验实体
+     * @param model  校验对象
      * @param path   路径
      * @param method 需要校验方法
      *
@@ -54,6 +59,7 @@ public class CommonUtil {
         try {
             String code = "200";
             Integer max = 64;
+            //api.json 的路径
             String apiPath = path;
             String type = "";
             if(path.contains("/")){
@@ -61,24 +67,29 @@ public class CommonUtil {
             }
             String[] fileds = {};
             String checkObjectKey = "";
+            //获取需要校验的参数
             Map<String,String[]> checkInfo = getCheckInfo(apiPath,method);
             for (Map.Entry<String,String[]> entry : checkInfo.entrySet()) {
                 fileds = entry.getValue();
                 checkObjectKey = entry.getKey();
             }
-
-            JSONObject verify =  JsonUtil.getJsonObject(path,VERIFY_JSON_NAME);//获取校验文件
-
-            Set<String> keys = verify.getJSONObject(checkObjectKey).keySet();//获取校验key
-            JSONObject entity = verify.getJSONObject(checkObjectKey);//获取具体校验规则
+            //获取校验文件
+            JSONObject verify =  JsonUtil.getJsonObject(path,VERIFY_JSON_NAME);
+            //获取校验key
+            Set<String> keys = verify.getJSONObject(checkObjectKey).keySet();
+            //获取具体校验规则
+            JSONObject entity = verify.getJSONObject(checkObjectKey);
             for(String name : fileds){
                 for (String key : keys) {
                     if(name.equals(key)){
                         String nameTemp = name;
-                        name = name.substring(0,1).toUpperCase()+name.substring(1); //将属性的首字符大写，方便构造get，set方法
-                        //String type = field.getGenericType().toString();    //获取属性的类型
+                        //将属性的首字符大写，方便构造get，set方法
+                        name = name.substring(0,1).toUpperCase()+name.substring(1);
+                        //获取属性的类型
+                        //String type = field.getGenericType().toString();
                         Method m = model.getClass().getMethod("get"+name);
-                        JSONObject object =  entity.getJSONObject(nameTemp);//获取字段的具体校验规则
+                        //获取字段的具体校验规则
+                        JSONObject object =  entity.getJSONObject(nameTemp);
                         if(object.containsKey("require")){
                             Boolean must = (Boolean)object.getJSONObject("require").get("must");
                             if(m.invoke(model)  instanceof String){
@@ -147,7 +158,9 @@ public class CommonUtil {
 
                             }
                         }
+                        //更具错误吗获取错误信息
                         String message = (String)CommonUtil.getErrorMessage(apiPath,method,code,name,String.valueOf(max),"1",type);
+                        //对 errorMessage  替换
                         message = StringUtils.replace(message,"errorMessage","msg");
                         return message;
 
@@ -297,8 +310,8 @@ public class CommonUtil {
         try {
             api = JsonUtil.getJsonObject(path,API_JSON_NAME);
             Set<Map.Entry<String,Object>> keys = api.getJSONObject(method).getJSONObject("response").getJSONObject("fail").entrySet();
-            String[] serchList = {"{{name}}","{{max}}","{{name}}","{{min}}"};
-            String[] replaceList = {name,max,name,min};
+            String[] serchList = {"{{name}}","{{max}}","{{name}}","{{min}}","{{currentType}}"};
+            String[] replaceList = {name,max,name,min,type};
             for (Map.Entry<String,Object> entry : keys) {
                 if(errorCode.equals(entry.getKey())){
                     String text = entry.getValue().toString();

@@ -6,6 +6,10 @@ import io.rong.models.chatroom.ChatroomModel;
 import io.rong.models.response.ListGagChatroomUserResult;
 import io.rong.models.response.ResponseResult;
 
+/**
+ * 聊天室全局
+ * @author RongCloud
+ */
 public class BanExample {
     /**
      * 此处替换成您的appKey
@@ -19,11 +23,11 @@ public class BanExample {
     public static void main(String[] args) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         Ban ban = rongCloud.chatroom.ban;
+
         /**
          * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/ban.html#add
          * 添加聊天室全局禁言
          * */
-
         String[] memberIds = {"fhgko9i4","qawr34h"};
         ChatroomModel chatroom = new ChatroomModel()
                 .setMemberIds(memberIds)

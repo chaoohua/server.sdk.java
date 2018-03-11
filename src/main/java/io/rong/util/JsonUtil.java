@@ -4,7 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import java.io.*;
-
+/**
+ * Json公共服务
+ * @date 2018-03-09
+ * @author RongCloud
+ */
 public class JsonUtil {
     private static final String JSONFILE = JsonUtil.class.getClassLoader().getResource("jsonsource").getPath()+"/";
     /**

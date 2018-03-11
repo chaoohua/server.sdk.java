@@ -3,8 +3,14 @@ package io.rong.example.message;
 import io.rong.RongCloud;
 import io.rong.messages.TxtMessage;
 import io.rong.messages.VoiceMessage;
-import io.rong.methods.message.Message;
+import io.rong.methods.message._private.Private;
+import io.rong.methods.message.chatroom.Chatroom;
+import io.rong.methods.message.discussion.Discussion;
+import io.rong.methods.message.group.Group;
+import io.rong.methods.message.history.History;
+import io.rong.methods.message.system.MsgSystem;
 import io.rong.models.message.*;
+import io.rong.methods.message.Message;
 import io.rong.models.response.HistoryMessageResult;
 import io.rong.models.response.ResponseResult;
 import io.rong.util.GsonUtil;
@@ -15,9 +21,9 @@ import java.io.Reader;
 
 /**
  * 消息发送示例
- * @date
+ * @date 2018-03-09
  * @author hc
- * @version
+ * @version 2.0.0
  */
 public class MessageExample {
     private static final String JSONFILE = MessageExample.class.getClassLoader().getResource("jsonsource").getPath()+"/";
@@ -38,7 +44,14 @@ public class MessageExample {
     public static void main(String[] args) throws Exception {
 
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
-        Message Message = rongCloud.message;
+
+        Private Private = rongCloud.message.msgPrivate;
+        MsgSystem system = rongCloud.message.system;
+        Group group = rongCloud.message.group;
+        Chatroom chatroom = rongCloud.message.chatroom;
+        Discussion discussion = rongCloud.message.discussion;
+        History history = rongCloud.message.history;
+
 
         /**
          *
@@ -57,7 +70,7 @@ public class MessageExample {
                 .setIsCounted(0)
                 .setContentAvailable(0);
 
-        ResponseResult result = Message.system.send(systemMessage);
+        ResponseResult result = system.send(systemMessage);
         System.out.println("send system message:  " + result.toString());
 
         /**
@@ -67,9 +80,9 @@ public class MessageExample {
          */
         Reader reader = null ;
         try {
-            reader = new InputStreamReader(new FileInputStream(JSONFILE+"/message/"+"Template.json"));
-            Template template = (Template)GsonUtil.fromJson(reader, Template.class);
-            ResponseResult systemTemplateResult = Message.system.sendTemplate(template);
+            reader = new InputStreamReader(new FileInputStream(JSONFILE+"/message/"+"TemplateMessage.json"));
+            TemplateMessage template = (TemplateMessage)GsonUtil.fromJson(reader, TemplateMessage.class);
+            ResponseResult systemTemplateResult = system.sendTemplate(template);
             System.out.println("send system template message:  " + systemTemplateResult.toString());
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,7 +95,7 @@ public class MessageExample {
         /**
          * 发送单聊消息
          * */
-        PrivateMessage  privateMessage = new PrivateMessage()
+        PrivateMessage privateMessage = new PrivateMessage()
                 .setSenderUserId("userId")
                 .setTargetIds(targetIds)
                 .setObjectName(voiceMessage.getType())
@@ -94,16 +107,16 @@ public class MessageExample {
                 .setIsPersisted(0)
                 .setIsCounted(0)
                 .setIsIncludeSender(0);
-        ResponseResult publishPrivateResult = Message.aPrivate.send(privateMessage);
+        ResponseResult publishPrivateResult = Private.send(privateMessage);
         System.out.println("sendPrivate:  " + publishPrivateResult.toString());
 
         /**
          * 发送单聊模板消息方法
          */
         try {
-            reader = new InputStreamReader(new FileInputStream(JSONFILE+"/message/"+"Template.json"));
-            Template template  =  (Template) GsonUtil.fromJson(reader, Template.class);
-            ResponseResult messagePublishTemplateResult = Message.aPrivate.sendTemplate(template);
+            reader = new InputStreamReader(new FileInputStream(JSONFILE+"/message/"+"TemplateMessage.json"));
+            TemplateMessage template  =  (TemplateMessage) GsonUtil.fromJson(reader, TemplateMessage.class);
+            ResponseResult messagePublishTemplateResult = Private.sendTemplate(template);
 
             System.out.println("send privateTemplate message:  " + messagePublishTemplateResult.toString());
 
@@ -122,7 +135,7 @@ public class MessageExample {
                 .setTargetId("IXQhMs3ny")
                 .setuId("5GSB-RPM1-KP8H-9JHF")
                 .setSentTime("1519444243981");
-        ResponseResult recallPrivateResult = (ResponseResult)Message.aPrivate.recall(message);
+        ResponseResult recallPrivateResult = (ResponseResult)Private.recall(message);
         System.out.println("recall private:  " + recallPrivateResult.toString());
 
         /**
@@ -141,7 +154,7 @@ public class MessageExample {
                 .setIsCounted(0)
                 .setIsIncludeSender(0)
                 .setContentAvailable(0);
-        ResponseResult groupResult = Message.group.send(groupMessage);
+        ResponseResult groupResult = group.send(groupMessage);
 
         System.out.println("send Group message:  " + groupResult.toString());
 
@@ -155,7 +168,7 @@ public class MessageExample {
                 .setTargetId("markoiwm")
                 .setuId("5GSB-RPM1-KP8H-9JHF")
                 .setSentTime("1519444243981");
-        ResponseResult recallMessageResult = (ResponseResult)Message.group.recall(message);
+        ResponseResult recallMessageResult = (ResponseResult)group.recall(message);
 
         System.out.println("send recall message:  " + recallMessageResult.toString());
 
@@ -205,7 +218,7 @@ public class MessageExample {
                 .setIsIncludeSender(0)
                 .setContentAvailable(0);
 
-        ResponseResult discussionResult = Message.discussion.send(discussionMessage);
+        ResponseResult discussionResult = discussion.send(discussionMessage);
 
         System.out.println("send Group message:  " + groupResult.toString());
 
@@ -219,7 +232,7 @@ public class MessageExample {
                 .setTargetId("IXQhMs3ny")
                 .setuId("5GSB-RPM1-KP8H-9JHF")
                 .setSentTime("1519444243981");
-        ResponseResult recallDiscussionResult = (ResponseResult) Message.discussion.recall(message);
+        ResponseResult recallDiscussionResult = (ResponseResult)discussion.recall(message);
 
         System.out.println("send Group message:  " + recallDiscussionResult.toString());
 
@@ -239,7 +252,7 @@ public class MessageExample {
                 .setContent(txtMessage)
                 .setObjectName(txtMessage.getType());
 
-        ResponseResult chatroomResult = Message.chatroom.send(chatroomMessage);
+        ResponseResult chatroomResult = chatroom.send(chatroomMessage);
         System.out.println("send chatroom message:  " + chatroomResult.toString());
         /**
          *
@@ -255,7 +268,7 @@ public class MessageExample {
                 .setContent(txtMessage)
                 .setObjectName(txtMessage.getType());
 
-        ResponseResult chatroomBroadcastresult = Message.chatroom.broadcast(chatroomMessage);
+        ResponseResult chatroomBroadcastresult = chatroom.broadcast(chatroomMessage);
         System.out.println("send chatroom broadcast message:  " + chatroomBroadcastresult.toString());
 
 
@@ -267,7 +280,7 @@ public class MessageExample {
          *
          * */
 
-        HistoryMessageResult historyMessageResult = (HistoryMessageResult) Message.history.get("2018030210");
+        HistoryMessageResult historyMessageResult = (HistoryMessageResult)history.get("2018030210");
         System.out.println("get history  message:  " + historyMessageResult.toString());
 
         /**
@@ -278,7 +291,7 @@ public class MessageExample {
          *
          * */
 
-        ResponseResult removeHistoryMessageResult = (ResponseResult)Message.history.remove("2018030210");
+        ResponseResult removeHistoryMessageResult = (ResponseResult)history.remove("2018030210");
         System.out.println("remove history  message:  " + removeHistoryMessageResult.toString());
 
 

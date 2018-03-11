@@ -4,8 +4,6 @@ import io.rong.RongCloud;
 import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
 import io.rong.models.CommonConstrants;
-import io.rong.models.chatroom.ChatroomModel;
-import io.rong.models.message.Message;
 import io.rong.models.response.ResponseResult;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;

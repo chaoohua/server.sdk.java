@@ -1,5 +1,9 @@
 package io.rong.models.message;
 
+/**
+ * @消息体
+ * @author hc
+ */
 public class MentionMessage {
     public String senderUserId;
     public String targetId;

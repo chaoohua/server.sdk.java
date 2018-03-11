@@ -2,16 +2,31 @@ package io.rong.models.message;
 
 import io.rong.messages.BaseMessage;
 
-public class GroupMessage extends Message{
+/**
+ * 群组消息体
+ * @author hc
+ */
+public class GroupMessage extends Message {
 
     /**
      * 发送者自己是否接收此条消息, 0: 不接收, 1: 接收, 默认: 0
      **/
     public Integer isIncludeSender;
     /**
+     * 针对 iOS 平台，Push 时用来控制未读消息显示数，只有在 toUserId 为一个用户 Id 的时候有效。（可选）
+     */
+    public Integer isPersisted;
+    /**
+     * 当前版本有新的自定义消息，而老版本没有该自定义消息时，老版本客户端收到消息后是否进行未读消息计数，
+     * 0 表示为不计数、 1 表示为计数，默认为 1 计数，未读消息数增加 1。（可选）
+     */
+    public Integer isCounted;
+
+    /**
      * ios静默推送 0关闭 1开启
      **/
-    private Integer contentAvailable;
+    public Integer contentAvailable;
+
 
     public GroupMessage() {
     }
@@ -97,20 +112,20 @@ public class GroupMessage extends Message{
         this.pushData = pushData;
         return this;
     }
-    @Override
+
     public Integer getIsPersisted() {
         return this.isPersisted;
     }
-    @Override
+
     public GroupMessage setIsPersisted(Integer isPersisted) {
         this.isPersisted = isPersisted;
         return this;
     }
-    @Override
+
     public Integer getIsCounted() {
         return this.isCounted;
     }
-    @Override
+
     public GroupMessage setIsCounted(Integer isCounted) {
         this.isCounted = isCounted;
         return this;
@@ -124,11 +139,11 @@ public class GroupMessage extends Message{
         this.isIncludeSender = isIncludeSender;
         return this;
     }
-    @Override
+
     public Integer getContentAvailable() {
         return this.contentAvailable;
     }
-    @Override
+
     public GroupMessage setContentAvailable(Integer contentAvailable) {
         this.contentAvailable = contentAvailable;
         return this;

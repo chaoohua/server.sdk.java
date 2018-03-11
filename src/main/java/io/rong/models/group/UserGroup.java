@@ -1,5 +1,8 @@
 package io.rong.models.group;
 
+/**
+ * @author RongCloud
+ */
 public class UserGroup {
 
     private String id;

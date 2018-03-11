@@ -2,6 +2,9 @@ package io.rong.models.chatroom;
 
 import io.rong.util.GsonUtil;
 
+/**
+ * @author RongCloud
+ */
 public class ChatroomMember {
     /**
      * 聊天室用户Id。

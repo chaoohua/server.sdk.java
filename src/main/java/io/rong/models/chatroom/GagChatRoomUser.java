@@ -4,6 +4,7 @@ import io.rong.util.GsonUtil;
 
 /**
  * 聊天室被禁言用户信息。
+ * @author RongCloud
  */
 public class GagChatRoomUser {
 	// 解禁时间。

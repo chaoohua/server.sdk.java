@@ -3,17 +3,17 @@ package io.rong.models.message;
 import io.rong.messages.BaseMessage;
 
 /**
+ * 聊天室消息体
  * @author RongCloud
  */
-public class ChatroomMessage extends Message{
+public class ChatroomMessage extends Message {
 
     public ChatroomMessage() {
 
     }
 
-    public ChatroomMessage(String senderUserId, String[] targetIds, String objectName, BaseMessage content,
-                           String pushContent, String pushData, Integer isPersisted, Integer isCounted) {
-        super(senderUserId, targetIds, objectName, content, pushContent, pushData, isPersisted, isCounted);
+    public ChatroomMessage(String senderUserId, String[] targetIds, String objectName, BaseMessage content) {
+        super(senderUserId, targetIds, objectName, content, null, null);
     }
 
     @Override

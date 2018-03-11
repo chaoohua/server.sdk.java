@@ -42,11 +42,11 @@ public class GroupExample {
 		 * 创建群组方法
 		 *
 		 */
-		String[] members = {"userId1","userid2","userId3"};
+		String[] memberIds = {"userId1","userid2","userId3"};
 
 		GroupModel group = new GroupModel()
 				.setId("groupId")
-				.setMerberIds(members)
+				.setMerberIds(memberIds)
 				.setName("groupName");
 		Result groupCreateResult = (Result)Group.create(group);
 		System.out.println("group create result:  " + groupCreateResult.toString());
@@ -77,7 +77,7 @@ public class GroupExample {
 		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#refresh
 		 *  刷新群组信息方法
 		 */
-		String[] memberIds = {"userId2","userid3","userId4"};
+		memberIds = new String[]{"userId2", "userid3", "userId4"};
 		group = new GroupModel()
 				.setId("groupId")
 				.setMerberIds(memberIds)
@@ -91,7 +91,8 @@ public class GroupExample {
 		 * 邀请用户加入群组
 		 *
 		 */
-		group = new GroupModel().setId("hdiuj87jj")
+		group = new GroupModel()
+				.setId("hdiuj87jj")
 				.setMerberIds(memberIds)
 				.setName("groupName");
 		Result groupInviteResult = (Result)rongCloud.group.invite(group);
@@ -103,7 +104,8 @@ public class GroupExample {
 		 * 用户加入指定群组
 		 *
 		 */
-		group = new GroupModel().setId("groupId")
+		group = new GroupModel()
+				.setId("groupId")
 				.setMerberIds(memberIds)
 				.setName("groupName");
 		Result groupJoinResult = (Result)rongCloud.group.join(group);

@@ -4,6 +4,7 @@ import io.rong.util.GsonUtil;
 
 /**
  * 聊天室。
+ * @author RongCloud
  */
 public class ChatroomModel {
 	/**

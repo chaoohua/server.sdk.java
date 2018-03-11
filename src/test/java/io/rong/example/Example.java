@@ -87,12 +87,10 @@ public class Example {
 				.setName("username")
 				.setPortrait("http://www.rongcloud.cn/images/logo.png");
 
-
 		Result result = (ResponseResult)rongCloud.user.refresh(user);
 		System.out.println("refresh:  " + result.toString());
+
 		assertEquals("200",result.getCode().toString());
-
-
 	}
 	/**
 	 * 测试用户封禁方法（每秒钟限 100 次）
@@ -197,9 +195,9 @@ public class Example {
 	public void testSendSystemTemplate() throws Exception {
 		Reader reader = null ;
 		try {
-			reader = new InputStreamReader(new FileInputStream(JSONFILE+"/message/"+"Template.json"));
+			reader = new InputStreamReader(new FileInputStream(JSONFILE+"/message/"+"TemplateMessage.json"));
 
-			Template template = (Template)GsonUtil.fromJson(reader, Template.class);
+			TemplateMessage template = (TemplateMessage)GsonUtil.fromJson(reader, TemplateMessage.class);
 
 			ResponseResult result = rongCloud.message.system.sendTemplate(template);
 			System.out.println("sendSystemTemplate:  " + result.toString());
@@ -238,9 +236,9 @@ public class Example {
 		Reader reader = null ;
 		// 发送单聊模板消息方法（一个用户向多个用户发送不同消息内容，单条消息最大 128k。每分钟最多发送 6000 条信息，每次发送用户上限为 1000 人。）
 		try {
-			reader = new InputStreamReader(new FileInputStream(JSONFILE+"/message/"+"Template.json"));
-			Template template  =  (Template) GsonUtil.fromJson(reader, Template.class);
-			ResponseResult messagePublishTemplateResult = rongCloud.message.aPrivate.sendTemplate(template);
+			reader = new InputStreamReader(new FileInputStream(JSONFILE+"/message/"+"TemplateMessage.json"));
+			TemplateMessage template  =  (TemplateMessage) GsonUtil.fromJson(reader, TemplateMessage.class);
+			ResponseResult messagePublishTemplateResult = rongCloud.message.msgPrivate.sendTemplate(template);
 			System.out.println("sendPrivateTemplate:  " + messagePublishTemplateResult.toString());
 
 			assertEquals("200",messagePublishTemplateResult.getCode().toString());
@@ -273,7 +271,7 @@ public class Example {
 				.setIsIncludeSender(0);
 
 		//发送单聊方法
-		ResponseResult publishPrivateResult = rongCloud.message.aPrivate.send(privateMessage);
+		ResponseResult publishPrivateResult = rongCloud.message.msgPrivate.send(privateMessage);
 		System.out.println("sendPrivate:  " + publishPrivateResult.toString());
 
 		assertEquals("200",publishPrivateResult.getCode().toString());

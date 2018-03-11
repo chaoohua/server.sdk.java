@@ -4,6 +4,7 @@ import io.rong.util.GsonUtil;
 
 /**
  * 群组用户信息。
+ * @author RongCloud
  */
 public class GroupUser {
 	// 用户 Id。

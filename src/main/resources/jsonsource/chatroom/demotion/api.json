@@ -3,8 +3,8 @@
 		"docs": "http://rongcloud.cn/docs/server.html#chatroom_message_priority_add",
 		"url": "chatroom/message/priority/add",
 		"params": {
-			"priority": {
-				"msgs": ["RC:TxtMsg", "RC:ImgMsg"]
+			"message": {
+				"type": ["RC:TxtMsg", "RC:ImgMsg"]
 			}
 		},
 		"response": {

@@ -1,5 +1,8 @@
 package io.rong.models.conversation;
 
+/**
+ * @author RongCloud
+ */
 public class ConversationModel {
     public String type;
     public String userId;

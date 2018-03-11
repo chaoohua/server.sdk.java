@@ -3,10 +3,11 @@ package io.rong.methods.message._private;
 import io.rong.RongCloud;
 import io.rong.models.CheckMethod;
 import io.rong.models.Result;
+import io.rong.models.message.Message;
 import io.rong.models.message.RecallMessage;
-import io.rong.models.message.Template;
+import io.rong.models.message.TemplateMessage;
 import io.rong.models.response.ResponseResult;
-import io.rong.models.TemplateMessage;
+import io.rong.models.Templates;
 import io.rong.models.message.PrivateMessage;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -48,15 +49,18 @@ public class Private {
 	/**
 	 * 发送单聊消息方法（一个用户向另外一个用户发送消息，单条消息最大 128k。每分钟最多发送 6000 条信息，每次发送用户上限为 1000 人，如：一次发送 1000 人时，示为 1000 条消息。） 
 	 * 
-	 * @param privateMessage 单聊消息
+	 * @param message 单聊消息
 	 *
 	 * @return ResponseResult
 	 **/
-	public ResponseResult send(PrivateMessage privateMessage) throws Exception {
+	public ResponseResult send(Message message) throws Exception {
+		if(null == message){
 
-		String message = CommonUtil.checkFiled(privateMessage,PATH, CheckMethod.SEND);
-		if(null != message){
-			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+		}
+		PrivateMessage privateMessage = (PrivateMessage)message;
+		String msgErr = CommonUtil.checkFiled(privateMessage,PATH, CheckMethod.SEND);
+		if(null != msgErr){
+			return (ResponseResult)GsonUtil.fromJson(msgErr,ResponseResult.class);
 		}
 
 	    StringBuilder sb = new StringBuilder();
@@ -86,11 +90,11 @@ public class Private {
 	    	sb.append("&verifyBlacklist=").append(URLEncoder.encode(privateMessage.verifyBlacklist.toString(), UTF8));
 	    }
 	    
-	    if (privateMessage.isPersisted != null) {
+	    if (privateMessage.getIsPersisted() != null) {
 	    	sb.append("&isPersisted=").append(URLEncoder.encode(privateMessage.isPersisted.toString(), UTF8));
 	    }
 	    
-	    if (privateMessage.isCounted != null) {
+	    if (privateMessage.getIsCounted() != null) {
 	    	sb.append("&isCounted=").append(URLEncoder.encode(privateMessage.isCounted.toString(), UTF8));
 	    }
 	    
@@ -115,20 +119,20 @@ public class Private {
 	 *
 	 * @return ResponseResult
 	 **/
-	public ResponseResult sendTemplate(Template template) throws Exception {
+	public ResponseResult sendTemplate(TemplateMessage template) throws Exception {
 
 		String message = CommonUtil.checkFiled(template,PATH, CheckMethod.SENDTEMPLATE);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 
-		TemplateMessage templateMessage = new TemplateMessage();
+		Templates templateMessage = new Templates();
 
 		ArrayList<String> toUserIds = new ArrayList<>();
 		List<Map<String,String>> values = new ArrayList<>();
 		List<String> push = new ArrayList<>();
 
-		for(Map.Entry<String, Template.Data> vo : template.getContent().entrySet()){
+		for(Map.Entry<String, TemplateMessage.Data> vo : template.getContent().entrySet()){
 			toUserIds.add(vo.getKey());
 			values.add(vo.getValue().getData());
 			push.add(vo.getValue().getPush());

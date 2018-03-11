@@ -5,6 +5,7 @@ import io.rong.util.ParamNotNull;
 
 public class RecallMessage {
     /**
+     * 撤回消息体
      * 发送人id
      * */
     public String senderUserId;

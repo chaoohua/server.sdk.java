@@ -2,6 +2,9 @@ package io.rong.models.group.gag;
 
 import io.rong.models.group.GroupModel;
 
+/**
+ * @author RongCloud
+ */
 public class GagModel extends GroupModel{
 
     Integer munite;

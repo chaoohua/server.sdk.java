@@ -17,7 +17,11 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
+/**
+ * http 公共服务
+ * @date 2018-03-09
+ * @author RongCloud
+ */
 public class HttpUtil {
 
 	private static final String APPKEY = "RC-App-Key";

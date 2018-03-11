@@ -1,5 +1,9 @@
 package io.rong.models.message;
 
+/**
+ * @内容
+ * @author hc
+ */
 public class MentionedInfo {
     private int type;
     private String[] userIds;

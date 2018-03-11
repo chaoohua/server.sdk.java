@@ -4,6 +4,7 @@ import io.rong.util.GsonUtil;
 
 /**
  * 聊天室被封禁用户信息。
+ * @author RongCloud
  */
 public class BlockChatRoomUser {
 	// 聊天室用户Id。

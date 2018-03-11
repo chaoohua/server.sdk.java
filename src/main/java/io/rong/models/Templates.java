@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 模版消息对象。
  */
-public class TemplateMessage {
+public class Templates {
 	// 发送人用户 Id。（必传）
 	String fromUserId;
 	// 接收用户 Id，提供多个本参数可以实现向多人发送消息，上限为 1000 人。（必传）
@@ -27,10 +27,10 @@ public class TemplateMessage {
 
 	Integer contentAvailable;
 
-	public TemplateMessage() {
+	public Templates() {
 	}
 
-	public TemplateMessage(String fromUserId, String[] toUserId, String content, List<Map<String, String>> values, String objectName, String[] pushContent, String[] pushData, Integer verifyBlacklist) {
+	public Templates(String fromUserId, String[] toUserId, String content, List<Map<String, String>> values, String objectName, String[] pushContent, String[] pushData, Integer verifyBlacklist) {
 		this.fromUserId = fromUserId;
 		this.toUserId = toUserId;
 		this.content = content;
@@ -195,6 +195,6 @@ public class TemplateMessage {
 
 	@Override
 	public String toString() {
-		return GsonUtil.toJson(this, TemplateMessage.class);
+		return GsonUtil.toJson(this, Templates.class);
 	}
 }

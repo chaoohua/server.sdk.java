@@ -4,6 +4,7 @@ import io.rong.util.GsonUtil;
 
 /**
  * 群组信息。
+ * @author RongCloud
  */
 public class GroupInfo {
 	// 群组Id。

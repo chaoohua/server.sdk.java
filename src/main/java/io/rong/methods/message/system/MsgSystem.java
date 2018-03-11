@@ -4,9 +4,9 @@ import io.rong.RongCloud;
 import io.rong.models.CheckMethod;
 import io.rong.models.message.BroadcastMessage;
 import io.rong.models.message.Message;
-import io.rong.models.message.Template;
+import io.rong.models.message.TemplateMessage;
 import io.rong.models.response.ResponseResult;
-import io.rong.models.TemplateMessage;
+import io.rong.models.Templates;
 import io.rong.models.message.SystemMessage;
 import io.rong.util.CommonUtil;
 import io.rong.util.GsonUtil;
@@ -25,7 +25,7 @@ import java.util.Map;
  * @author hc
  * @date 2017/12/30
  */
-public class System {
+public class MsgSystem {
     private static final String UTF8 = "UTF-8";
     private String appKey;
     private String appSecret;
@@ -39,7 +39,7 @@ public class System {
     public void setRongCloud(RongCloud rongCloud) {
         this.rongCloud = rongCloud;
     }
-    public System(String appKey, String appSecret) {
+    public MsgSystem(String appKey, String appSecret) {
         this.appKey = appKey;
         this.appSecret = appSecret;
 
@@ -102,19 +102,19 @@ public class System {
      *
      * @return ResponseResult
      **/
-    public ResponseResult sendTemplate(Template template) throws Exception {
+    public ResponseResult sendTemplate(TemplateMessage template) throws Exception {
 
         String code = CommonUtil.checkFiled(template,PATH,CheckMethod.PUBLISHTEMPLATE);
         if(null != code){
             return (ResponseResult)GsonUtil.fromJson(code,ResponseResult.class);
         }
-        TemplateMessage templateMessage = new TemplateMessage();
+        Templates templateMessage = new Templates();
 
         ArrayList<String> toUserIds = new ArrayList<>();
         List<Map<String,String>> values = new ArrayList<>();
         List<String> push = new ArrayList<>();
 
-        for(Map.Entry<String, Template.Data> vo : template.getContent().entrySet()){
+        for(Map.Entry<String, TemplateMessage.Data> vo : template.getContent().entrySet()){
             toUserIds.add(vo.getKey());
             values.add(vo.getValue().getData());
             push.add(vo.getValue().getPush());

@@ -4,6 +4,7 @@ import io.rong.util.GsonUtil;
 
 /**
  * 聊天室信息。
+ * @author RongCloud
  */
 public class ChatRoomInfo {
 	// 聊天室Id。

@@ -3,6 +3,9 @@ package io.rong.models.group;
 import io.rong.models.chatroom.ChatroomMember;
 import io.rong.util.GsonUtil;
 
+/**
+ * @author RongCloud
+ */
 public class GroupMember {
     /**
      * 群组成员Id。

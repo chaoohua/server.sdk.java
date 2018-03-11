@@ -2,7 +2,9 @@ package io.rong.models.group;
 
 /**
  * 群组数据模型
- **/
+ *
+ * @author Rongcloud
+ * */
 public class GroupModel {
     /**
      * 群组id

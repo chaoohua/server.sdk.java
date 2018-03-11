@@ -4,6 +4,7 @@ import io.rong.util.GsonUtil;
 
 /**
  * 群组用户封禁信息。
+ * @author RongCloud
  */
 public class GagGroupUser {
 	// 解禁时间。
