@@ -22,7 +22,7 @@ public class BlockExample {
 
         String[] memberIds = {"fhgko9i4","qawr34h"};
         /**
-         *API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/block.html#add
+         *API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/block.html#add
          *
          * 添加封禁聊天室成员方法
          */
@@ -35,7 +35,7 @@ public class BlockExample {
 
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/block.html#remove
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/block.html#remove
          *
          * 移除封禁聊天室成员方法
          */
@@ -46,7 +46,7 @@ public class BlockExample {
         System.out.println("removeResult:  " + removeResult.toString());
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/block.html#getList
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/block.html#getList
          *
          * 查询被封禁聊天室成员方法
          */

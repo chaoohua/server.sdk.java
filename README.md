@@ -7,7 +7,30 @@ Rong Cloud Server SDK in Java.
 - 官方文档(http://www.rongcloud.cn/docs/server.html)
 
 # 使用教程
-* 请参考 [Example](./src/main/java/io/rong/example/chatroom/ChatroomExample.java) 里面提供了所有的 API 接口的调用用例。
+
+##### 1、注册开发者，请移步 [开发者后台](https://developer.rongcloud.cn)
+
+##### 2、创建应用
+
+##### 3、获取 Appkey 、 Secret
+
+##### 4、使用示例 
+
+###### [用户模块示例](./src/main/java/io/rong/example/user/UserExample.java)
+
+###### [消息模块示例](./src/main/java/io/rong/example/message/MessageExample.java)
+
+###### [聊天室模块示例](./src/main/java/io/rong/example/chatroom/Chatroom/Example.java)
+
+###### [群组模块示例](./src/main/java/io/rong/example/group/GroupExample.java)
+
+###### [绘画模块示例](./src/main/java/io/rong/example/conversation/ConversationExample.java)
+
+###### [敏感词模块示例](./src/main/java/io/rong/example/sensitive/SensitiveExample.java)
+
+###### [推送模块示例](./src/main/java/io/rong/example/push/PushExample.java)
+
+###### [消息模块示例](./src/main/java/io/rong/example/sms/SmsExample.java)
 
 ## sdk封装接口
 
@@ -28,19 +51,19 @@ Rong Cloud Server SDK in Java.
 ### [Message](src/main/java/io/rong/methods/message)
 - 消息发送
   #### private
-   - publish  发送单聊消息
-   - publishTemplate  发送单聊模板消息
+   - send  发送单聊消息
+   - sendTemplate  发送单聊模板消息
   #### system
-    - publish  发送系统消息
-    - publishTemplate  发送系统模板消息
+    - send  发送系统消息
+    - sendTemplate  发送系统模板消息
   #### group
-    - publish  发送群组消息
+    - send  发送群组消息
   #### discussion 
-    - publish  发送讨论组消息
+    - send  发送讨论组消息
   #### chatroom
-    - publish  发送聊天室消息
+    - send  发送聊天室消息
   #### broadcast
-    - publish  发送广播消息
+    - send  发送广播消息
   #### history
     - get  消息历史记录下载地址获取 消息历史记录下载地址获取。获取 APP 内指定某天某小时内的所有会话消息记录的下载地址
     - remove  消息历史记录删除

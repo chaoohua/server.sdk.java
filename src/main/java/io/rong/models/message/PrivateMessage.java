@@ -45,27 +45,29 @@ public class PrivateMessage extends Message {
         this.isIncludeSender = isIncludeSender;
         this.contentAvailable = contentAvailable;
     }
+
+    @Override
+    public String getSenderUserId() {
+        return this.senderUserId;
+    }
+
+    @Override
+    public PrivateMessage setSenderUserId(String senderUserId) {
+        this.senderUserId = senderUserId;
+        return this;
+    }
     /**
      * 获取接受用户id
      *
      * @return String
      */
     @Override
-    public String getSenderUserId() {
-        return this.senderUserId;
-    }
-    /**
-     * 获取接受用户id
-     */
-    @Override
-    public PrivateMessage setSenderUserId(String senderUserId) {
-        this.senderUserId = senderUserId;
-        return this;
-    }
-    @Override
     public String[] getTargetIds() {
         return this.targetIds;
     }
+    /**
+     * 设置接受用户id
+     */
     @Override
     public PrivateMessage setTargetIds(String[] targetIds) {
         this.targetIds = targetIds;

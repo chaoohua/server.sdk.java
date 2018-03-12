@@ -25,7 +25,7 @@ public class BlockExample {
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/user/block.html#add
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/user/block.html#add
          * 解除用户封禁
          *
          */
@@ -36,7 +36,7 @@ public class BlockExample {
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/user/block.html#remove
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/user/block.html#remove
          * 解除用户封禁
          *
          */
@@ -45,7 +45,7 @@ public class BlockExample {
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/user/block.html#getList
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/user/block.html#getList
          * 获取被封禁用户
          *
          */

@@ -21,7 +21,7 @@ public class GagExample {
         Gag gag = rongCloud.chatroom.gag;
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/gag.html#add
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/gag.html#add
          * 添加禁言聊天室成员方法想（在 App 中如果不让某一用户在聊天室中发言时，可将此用户在聊天室中禁言，
          * 被禁言用户可以接收查看聊天室中用户聊天信息，但不能发送消息.）获取某用户的黑名单列表方法（每秒钟限 100 次）
          */
@@ -36,7 +36,7 @@ public class GagExample {
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/gag.html#remove
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/gag.html#remove
          * 查询被禁言聊天室成员方法
          */
 
@@ -45,7 +45,7 @@ public class GagExample {
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/gag.html#getList
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/gag.html#getList
          *
          * 移除禁言聊天室成员
          */

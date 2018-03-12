@@ -8,9 +8,9 @@ import io.rong.methods.message.chatroom.Chatroom;
 import io.rong.methods.message.discussion.Discussion;
 import io.rong.methods.message.group.Group;
 import io.rong.methods.message.history.History;
+import io.rong.methods.message.Message;
 import io.rong.methods.message.system.MsgSystem;
 import io.rong.models.message.*;
-import io.rong.methods.message.Message;
 import io.rong.models.response.HistoryMessageResult;
 import io.rong.models.response.ResponseResult;
 import io.rong.util.GsonUtil;
@@ -44,7 +44,7 @@ public class MessageExample {
     public static void main(String[] args) throws Exception {
 
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
-
+        Message message = rongCloud.message;
         Private Private = rongCloud.message.msgPrivate;
         MsgSystem system = rongCloud.message.system;
         Group group = rongCloud.message.group;
@@ -130,16 +130,16 @@ public class MessageExample {
         /**
          * 撤回单聊消息
          * */
-        RecallMessage message = new RecallMessage()
+        RecallMessage recallMessage = new RecallMessage()
                 .setSenderUserId("sea9901")
                 .setTargetId("IXQhMs3ny")
                 .setuId("5GSB-RPM1-KP8H-9JHF")
                 .setSentTime("1519444243981");
-        ResponseResult recallPrivateResult = (ResponseResult)Private.recall(message);
+        ResponseResult recallPrivateResult = (ResponseResult)Private.recall(recallMessage);
         System.out.println("recall private:  " + recallPrivateResult.toString());
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/group.html#send
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/group.html#send
          *
          * 群组消息
          * */
@@ -159,21 +159,21 @@ public class MessageExample {
         System.out.println("send Group message:  " + groupResult.toString());
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/private.html#recall
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/private.html#recall
          *
          * 群组撤回消息
          * */
-         message = new RecallMessage()
+        recallMessage = new RecallMessage()
                 .setSenderUserId("sea9901")
                 .setTargetId("markoiwm")
                 .setuId("5GSB-RPM1-KP8H-9JHF")
                 .setSentTime("1519444243981");
-        ResponseResult recallMessageResult = (ResponseResult)group.recall(message);
+        ResponseResult recallMessageResult = (ResponseResult)group.recall(recallMessage);
 
         System.out.println("send recall message:  " + recallMessageResult.toString());
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/private.html#recall
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/private.html#recall
          *
          * 群组@消息
          * */
@@ -201,7 +201,7 @@ public class MessageExample {
         System.out.println("group mention result:  " + mentionResult.toString());
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/discussion.html#send
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/discussion.html#send
          *
          * 发送讨论组消息
          * */
@@ -223,22 +223,22 @@ public class MessageExample {
         System.out.println("send Group message:  " + groupResult.toString());
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/discussion.html#recall
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/discussion.html#recall
          *
          * 撤回讨论组消息
          * */
-        message = new RecallMessage()
+        recallMessage = new RecallMessage()
                 .setSenderUserId("sea9901")
                 .setTargetId("IXQhMs3ny")
                 .setuId("5GSB-RPM1-KP8H-9JHF")
                 .setSentTime("1519444243981");
-        ResponseResult recallDiscussionResult = (ResponseResult)discussion.recall(message);
+        ResponseResult recallDiscussionResult = (ResponseResult)discussion.recall(recallMessage);
 
         System.out.println("send Group message:  " + recallDiscussionResult.toString());
 
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/chatroom.html#send
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/chatroom.html#send
          *
          * 聊天室消息
          * */
@@ -256,7 +256,7 @@ public class MessageExample {
         System.out.println("send chatroom message:  " + chatroomResult.toString());
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/chatroom.html#broadcast
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/chatroom.html#broadcast
          *
          * 聊天室广播消息
          *
@@ -274,7 +274,7 @@ public class MessageExample {
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/history.html#get
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/history.html#get
          *
          * 获取历史消息日志文件
          *
@@ -285,7 +285,7 @@ public class MessageExample {
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/history.html#get
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/history.html#get
          *
          * 删除历史消息日志文件
          *
