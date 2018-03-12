@@ -30,10 +30,9 @@ public class GroupMessage extends Message {
 
     public GroupMessage() {
     }
-
     /**
      * @param  senderUserId:发送人用户 Id 。（必传）
-     * @param  targetIds:接收群Id，提供多个本参数可以实现向多群发送消息，最多不超过 3 个群组。（必传）
+     * @param  targetId:接收群Id，提供多个本参数可以实现向多群发送消息，最多不超过 3 个群组。（必传）
      * @param  content:发送消息内容，参考融云消息类型表.示例说明；如果 objectName 为自定义消息类型，该参数可自定义格式。（必传）
      * @param  pushContent:定义显示的 Push 内容，如果 objectName 为融云内置消息类型时，则发送后用户一定会收到 Push 信息. 如果为自定义消息，则 pushContent 为自定义消息显示的 Push 内容，如果不传则用户不会收到 Push 通知。（可选）
      * @param  pushData:针对 iOS 平台为 Push 通知时附加到 payload 中，Android 客户端收到推送消息时对应字段名为 pushData。（可选）
@@ -42,17 +41,11 @@ public class GroupMessage extends Message {
      * @param  isIncludeSender:发送用户自已是否接收消息，0 表示为不接收，1 表示为接收，默认为 0 不接收。（可选）
      *
      * */
-    public GroupMessage(String senderUserId, String[] targetIds, String objectName, BaseMessage content, String pushContent, String pushData,
-                        Integer isPersisted, Integer isCounted, Integer isIncludeSender, Integer isMentioned, Integer contentAvailable) {
-        this.senderUserId = senderUserId;
-        this.targetIds = targetIds;
-        this.objectName = objectName;
-        this.content = content;
-        this.pushContent = pushContent;
-        this.pushData = pushData;
+    public GroupMessage(String senderUserId, String[] targetId, String objectName, BaseMessage content, String pushContent, String pushData, Integer isIncludeSender, Integer isPersisted, Integer isCounted, Integer contentAvailable) {
+        super(senderUserId, targetId, objectName, content, pushContent, pushData);
+        this.isIncludeSender = isIncludeSender;
         this.isPersisted = isPersisted;
         this.isCounted = isCounted;
-        this.isIncludeSender = isIncludeSender;
         this.contentAvailable = contentAvailable;
     }
 
@@ -72,8 +65,8 @@ public class GroupMessage extends Message {
      * @return String
      */
     @Override
-    public String[] getTargetIds() {
-        return this.targetIds;
+    public String[] getTargetId() {
+        return this.targetId;
     }
     /**
      * 设置接收群组Id
@@ -81,8 +74,8 @@ public class GroupMessage extends Message {
      * @return String
      */
     @Override
-    public GroupMessage setTargetIds(String[] targetIds) {
-        this.targetIds = targetIds;
+    public GroupMessage setTargetId(String[] targetId) {
+        this.targetId = targetId;
         return this;
     }
     @Override

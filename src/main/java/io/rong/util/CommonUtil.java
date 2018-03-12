@@ -374,7 +374,6 @@ public class CommonUtil {
             String code = String.valueOf(object.get("code"));
             api = JsonUtil.getJsonObject(path,API_JSON_NAME);
             Set<Map.Entry<String,Object>> keys = api.getJSONObject(method).getJSONObject("response").getJSONObject("fail").entrySet();
-           // String[] serchList = {"{{name}}","{{min}}","{{name}}","{{max}}"};
             String text = "";
             for (Map.Entry<String,Object> entry : keys) {
                 if(code.equals(entry.getKey())){
@@ -384,7 +383,9 @@ public class CommonUtil {
                 }
             }
             if(code.equals("200")){
-                text = StringUtils.replace(response,"users","members");
+                if(path.contains("chatroom")||path.contains("group")){
+                    text = StringUtils.replace(response,"users","members");
+                }
                 return text;
             }else{
                 text = StringUtils.replace(response,"errorMessage","msg");

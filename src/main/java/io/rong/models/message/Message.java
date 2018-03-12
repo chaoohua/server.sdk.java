@@ -8,52 +8,52 @@ import io.rong.messages.BaseMessage;
  */
 public class Message {
 
-    public String senderUserId;
+    private String senderUserId;
     /**
      *
      * 接受 Id 可能是用户Id，聊天Id ，群组Id，讨论组Id（必传）
      **/
-    public String[] targetIds;
+    private String[] targetId;
     /**
      *消息类型 （必传）
      **/
-    public String objectName;
+    private String objectName;
     /**
      * 发送消息内容，参考融云消息类型表.示例说明；如果 objectName
      * 为自定义消息类型，该参数可自定义格式。（必传）。
      **/
-    public BaseMessage content;
+    private BaseMessage content;
     /**
      * 定义显示的 Push 内容，如果 objectName 为融云内置消息类型时，
      * 则发送后用户一定会收到 Push 信息。如果为自定义消息，则 pushContent
      * 为自定义消息显示的 Push 内容，如果不传则用户不会收到 Push 通知。（可选）
      */
-    public String pushContent;
+    private String pushContent;
     /**
      * 针对 iOS 平台为 Push 通知时附加到 payload 中，Android 客户端收到推送消息时对应字段名为 pushData。（可选）
      */
-    public String pushData;
+    private String pushData;
 
 
     public Message() {
     }
 
-    public Message(String senderUserId, String[] targetIds, String objectName, BaseMessage content,
+    public Message(String senderUserId, String[] targetId, String objectName, BaseMessage content,
                    String pushContent, String pushData) {
         this.senderUserId = senderUserId;
-        this.targetIds = targetIds;
+        this.targetId = targetId;
         this.objectName = objectName;
         this.content = content;
         this.pushContent = pushContent;
         this.pushData = pushData;
     }
 
-    public String[] getTargetIds() {
-        return this.targetIds;
+    public String[] getTargetId() {
+        return this.targetId;
     }
 
-    public Message setTargetIds(String[] targetIds) {
-        this.targetIds = targetIds;
+    public Message setTargetId(String[] targetId) {
+        this.targetId = targetId;
         return this;
     }
 

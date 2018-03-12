@@ -210,7 +210,7 @@ public class Example {
 		}
 	}
 	/**
-	 * 系统消息测试
+	 * 广播消息测试
 	 */
 	@Test
 	public void testSendBroadcast() throws Exception {
@@ -325,11 +325,10 @@ public class Example {
 		//@内容
 		MentionedInfo mentionedInfo = new MentionedInfo(1,mentionIds,"push");
 		//@消息的消息内容
-		GroupMentionContent content = new GroupMentionContent(txtMessage,mentionedInfo);
+		MentionMessageContent content = new MentionMessageContent(txtMessage,mentionedInfo);
 
 		MentionMessage mentionMessage = new MentionMessage()
 				.setSenderUserId("userId")
-				.setMentionIds(targetIds)
 				.setObjectName(txtMessage.getType())
 				.setContent(content)
 				.setPushContent("this is a push")
@@ -337,7 +336,6 @@ public class Example {
 				.setIsPersisted(0)
 				.setIsCounted(0)
 				.setIsIncludeSender(0)
-				.setIsMentioned(0)
 				.setContentAvailable(0);
 		ResponseResult result = rongCloud.message.group.sendMention(mentionMessage);
 

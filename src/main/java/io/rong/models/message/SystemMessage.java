@@ -28,9 +28,9 @@ public class SystemMessage extends Message {
     public SystemMessage() {
     }
 
-    public SystemMessage(String senderUserId, String[] targetIds, String objectName, BaseMessage content,
-                         String pushContent, String pushData, Integer isPersisted, Integer isCounted, Integer contentAvailable) {
-        super(senderUserId, targetIds, objectName, content, pushContent, pushData);
+    public SystemMessage(String senderUserId, String[] targetId, String objectName, BaseMessage content, String pushContent, String pushData,
+                         Integer isPersisted, Integer isCounted, Integer contentAvailable) {
+        super(senderUserId, targetId, objectName, content, pushContent, pushData);
         this.isPersisted = isPersisted;
         this.isCounted = isCounted;
         this.contentAvailable = contentAvailable;
@@ -50,15 +50,15 @@ public class SystemMessage extends Message {
      * @return String
      */
     @Override
-    public String[] getTargetIds() {
-        return this.targetIds;
+    public String[] getTargetId() {
+        return this.targetId;
     }
     /**
      * 接收用户Id，提供多个本参数可以实现向多用户发送系统消息，上限为 100 人
      */
     @Override
-    public SystemMessage setTargetIds(String[] targetIds) {
-        this.targetIds = targetIds;
+    public SystemMessage setTargetId(String[] targetId) {
+        this.targetId = targetId;
         return this;
     }
     @Override

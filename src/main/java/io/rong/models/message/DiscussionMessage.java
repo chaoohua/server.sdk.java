@@ -32,10 +32,13 @@ public class DiscussionMessage extends Message {
     public DiscussionMessage() {
     }
 
-    public DiscussionMessage(String senderUserId, String[] targetIds, String objectName, BaseMessage content, String pushContent, String pushData,
-                             Integer isPersisted, Integer isCounted, Integer isIncludeSender) {
-        super(senderUserId, targetIds, objectName, content, pushContent, pushData);
+    public DiscussionMessage(String senderUserId, String[] targetId, String objectName, BaseMessage content, String pushContent, String pushData,
+                             Integer isPersisted, Integer isCounted, Integer isIncludeSender, Integer contentAvailable) {
+        super(senderUserId, targetId, objectName, content, pushContent, pushData);
+        this.isPersisted = isPersisted;
+        this.isCounted = isCounted;
         this.isIncludeSender = isIncludeSender;
+        this.contentAvailable = contentAvailable;
     }
 
     @Override
@@ -53,8 +56,8 @@ public class DiscussionMessage extends Message {
      * @return String
      */
     @Override
-    public String[] getTargetIds() {
-        return this.targetIds;
+    public String[] getTargetId() {
+        return this.targetId;
     }
     /**
      * 设置接受聊天室Id
@@ -62,8 +65,8 @@ public class DiscussionMessage extends Message {
      * @return String
      */
     @Override
-    public DiscussionMessage setTargetIds(String[] targetIds) {
-        this.targetIds = targetIds;
+    public DiscussionMessage setTargetId(String[] targetId) {
+        this.targetId = targetId;
         return this;
     }
 

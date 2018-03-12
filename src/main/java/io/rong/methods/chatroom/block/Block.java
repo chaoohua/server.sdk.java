@@ -3,7 +3,6 @@ package io.rong.methods.chatroom.block;
 import io.rong.RongCloud;
 import io.rong.models.*;
 import io.rong.models.chatroom.ChatroomModel;
-import io.rong.models.chatroom.ChatroomMember;
 import io.rong.models.response.ListBlockChatroomUserResult;
 import io.rong.models.response.ResponseResult;
 import io.rong.util.CommonUtil;

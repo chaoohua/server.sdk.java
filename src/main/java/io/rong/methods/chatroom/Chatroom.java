@@ -80,7 +80,7 @@ public class Chatroom {
 	 **/
 	public ResponseResult create(ChatroomModel[] chatrooms) throws Exception {
 		if (chatrooms == null) {
-			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/chatroom/create","Paramer 'chatRoomInfo' is required");
+			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/chatroom/create","Paramer 'chatrooms' is required");
 		}
 		
 	   	StringBuilder sb = new StringBuilder();

@@ -21,7 +21,7 @@ public class Message {
 	public  Discussion discussion;
 	public  Group group;
 	public  History history;
-	public MsgSystem system;
+	public  MsgSystem system;
 	private RongCloud rongCloud;
 
 	public RongCloud getRongCloud() {

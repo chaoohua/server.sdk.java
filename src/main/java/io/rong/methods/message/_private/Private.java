@@ -1,7 +1,9 @@
 package io.rong.methods.message._private;
 
 import io.rong.RongCloud;
+import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
+import io.rong.models.CommonConstrants;
 import io.rong.models.Result;
 import io.rong.models.message.Message;
 import io.rong.models.message.RecallMessage;
@@ -53,53 +55,52 @@ public class Private {
 	 *
 	 * @return ResponseResult
 	 **/
-	public ResponseResult send(Message message) throws Exception {
+	public ResponseResult send(PrivateMessage message) throws Exception {
 		if(null == message){
-
+			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,PATH, "Paramer 'message' is required");
 		}
-		PrivateMessage privateMessage = (PrivateMessage)message;
-		String msgErr = CommonUtil.checkFiled(privateMessage,PATH, CheckMethod.SEND);
-		if(null != msgErr){
-			return (ResponseResult)GsonUtil.fromJson(msgErr,ResponseResult.class);
+		String errMsg = CommonUtil.checkFiled(message,PATH, CheckMethod.SEND);
+		if(null != errMsg){
+			return (ResponseResult)GsonUtil.fromJson(errMsg,ResponseResult.class);
 		}
 
 	    StringBuilder sb = new StringBuilder();
-	    sb.append("&fromUserId=").append(URLEncoder.encode(privateMessage.senderUserId.toString(), UTF8));
+	    sb.append("&fromUserId=").append(URLEncoder.encode(message.getSenderUserId().toString(), UTF8));
 	    
-	    for (int i = 0 ; i< privateMessage.targetIds.length; i++) {
-			String child  = privateMessage.targetIds[i];
+	    for (int i = 0 ; i< message.getTargetId().length; i++) {
+			String child  = message.getTargetId()[i];
 			sb.append("&toUserId=").append(URLEncoder.encode(child, UTF8));
 		}
 		
-	    sb.append("&objectName=").append(URLEncoder.encode(privateMessage.content.getType(), UTF8));
-   	    sb.append("&content=").append(URLEncoder.encode(privateMessage.content.toString(), UTF8));
+	    sb.append("&objectName=").append(URLEncoder.encode(message.getContent().getType(), UTF8));
+   	    sb.append("&content=").append(URLEncoder.encode(message.getContent().toString(), UTF8));
 	    
-	    if (privateMessage.pushContent != null) {
-	    	sb.append("&pushContent=").append(URLEncoder.encode(privateMessage.pushContent.toString(), UTF8));
+	    if (message.getPushContent() != null) {
+	    	sb.append("&pushContent=").append(URLEncoder.encode(message.getPushContent().toString(), UTF8));
 	    }
 	    
-	    if (privateMessage.pushData != null) {
-	    	sb.append("&pushData=").append(URLEncoder.encode(privateMessage.pushData.toString(), UTF8));
+	    if (message.getPushData() != null) {
+	    	sb.append("&pushData=").append(URLEncoder.encode(message.getPushData().toString(), UTF8));
 	    }
 	    
-	    if (privateMessage.count != null) {
-	    	sb.append("&count=").append(URLEncoder.encode(privateMessage.count.toString(), UTF8));
+	    if (message.getCount() != null) {
+	    	sb.append("&count=").append(URLEncoder.encode(message.getCount().toString(), UTF8));
 	    }
 	    
-	    if (privateMessage.verifyBlacklist != null) {
-	    	sb.append("&verifyBlacklist=").append(URLEncoder.encode(privateMessage.verifyBlacklist.toString(), UTF8));
+	    if (message.getVerifyBlacklist() != null) {
+	    	sb.append("&verifyBlacklist=").append(URLEncoder.encode(message.getVerifyBlacklist().toString(), UTF8));
 	    }
 	    
-	    if (privateMessage.getIsPersisted() != null) {
-	    	sb.append("&isPersisted=").append(URLEncoder.encode(privateMessage.isPersisted.toString(), UTF8));
+	    if (message.getIsPersisted() != null) {
+	    	sb.append("&isPersisted=").append(URLEncoder.encode(message.getIsPersisted().toString(), UTF8));
 	    }
 	    
-	    if (privateMessage.getIsCounted() != null) {
-	    	sb.append("&isCounted=").append(URLEncoder.encode(privateMessage.isCounted.toString(), UTF8));
+	    if (message.getIsCounted() != null) {
+	    	sb.append("&isCounted=").append(URLEncoder.encode(message.getIsCounted().toString(), UTF8));
 	    }
 	    
-	    if (privateMessage.isIncludeSender != null) {
-	    	sb.append("&isIncludeSender=").append(URLEncoder.encode(privateMessage.isIncludeSender.toString(), UTF8));
+	    if (message.getIsIncludeSender() != null) {
+	    	sb.append("&isIncludeSender=").append(URLEncoder.encode(message.getIsIncludeSender().toString(), UTF8));
 	    }
 		String body = sb.toString();
 	   	if (body.indexOf("&") == 0) {
@@ -115,15 +116,15 @@ public class Private {
 	/**
 	 * 发送单聊模板消息方法（一个用户向多个用户发送不同消息内容，单条消息最大 128k。每分钟最多发送 6000 条信息，每次发送用户上限为 1000 人。） 
 	 * 
-	 * @param  template:单聊模版消息。
+	 * @param  message:单聊模版消息。
 	 *
 	 * @return ResponseResult
 	 **/
-	public ResponseResult sendTemplate(TemplateMessage template) throws Exception {
+	public ResponseResult sendTemplate(TemplateMessage message) throws Exception {
 
-		String message = CommonUtil.checkFiled(template,PATH, CheckMethod.SENDTEMPLATE);
-		if(null != message){
-			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
+		String errMsg = CommonUtil.checkFiled(message,PATH, CheckMethod.SENDTEMPLATE);
+		if(null != errMsg){
+			return (ResponseResult)GsonUtil.fromJson(errMsg,ResponseResult.class);
 		}
 
 		Templates templateMessage = new Templates();
@@ -132,20 +133,20 @@ public class Private {
 		List<Map<String,String>> values = new ArrayList<>();
 		List<String> push = new ArrayList<>();
 
-		for(Map.Entry<String, TemplateMessage.Data> vo : template.getContent().entrySet()){
+		for(Map.Entry<String, TemplateMessage.Data> vo : message.getContent().entrySet()){
 			toUserIds.add(vo.getKey());
 			values.add(vo.getValue().getData());
 			push.add(vo.getValue().getPush());
 		}
-		templateMessage.setFromUserId(template.getSenderId());
+		templateMessage.setFromUserId(message.getSenderId());
 		templateMessage.setToUserId(toUserIds.toArray(new String[toUserIds.size()]));
-		templateMessage.setObjectName(template.getObjectName());
-		templateMessage.setContent(template.getTemplate().toString());
+		templateMessage.setObjectName(message.getObjectName());
+		templateMessage.setContent(message.getTemplate().toString());
 		templateMessage.setValues(values);
 		templateMessage.setPushContent(push.toArray(new String[push.size()]));
-		templateMessage.setPushData(template.getPushData());
-		templateMessage.setVerifyBlacklist(template.getVerifyBlacklist());
-		templateMessage.setContentAvailable(template.getContentAvailable());
+		templateMessage.setPushData(message.getPushData());
+		templateMessage.setVerifyBlacklist(message.getVerifyBlacklist());
+		templateMessage.setContentAvailable(message.getContentAvailable());
 
 
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/message/private/publish_template.json", "application/json");
@@ -157,22 +158,22 @@ public class Private {
 	/**
 	 * 设置用户某会话接收新消息时是否进行消息提醒。
 	 *
-	 *@param recallMessage
+	 *@param message
 	 *
 	 * @return ResponseResult
 	 **/
-	public Result recall(RecallMessage recallMessage) throws Exception {
-		//需要校验的字段
-		String message = CommonUtil.checkFiled(recallMessage,PATH,CheckMethod.RECALL);
-		if(null != message){
-			return (Result)GsonUtil.fromJson(message,Result.class);
+	public Result recall(RecallMessage message) throws Exception {
+
+		String errMsg = CommonUtil.checkFiled(message,PATH,CheckMethod.RECALL);
+		if(null != errMsg){
+			return (ResponseResult)GsonUtil.fromJson(errMsg,ResponseResult.class);
 		}
 		StringBuilder sb = new StringBuilder();
 		sb.append("&conversationType=").append(URLEncoder.encode("1", UTF8));
-		sb.append("&fromUserId=").append(URLEncoder.encode(recallMessage.senderUserId.toString(), UTF8));
-		sb.append("&targetId=").append(URLEncoder.encode(recallMessage.targetId.toString(), UTF8));
-		sb.append("&messageUID=").append(URLEncoder.encode(recallMessage.uId.toString(), UTF8));
-		sb.append("&sentTime=").append(URLEncoder.encode(recallMessage.sentTime.toString(), UTF8));
+		sb.append("&fromUserId=").append(URLEncoder.encode(message.senderUserId.toString(), UTF8));
+		sb.append("&targetId=").append(URLEncoder.encode(message.targetId.toString(), UTF8));
+		sb.append("&messageUID=").append(URLEncoder.encode(message.uId.toString(), UTF8));
+		sb.append("&sentTime=").append(URLEncoder.encode(message.sentTime.toString(), UTF8));
 		String body = sb.toString();
 		if (body.indexOf("&") == 0) {
 			body = body.substring(1, body.length());

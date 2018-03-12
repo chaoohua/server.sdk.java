@@ -35,7 +35,7 @@ public class ChatroomModel {
 	/**
 	 * 禁言时间
 	 * */
-	 Integer minute;
+	Integer minute;
 
 	public ChatroomModel() {
 		super();

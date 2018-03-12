@@ -58,7 +58,7 @@ public class Discussion {
 
         StringBuilder sb = new StringBuilder();
         sb.append("&fromUserId=").append(URLEncoder.encode(message.getSenderUserId().toString(), UTF8));
-        sb.append("&toDiscussionId=").append(URLEncoder.encode(message.getTargetIds().toString(), UTF8));
+        sb.append("&toDiscussionId=").append(URLEncoder.encode(message.getTargetId().toString(), UTF8));
         sb.append("&objectName=").append(URLEncoder.encode(message.getContent().getType(), UTF8));
         sb.append("&content=").append(URLEncoder.encode(message.toString(), UTF8));
 
@@ -95,22 +95,22 @@ public class Discussion {
     /**
      * 设置用户某会话接收新消息时是否进行消息提醒。
      *
-     *@param recallMessage
+     *@param message
      *
      * @return ResponseResult
      **/
-    public Result recall(RecallMessage recallMessage) throws Exception {
+    public Result recall(RecallMessage message) throws Exception {
         //需要校验的字段
-        String message = CommonUtil.checkFiled(recallMessage,PATH,CheckMethod.RECALL);
-        if(null != message){
-            return (Result)GsonUtil.fromJson(message,Result.class);
+        String msgErr = CommonUtil.checkFiled(message,PATH,CheckMethod.RECALL);
+        if(null != msgErr){
+            return (ResponseResult)GsonUtil.fromJson(msgErr,ResponseResult.class);
         }
         StringBuilder sb = new StringBuilder();
         sb.append("&conversationType=").append(URLEncoder.encode("2", UTF8));
-        sb.append("&fromUserId=").append(URLEncoder.encode(recallMessage.senderUserId.toString(), UTF8));
-        sb.append("&targetId=").append(URLEncoder.encode(recallMessage.targetId.toString(), UTF8));
-        sb.append("&messageUID=").append(URLEncoder.encode(recallMessage.uId.toString(), UTF8));
-        sb.append("&sentTime=").append(URLEncoder.encode(recallMessage.sentTime.toString(), UTF8));
+        sb.append("&fromUserId=").append(URLEncoder.encode(message.senderUserId.toString(), UTF8));
+        sb.append("&targetId=").append(URLEncoder.encode(message.targetId.toString(), UTF8));
+        sb.append("&messageUID=").append(URLEncoder.encode(message.uId.toString(), UTF8));
+        sb.append("&sentTime=").append(URLEncoder.encode(message.sentTime.toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());

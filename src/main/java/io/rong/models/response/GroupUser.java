@@ -1,4 +1,4 @@
-package io.rong.models.group;
+package io.rong.models.response;
 
 import io.rong.util.GsonUtil;
 

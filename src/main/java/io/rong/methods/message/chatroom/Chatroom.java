@@ -50,15 +50,15 @@ public class Chatroom {
             return (ResponseResult)GsonUtil.fromJson(code,ResponseResult.class);
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("&fromUserId=").append(URLEncoder.encode(message.senderUserId.toString(), UTF8));
+        sb.append("&fromUserId=").append(URLEncoder.encode(message.getTargetId().toString(), UTF8));
 
-        for (int i = 0 ; i< message.targetIds.length; i++) {
-            String child  = message.targetIds[i];
+        for (int i = 0 ; i< message.getTargetId().length; i++) {
+            String child  = message.getTargetId()[i];
             sb.append("&toChatroomId=").append(URLEncoder.encode(child, UTF8));
         }
 
-        sb.append("&objectName=").append(URLEncoder.encode(message.content.getType(), UTF8));
-        sb.append("&content=").append(URLEncoder.encode(message.content.toString(), UTF8));
+        sb.append("&objectName=").append(URLEncoder.encode(message.getContent().getType(), UTF8));
+        sb.append("&content=").append(URLEncoder.encode(message.getContent().toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());
@@ -84,10 +84,10 @@ public class Chatroom {
             return (ResponseResult)GsonUtil.fromJson(code,ResponseResult.class);
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("&fromUserId=").append(URLEncoder.encode(message.senderUserId.toString(), UTF8));
+        sb.append("&fromUserId=").append(URLEncoder.encode(message.getSenderUserId().toString(), UTF8));
 
 
-        sb.append("&objectName=").append(URLEncoder.encode(message.content.getType(), UTF8));
+        sb.append("&objectName=").append(URLEncoder.encode(message.getContent().getType(), UTF8));
         sb.append("&content=").append(URLEncoder.encode(message.toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {

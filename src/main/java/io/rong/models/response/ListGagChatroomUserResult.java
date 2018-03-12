@@ -1,7 +1,6 @@
 package io.rong.models.response;
 
 import io.rong.models.Result;
-import io.rong.models.chatroom.GagChatRoomUser;
 import io.rong.util.GsonUtil;
 import java.util.List;
 

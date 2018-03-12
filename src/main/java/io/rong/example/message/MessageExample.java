@@ -8,7 +8,6 @@ import io.rong.methods.message.chatroom.Chatroom;
 import io.rong.methods.message.discussion.Discussion;
 import io.rong.methods.message.group.Group;
 import io.rong.methods.message.history.History;
-import io.rong.methods.message.Message;
 import io.rong.methods.message.system.MsgSystem;
 import io.rong.models.message.*;
 import io.rong.models.response.HistoryMessageResult;
@@ -17,6 +16,7 @@ import io.rong.util.GsonUtil;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import io.rong.models.message.Message;
 
 
 /**
@@ -44,7 +44,6 @@ public class MessageExample {
     public static void main(String[] args) throws Exception {
 
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
-        Message message = rongCloud.message;
         Private Private = rongCloud.message.msgPrivate;
         MsgSystem system = rongCloud.message.system;
         Group group = rongCloud.message.group;
@@ -52,8 +51,8 @@ public class MessageExample {
         Discussion discussion = rongCloud.message.discussion;
         History history = rongCloud.message.history;
 
-
         /**
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/system.html#send
          *
          * 发送系统消息
          *
@@ -61,7 +60,7 @@ public class MessageExample {
         String[] targetIds = {"userId2","userid3","userId4"};
         SystemMessage systemMessage = new SystemMessage()
                 .setSenderUserId("usetId")
-                .setTargetIds(targetIds)
+                .setTargetId(targetIds)
                 .setObjectName(txtMessage.getType())
                 .setContent(txtMessage)
                 .setPushContent("this is a push")
@@ -74,6 +73,7 @@ public class MessageExample {
         System.out.println("send system message:  " + result.toString());
 
         /**
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/system.html#sendTemplate
          *
          * 发送系统模板消息方法
          *
@@ -93,11 +93,30 @@ public class MessageExample {
         }
 
         /**
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/system.html#sendTemplate
+         *
+         * 发送系统模板消息方法
+         *
+         */
+        Message message = new BroadcastMessage()
+                .setSenderUserId("Hji8yh76")
+                .setObjectName(txtMessage.getType())
+                .setContent(txtMessage)
+                .setPushContent("this is a push")
+                .setPushData("{'pushData':'hello'}")
+                .setOs("iOS");
+        ResponseResult broadcastResult = rongCloud.message.system.broadcast(message);
+        System.out.println("send broadcast:  " + broadcastResult.toString());
+
+
+        /**
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/private.html#send
+         *
          * 发送单聊消息
          * */
         PrivateMessage privateMessage = new PrivateMessage()
                 .setSenderUserId("userId")
-                .setTargetIds(targetIds)
+                .setTargetId(targetIds)
                 .setObjectName(voiceMessage.getType())
                 .setContent(voiceMessage)
                 .setPushContent("")
@@ -111,6 +130,8 @@ public class MessageExample {
         System.out.println("sendPrivate:  " + publishPrivateResult.toString());
 
         /**
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/private.html#sendTemplate
+         *
          * 发送单聊模板消息方法
          */
         try {
@@ -128,6 +149,8 @@ public class MessageExample {
             }
         }
         /**
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/private.html#recall
+         *
          * 撤回单聊消息
          * */
         RecallMessage recallMessage = new RecallMessage()
@@ -145,7 +168,7 @@ public class MessageExample {
          * */
         GroupMessage groupMessage = new GroupMessage()
                 .setSenderUserId("userId")
-                .setTargetIds(targetIds)
+                .setTargetId(targetIds)
                 .setObjectName(txtMessage.getType())
                 .setContent(txtMessage)
                 .setPushContent("this is a push")
@@ -159,7 +182,7 @@ public class MessageExample {
         System.out.println("send Group message:  " + groupResult.toString());
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/private.html#recall
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/group.html#recall
          *
          * 群组撤回消息
          * */
@@ -173,7 +196,7 @@ public class MessageExample {
         System.out.println("send recall message:  " + recallMessageResult.toString());
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/private.html#recall
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/group.html#sendMention
          *
          * 群组@消息
          * */
@@ -182,11 +205,10 @@ public class MessageExample {
 
         MentionedInfo mentionedInfo = new MentionedInfo(1,mentionIds,"");
         //@内容
-        GroupMentionContent content = new GroupMentionContent(txtMessage,mentionedInfo);
+        MentionMessageContent content = new MentionMessageContent(txtMessage,mentionedInfo);
 
         MentionMessage mentionMessage = new MentionMessage()
                 .setSenderUserId("userId")
-                .setMentionIds(targetIds)
                 .setObjectName(txtMessage.getType())
                 .setContent(content)
                 .setPushContent("this is a push")
@@ -194,7 +216,6 @@ public class MessageExample {
                 .setIsPersisted(0)
                 .setIsCounted(0)
                 .setIsIncludeSender(0)
-                .setIsMentioned(0)
                 .setContentAvailable(0);
         ResponseResult mentionResult = rongCloud.message.group.sendMention(mentionMessage);
 
@@ -208,7 +229,7 @@ public class MessageExample {
         String[] discussionIds = {"lijhGk87","lijhGk88"};
         DiscussionMessage discussionMessage = new DiscussionMessage()
                 .setSenderUserId("JuikH78ko")
-                .setTargetIds(discussionIds)
+                .setTargetId(discussionIds)
                 .setObjectName(txtMessage.getType())
                 .setContent(txtMessage)
                 .setPushContent("this is a push")
@@ -248,7 +269,7 @@ public class MessageExample {
 
         ChatroomMessage chatroomMessage = new ChatroomMessage()
                 .setSenderUserId("bN6oQi8T5")
-                .setTargetIds(chatroomIds)
+                .setTargetId(chatroomIds)
                 .setContent(txtMessage)
                 .setObjectName(txtMessage.getType());
 

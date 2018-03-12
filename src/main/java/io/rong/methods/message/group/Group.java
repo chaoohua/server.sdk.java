@@ -54,34 +54,34 @@ public class Group {
             return (ResponseResult)GsonUtil.fromJson(code,ResponseResult.class);
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("&fromUserId=").append(URLEncoder.encode(message.senderUserId.toString(), UTF8));
+        sb.append("&fromUserId=").append(URLEncoder.encode(message.getSenderUserId().toString(), UTF8));
 
-        for (int i = 0 ; i< message.targetIds.length; i++) {
-            String child  =message.targetIds[i];
+        for (int i = 0 ; i< message.getTargetId().length; i++) {
+            String child  =message.getTargetId()[i];
             sb.append("&toGroupId=").append(URLEncoder.encode(child, UTF8));
         }
 
-        sb.append("&objectName=").append(URLEncoder.encode(message.content.getType(), UTF8));
-        sb.append("&content=").append(URLEncoder.encode(message.content.toString(), UTF8));
+        sb.append("&objectName=").append(URLEncoder.encode(message.getContent().getType(), UTF8));
+        sb.append("&content=").append(URLEncoder.encode(message.getContent().toString(), UTF8));
 
-        if (message.pushContent != null) {
-            sb.append("&pushContent=").append(URLEncoder.encode(message.pushContent.toString(), UTF8));
+        if (message.getPushContent() != null) {
+            sb.append("&pushContent=").append(URLEncoder.encode(message.getPushContent().toString(), UTF8));
         }
 
-        if (message.pushData != null) {
-            sb.append("&pushData=").append(URLEncoder.encode(message.pushData.toString(), UTF8));
+        if (message.getPushData() != null) {
+            sb.append("&pushData=").append(URLEncoder.encode(message.getPushData().toString(), UTF8));
         }
 
-        if (message.isPersisted != null) {
-            sb.append("&isPersisted=").append(URLEncoder.encode(message.isPersisted.toString(), UTF8));
+        if (message.getIsPersisted() != null) {
+            sb.append("&isPersisted=").append(URLEncoder.encode(message.getIsPersisted().toString(), UTF8));
         }
 
-        if (message.isCounted != null) {
-            sb.append("&isCounted=").append(URLEncoder.encode(message.isCounted.toString(), UTF8));
+        if (message.getIsCounted() != null) {
+            sb.append("&isCounted=").append(URLEncoder.encode(message.getIsCounted().toString(), UTF8));
         }
 
-        if (message.isIncludeSender != null) {
-            sb.append("&isIncludeSender=").append(URLEncoder.encode(message.isIncludeSender.toString(), UTF8));
+        if (message.getIsIncludeSender() != null) {
+            sb.append("&isIncludeSender=").append(URLEncoder.encode(message.getIsIncludeSender().toString(), UTF8));
         }
         if (message.getContentAvailable() != null) {
             sb.append("&contentAvailable=").append(URLEncoder.encode(message.getContentAvailable().toString(), UTF8));
@@ -111,39 +111,37 @@ public class Group {
             return (ResponseResult)GsonUtil.fromJson(code,ResponseResult.class);
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("&fromUserId=").append(URLEncoder.encode(message.senderUserId.toString(), UTF8));
-
-        for (int i = 0 ; i< message.mentionIds.length; i++) {
-            String child  =message.mentionIds[i];
+        sb.append("&fromUserId=").append(URLEncoder.encode(message.getSenderUserId().toString(), UTF8));
+        String[] groupIds = message.getTargetId();
+        for (int i = 0 ; i< groupIds.length; i++) {
+            String child  = groupIds[i];
             sb.append("&toGroupId=").append(URLEncoder.encode(child, UTF8));
         }
 
-        sb.append("&objectName=").append(URLEncoder.encode(message.content.getContent().getType(), UTF8));
-        sb.append("&content=").append(URLEncoder.encode(message.content.toString(), UTF8));
+        sb.append("&objectName=").append(URLEncoder.encode(message.getContent().getContent().getType(), UTF8));
+        sb.append("&content=").append(URLEncoder.encode(message.getContent().toString(), UTF8));
 
-        if (message.pushContent != null) {
-            sb.append("&pushContent=").append(URLEncoder.encode(message.pushContent.toString(), UTF8));
+        if (message.getPushContent() != null) {
+            sb.append("&pushContent=").append(URLEncoder.encode(message.getPushContent().toString(), UTF8));
         }
 
-        if (message.pushData != null) {
-            sb.append("&pushData=").append(URLEncoder.encode(message.pushData.toString(), UTF8));
+        if (message.getPushContent() != null) {
+            sb.append("&pushData=").append(URLEncoder.encode(message.getPushContent().toString(), UTF8));
         }
 
-        if (message.isPersisted != null) {
-            sb.append("&isPersisted=").append(URLEncoder.encode(message.isPersisted.toString(), UTF8));
+        if (message.getIsPersisted() != null) {
+            sb.append("&isPersisted=").append(URLEncoder.encode(message.getIsPersisted().toString(), UTF8));
         }
 
-        if (message.isCounted != null) {
-            sb.append("&isCounted=").append(URLEncoder.encode(message.isCounted.toString(), UTF8));
+        if (message.getIsCounted() != null) {
+            sb.append("&isCounted=").append(URLEncoder.encode(message.getIsCounted().toString(), UTF8));
         }
 
-        if (message.isIncludeSender != null) {
-            sb.append("&isIncludeSender=").append(URLEncoder.encode(message.isIncludeSender.toString(), UTF8));
+        if (message.getIsIncludeSender() != null) {
+            sb.append("&isIncludeSender=").append(URLEncoder.encode(message.getIsIncludeSender().toString(), UTF8));
         }
 
-        if (message.isMentioned != null) {
-            sb.append("&isMentioned=").append(URLEncoder.encode("1", UTF8));
-        }
+        sb.append("&isMentioned=").append(URLEncoder.encode("1", UTF8));
 
         if (message.getContentAvailable() != null) {
             sb.append("&contentAvailable=").append(URLEncoder.encode(message.getContentAvailable().toString(), UTF8));

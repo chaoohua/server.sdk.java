@@ -54,9 +54,6 @@ public class KeepaliveExample {
         ChatroomKeepaliveResult result = keepalive.getList();
 
         System.out.println("keepalive getList"+addResult.toString());
-
-
-
     }
 
 }

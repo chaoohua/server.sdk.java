@@ -36,11 +36,12 @@ public class PrivateMessage extends Message {
     public PrivateMessage() {
     }
 
-    public PrivateMessage(String senderUserId, String[] targetIds, String objectName, BaseMessage content,
-                          String pushContent, String pushData, Integer isPersisted, Integer isCounted, String count,
-                          Integer verifyBlacklist, Integer isIncludeSender, Integer contentAvailable) {
-        super(senderUserId, targetIds, objectName, content, pushContent, pushData);
+    public PrivateMessage(String senderUserId, String[] targetId, String objectName, BaseMessage content, String pushContent, String pushData,
+                          String count, Integer isPersisted, Integer isCounted, Integer verifyBlacklist, Integer isIncludeSender, Integer contentAvailable) {
+        super(senderUserId, targetId, objectName, content, pushContent, pushData);
         this.count = count;
+        this.isPersisted = isPersisted;
+        this.isCounted = isCounted;
         this.verifyBlacklist = verifyBlacklist;
         this.isIncludeSender = isIncludeSender;
         this.contentAvailable = contentAvailable;
@@ -62,15 +63,15 @@ public class PrivateMessage extends Message {
      * @return String
      */
     @Override
-    public String[] getTargetIds() {
-        return this.targetIds;
+    public String[] getTargetId() {
+        return this.targetId;
     }
     /**
      * 设置接受用户id
      */
     @Override
-    public PrivateMessage setTargetIds(String[] targetIds) {
-        this.targetIds = targetIds;
+    public PrivateMessage setTargetId(String[] targetId) {
+        this.targetId = targetId;
         return (PrivateMessage)this;
     }
 

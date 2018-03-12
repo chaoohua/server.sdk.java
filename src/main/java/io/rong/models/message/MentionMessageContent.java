@@ -6,11 +6,11 @@ import io.rong.util.GsonUtil;
 /**
  * @author RongCloud
  */
-public class GroupMentionContent {
+public class MentionMessageContent {
     private BaseMessage content;
     private MentionedInfo mentionedInfo;
 
-    public GroupMentionContent(BaseMessage content, MentionedInfo mentionedInfo) {
+    public MentionMessageContent(BaseMessage content, MentionedInfo mentionedInfo) {
         this.content = content;
         this.mentionedInfo = mentionedInfo;
     }
@@ -33,6 +33,6 @@ public class GroupMentionContent {
 
     @Override
     public String toString(){
-        return GsonUtil.toJson(this, GroupMentionContent.class);
+        return GsonUtil.toJson(this, MentionMessageContent.class);
     }
 }

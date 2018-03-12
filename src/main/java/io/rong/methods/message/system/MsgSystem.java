@@ -1,7 +1,9 @@
 package io.rong.methods.message.system;
 
 import io.rong.RongCloud;
+import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
+import io.rong.models.CommonConstrants;
 import io.rong.models.message.BroadcastMessage;
 import io.rong.models.message.Message;
 import io.rong.models.message.TemplateMessage;
@@ -61,8 +63,8 @@ public class MsgSystem {
         StringBuilder sb = new StringBuilder();
         sb.append("&fromUserId=").append(URLEncoder.encode(systemMessage.getSenderUserId().toString(), UTF8));
 
-        for (int i = 0 ; i< systemMessage.getTargetIds().length; i++) {
-            String child  = systemMessage.getTargetIds()[i];
+        for (int i = 0 ; i< systemMessage.getTargetId().length; i++) {
+            String child  = systemMessage.getTargetId()[i];
             sb.append("&toUserId=").append(URLEncoder.encode(child, UTF8));
         }
 
@@ -138,31 +140,31 @@ public class MsgSystem {
      * 发送广播消息方法（发送消息给一个应用下的所有注册用户，如用户未在线会对满足条件（绑定手机终端）的用户发送 Push 信息，单条消息最大 128k，会话类型为 SYSTEM。每小时只能发送 2 次，每天最多发送 3 次。）
      * 该功能开发环境下可免费使用。生产环境下，您需要登录开发者后台，在“应用/IM 服务/高级功能设置”中开通公有云专业版后，在“广播消息和推送”中，开启后才能使用
      *
-     *  @param message
+     *  @param message 消息体
      *
      * @return ResponseResult
      **/
-    public ResponseResult broadcast(Message message) throws Exception {
+    public ResponseResult broadcast(BroadcastMessage message) throws Exception {
+
         String errMsg = CommonUtil.checkFiled(message,PATH,CheckMethod.BROADCAST);
         if(null != errMsg){
             return (ResponseResult)GsonUtil.fromJson(errMsg,ResponseResult.class);
         }
-        BroadcastMessage broadcastMessage = (BroadcastMessage)message;
         StringBuilder sb = new StringBuilder();
-        sb.append("&fromUserId=").append(URLEncoder.encode(broadcastMessage.senderUserId.toString(), UTF8));
-        sb.append("&objectName=").append(URLEncoder.encode(broadcastMessage.content.getType(), UTF8));
-        sb.append("&content=").append(URLEncoder.encode(broadcastMessage.content.toString(), UTF8));
+        sb.append("&fromUserId=").append(URLEncoder.encode(message.getSenderUserId().toString(), UTF8));
+        sb.append("&objectName=").append(URLEncoder.encode(message.getContent().getType(), UTF8));
+        sb.append("&content=").append(URLEncoder.encode(message.getContent().toString(), UTF8));
 
-        if (broadcastMessage.pushContent != null) {
-            sb.append("&pushContent=").append(URLEncoder.encode(broadcastMessage.pushContent.toString(), UTF8));
+        if (message.getPushContent() != null) {
+            sb.append("&pushContent=").append(URLEncoder.encode(message.getPushContent().toString(), UTF8));
         }
 
-        if (broadcastMessage.pushData != null) {
-            sb.append("&pushData=").append(URLEncoder.encode(broadcastMessage.pushData.toString(), UTF8));
+        if (message.getPushData() != null) {
+            sb.append("&pushData=").append(URLEncoder.encode(message.getPushData().toString(), UTF8));
         }
 
-        if (broadcastMessage.os != null) {
-            sb.append("&os=").append(URLEncoder.encode(broadcastMessage.os.toString(), UTF8));
+        if (message.getOs() != null) {
+            sb.append("&os=").append(URLEncoder.encode(message.getOs().toString(), UTF8));
         }
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
