@@ -35,8 +35,6 @@ public class Example {
 
 	@Before
 	public void setUp() throws Exception {
-		/*String appKey = "e0x9wycfx7flq";8luwapkv8s7pl
-		String appSecret = "STCevzDS6Xy18n";*/
 		String appKey = "8luwapkv8s7pl";
 		String appSecret = "lmkgpHuXezTjV2";
 		//String api = "http://192.168.155.13:9200";
@@ -323,9 +321,10 @@ public class Example {
 	public void testSendGroupMention() throws Exception {
 
 		//要@的人
-		String[] userIds = {"Hji8yh76","sea9901"};
-		MentionedInfo mentionedInfo = new MentionedInfo(1,userIds,"");
-
+		String[] mentionIds = {"Hji8yh76","sea9901"};
+		//@内容
+		MentionedInfo mentionedInfo = new MentionedInfo(1,mentionIds,"push");
+		//@消息的消息内容
 		GroupMentionContent content = new GroupMentionContent(txtMessage,mentionedInfo);
 
 		MentionMessage mentionMessage = new MentionMessage()

@@ -6,6 +6,10 @@ import io.rong.models.chatroom.ChatroomModel;
 import io.rong.models.response.ListGagChatroomUserResult;
 import io.rong.models.response.ResponseResult;
 
+/**
+ * 聊天时禁言示例
+ * @author RongCloud
+ */
 public class GagExample {
     /**
      * 此处替换成您的appKey

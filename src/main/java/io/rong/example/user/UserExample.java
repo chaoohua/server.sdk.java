@@ -13,9 +13,6 @@ import io.rong.models.user.UserModel;
  * @date 2017/12/30
  */
 public class UserExample {
-    /*private static final String appKey = "e0x9wycfx7flq";
-    private static final String appSecret = "STCevzDS6Xy18n";
-    */
     /**
      * 此处替换成您的appKey
      * */

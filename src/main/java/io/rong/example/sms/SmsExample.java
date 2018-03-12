@@ -11,40 +11,60 @@ import java.io.Reader;
 
 public class SmsExample {
     /**
+     * 此处替换成您的appKey
+     * */
+    private static final String appKey = "8luwapkv8s7pl";
+    /**
+     * 此处替换成您的appSecret
+     * */
+    private static final String appSecret = "lmkgpHuXezTjV2";
+
+    /**
      * 本地调用测试
      *
      * @param args
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        String appKey = "appkey";//替换成您的appkey
-        String appSecret = "secret";//替换成匹配上面key的secret
 
         Reader reader = null;
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
 
-
-        System.out.println("************************User********************");
         UserModel user = new UserModel("userId1", "username", "http://www.rongcloud.cn/images/logo.png");
 
 
         SmsModel sms = new SmsModel("13500000000", "dsfdsfd", "86", "1408706337", "1408706337");
-
-        System.out.println("************************SMS********************");
-        // 获取图片验证码方法
+        /**
+         *
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/sms/code.html#getImage
+         *
+         * 获取图片验证码方法
+         * */
         SMSImageCodeResult sMSGetImageCodeResult = rongCloud.sms.code.getImage("app-key");
         System.out.println("getImageCode:  " + sMSGetImageCodeResult.toString());
-
-        // 发送短信验证码方法。
+        /**
+         *
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/sms/code.html#send
+         *
+         * 发送短信验证码。
+         * */
         SMSSendCodeResult sMSSendCodeResult = rongCloud.sms.code.send(sms);
         System.out.println("sendCode:  " + sMSSendCodeResult.toString());
-
-        // 验证码验证方法
+        /**
+         *
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/sms/code.html#verify
+         *
+         * 验证码验证方法。
+         * */
         SMSVerifyCodeResult sMSVerifyCodeResult = rongCloud.sms.code.verify("2312312", "2312312");
         System.out.println("verifyCode:  " + sMSVerifyCodeResult.toString());
 
-
-        // 验证码验证方法
+        /**
+         *
+         * API 文档: http://www.rongcloud.cn/docs/server/sdk/sms/notify.html#send
+         *
+         * 验证码验证方法。
+         * */
         SMSSendCodeResult smsNotifyResult = rongCloud.sms.notify.send(sms,"aa","bb","cc");
         System.out.println("notify:  " + sMSVerifyCodeResult.toString());
     }
