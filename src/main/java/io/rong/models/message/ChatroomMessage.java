@@ -6,7 +6,7 @@ import io.rong.messages.BaseMessage;
  * 聊天室消息体
  * @author RongCloud
  */
-public class ChatroomMessage extends Message {
+public class ChatroomMessage extends MessageModel {
 
     public ChatroomMessage() {
 
@@ -16,13 +16,9 @@ public class ChatroomMessage extends Message {
         super(senderUserId, targetId, objectName, content, null, null);
     }
 
-    @Override
-    public String getSenderUserId() {
-        return this.senderUserId;
-    }
-    @Override
+   @Override
     public ChatroomMessage setSenderUserId(String senderUserId) {
-        this.senderUserId = senderUserId;
+        setSenderUserId(senderUserId);
         return this;
     }
     /**
@@ -32,7 +28,7 @@ public class ChatroomMessage extends Message {
      */
     @Override
     public String[] getTargetId() {
-        return this.targetId;
+        return getTargetId();
     }
     /**
      * 设置接受聊天室Id
@@ -41,26 +37,18 @@ public class ChatroomMessage extends Message {
      */
     @Override
     public ChatroomMessage setTargetId(String[] targetId) {
-        this.targetId = targetId;
+        setTargetId(targetId);
         return this;
-    }
-    @Override
-    public String getObjectName() {
-        return this.objectName;
     }
     @Override
     public ChatroomMessage setObjectName(String objectName) {
-        this.objectName = objectName;
+        setObjectName(objectName);
         return this;
-    }
-    @Override
-    public BaseMessage getContent() {
-        return  this.content;
     }
 
     @Override
     public ChatroomMessage setContent(BaseMessage content) {
-        this.content = content;
+        setContent(content);
         return this;
     }
 }

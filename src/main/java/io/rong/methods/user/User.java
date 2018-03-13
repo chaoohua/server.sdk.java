@@ -1,7 +1,7 @@
 package io.rong.methods.user;
 
 import io.rong.RongCloud;
-import io.rong.methods.user.blacklist.BlackList;
+import io.rong.methods.user.blacklist.Blacklist;
 import io.rong.methods.user.block.Block;
 import io.rong.methods.user.onlinestatus.OnlineStatus;
 import io.rong.models.*;
@@ -25,7 +25,7 @@ public class User {
 	private String appKey;
 	private String appSecret;
 	public Block block;
-	public BlackList blackList;
+	public Blacklist blackList;
 	public OnlineStatus onlineStatus;
 	private RongCloud rongCloud;
 
@@ -42,7 +42,7 @@ public class User {
 		this.appKey = appKey;
 		this.appSecret = appSecret;
 		this.block = new Block(appKey,appSecret);
-		this.blackList = new BlackList(appKey,appSecret);
+		this.blackList = new Blacklist(appKey,appSecret);
 		this.onlineStatus = new OnlineStatus(appKey,appSecret);
 	}
 	/**
@@ -85,9 +85,9 @@ public class User {
 	 *
 	 * @return ResponseResult
 	 **/
-	public Result refresh(UserModel user) throws Exception {
+	public Result update(UserModel user) throws Exception {
 		//需要校验的字段
-		String message = CommonUtil.checkFiled(user,PATH,CheckMethod.REFRESH);
+		String message = CommonUtil.checkFiled(user,PATH,CheckMethod.UPDATE);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}

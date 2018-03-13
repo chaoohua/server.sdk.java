@@ -4,6 +4,7 @@ import io.rong.RongCloud;
 import io.rong.messages.TxtMessage;
 import io.rong.messages.VoiceMessage;
 import io.rong.models.Result;
+import io.rong.models.group.GroupMember;
 import io.rong.models.group.GroupModel;
 import io.rong.models.group.UserGroup;
 import io.rong.models.message.*;
@@ -51,9 +52,9 @@ public class Example {
 		user.setId("userId");
 
 		CheckOnlineResult result = rongCloud.user.onlineStatus.check(user);
+		System.out.println("checkOnline:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
-		System.out.println("checkOnline:  " + result.toString());
 	}
 
 	/**
@@ -171,7 +172,7 @@ public class Example {
 	public void testSendSystem() throws Exception {
 		SystemMessage systemMessage = new SystemMessage()
 					.setSenderUserId("usetId")
-					.setTargetIds(targetIds)
+					.setTargetId(targetIds)
 					.setObjectName(txtMessage.getType())
 					.setContent(txtMessage)
 					.setPushContent("this is a push")
@@ -214,7 +215,7 @@ public class Example {
 	 */
 	@Test
 	public void testSendBroadcast() throws Exception {
-		Message message = new BroadcastMessage()
+		BroadcastMessage message = new BroadcastMessage()
 				.setSenderUserId("Hji8yh76")
 				.setObjectName(txtMessage.getType())
 				.setContent(txtMessage)
@@ -257,7 +258,7 @@ public class Example {
 		Reader reader = null ;
 		PrivateMessage  privateMessage = new PrivateMessage()
 				.setSenderUserId("userId")
-				.setTargetIds(targetIds)
+				.setTargetId(targetIds)
 				.setObjectName(voiceMessage.getType())
 				.setContent(voiceMessage)
 				.setPushContent("")
@@ -298,7 +299,7 @@ public class Example {
 		//群组消息
 		GroupMessage groupMessage = new GroupMessage()
 				.setSenderUserId("Hji8yh76")
-				.setTargetIds(targetIds)
+				.setTargetId(targetIds)
 				.setObjectName(txtMessage.getType())
 				.setContent(txtMessage)
 				.setPushContent("this is a push")
@@ -368,7 +369,7 @@ public class Example {
 		//聊天室消息
 		ChatroomMessage message = new ChatroomMessage()
 				.setSenderUserId("targetIds")
-				.setTargetIds(targetIds)
+				.setTargetId(targetIds)
 				.setContent(txtMessage)
 				.setObjectName(txtMessage.getType());
 		ResponseResult result = rongCloud.message.chatroom.send(message);
@@ -524,11 +525,11 @@ public class Example {
 	@Test
 	public void testGroupCreate() throws Exception {
 
-		String[] members = {"userId1","userid2","userId3"};
+		GroupMember[] members = {new GroupMember().setId("ghJiu7H1"),new GroupMember().setId("ghJiu7H2")};
 
 		GroupModel group = new GroupModel()
 				.setId("groupId")
-				.setMerberIds(members)
+				.setMembers(members)
 				.setName("groupName");
 		Result result = (Result)rongCloud.group.create(group);
 		System.out.println("group create result:  " + result.toString());
@@ -564,10 +565,11 @@ public class Example {
 	@Test
 	public void testGroupRefresh() throws Exception {
 
-		String[] memberIds = {"he4kfpk","he4kfp2","he4kfp4"};
+		GroupMember[] members = {new GroupMember().setId("ghJiu7H1"),new GroupMember().setId("ghJiu7H2")};
+
 		GroupModel group = new GroupModel()
 				.setId("hiuyr743k")
-				.setMerberIds(memberIds)
+				.setMembers(members)
 				.setName("RongCloud");
 		Result result = (Result)rongCloud.group.refresh(group);
 		System.out.println("refresh:  " + result.toString());
@@ -580,10 +582,10 @@ public class Example {
 	 */
 	@Test
 	public void testGroupJoin() throws Exception {
-		String[] memberIds = {"userId2","userid3","userId4"};
+		GroupMember[] members = {new GroupMember().setId("ghJiu7H1"),new GroupMember().setId("ghJiu7H2")};
 		GroupModel group = new GroupModel()
 				.setId("hgir769ll")
-				.setMerberIds(memberIds)
+				.setMembers(members)
 				.setName("RongClooud");
 		Result result = (Result)rongCloud.group.join(group);
 		System.out.println("join:  " + result.toString());
@@ -611,10 +613,10 @@ public class Example {
 	@Test
 	public void testGroupQuit() throws Exception {
 
-		String[] memberIds = {"userId2","userid3","userId4"};
+		GroupMember[] members = {new GroupMember().setId("ghJiu7H1"),new GroupMember().setId("ghJiu7H2")};
 		GroupModel group = new GroupModel()
 				.setId("groupId")
-				.setMerberIds(memberIds)
+				.setMembers(members)
 				.setName("groupName");
 		Result result = (Result)rongCloud.group.quit(group);
 		System.out.println("quit:  " + result.toString());
@@ -628,10 +630,10 @@ public class Example {
 	@Test
 	public void testGroupAddGagUser() throws Exception {
 
-		String[] memberIds = {"userId1","userid2","userId3"};
+		GroupMember[] members = {new GroupMember().setId("ghJiu7H1"),new GroupMember().setId("ghJiu7H2")};
 		GroupModel group = new GroupModel()
 				.setId("lmkgpHuXezTjV2")
-				.setMerberIds(memberIds)
+				.setMembers(members)
 				.setMunite(5);
 		Result result = (Result)rongCloud.group.gag.add(group);
 		System.out.println("group.gag.add:  " + result.toString());
@@ -656,9 +658,9 @@ public class Example {
 	 */
 	@Test
 	public void testGroupRollBackGagUser() throws Exception {
-		String[] memberIds = {"userId2","userid3","userId4"};
+		GroupMember[] members = {new GroupMember().setId("ghJiu7H1"),new GroupMember().setId("ghJiu7H2")};
 		GroupModel group = new GroupModel()
-				.setMerberIds(memberIds)
+				.setMembers(members)
 				.setId("jhgui85hh");
 
 		ResponseResult result = (ResponseResult)rongCloud.group.gag.remove(group);

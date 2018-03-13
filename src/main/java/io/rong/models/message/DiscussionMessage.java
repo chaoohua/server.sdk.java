@@ -6,7 +6,7 @@ import io.rong.messages.BaseMessage;
  * 讨论组消息体
  * @author hc
  */
-public class DiscussionMessage extends Message {
+public class DiscussionMessage extends MessageModel {
 
     /**
      * 针对 iOS 平台，Push 时用来控制未读消息显示数，只有在 toUserId 为一个用户 Id 的时候有效。（可选）
@@ -41,13 +41,9 @@ public class DiscussionMessage extends Message {
         this.contentAvailable = contentAvailable;
     }
 
-    @Override
-    public String getSenderUserId() {
-        return this.senderUserId;
-    }
-    @Override
+   @Override
     public DiscussionMessage setSenderUserId(String senderUserId) {
-        this.senderUserId = senderUserId;
+        setSenderUserId(senderUserId);
         return this;
     }
     /**
@@ -57,7 +53,7 @@ public class DiscussionMessage extends Message {
      */
     @Override
     public String[] getTargetId() {
-        return this.targetId;
+        return getTargetId();
     }
     /**
      * 设置接受聊天室Id
@@ -66,35 +62,23 @@ public class DiscussionMessage extends Message {
      */
     @Override
     public DiscussionMessage setTargetId(String[] targetId) {
-        this.targetId = targetId;
+        setTargetId(targetId);
         return this;
     }
 
     @Override
-    public BaseMessage getContent() {
-        return this.content;
-    }
-    @Override
     public DiscussionMessage setContent(BaseMessage content) {
-        this.content = content;
+        setContent(content);
         return this;
-    }
-    @Override
-    public String getPushContent() {
-        return this.pushContent;
     }
     @Override
     public DiscussionMessage setPushContent(String pushContent) {
-        this.pushContent = pushContent;
+        setPushContent(pushContent);
         return this;
     }
     @Override
-    public String getPushData() {
-        return this.pushData;
-    }
-    @Override
     public DiscussionMessage setPushData(String pushData) {
-        this.pushData = pushData;
+        setPushData(pushData);
         return this;
     }
 
@@ -115,13 +99,10 @@ public class DiscussionMessage extends Message {
         this.isCounted = isCounted;
         return this;
     }
-    @Override
-    public String getObjectName() {
-        return this.objectName;
-    }
+
     @Override
     public DiscussionMessage setObjectName(String objectName) {
-        this.objectName = objectName;
+        setObjectName(objectName);
         return this;
     }
 

@@ -48,7 +48,7 @@
 		}
 
 	},
-	"refresh": {
+	"update": {
 		"docs": "http://rongcloud.cn/docs/server.html#user_refresh",
 		"url": "user/refresh",
 		"params": {

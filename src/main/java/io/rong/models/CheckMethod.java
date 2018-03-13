@@ -19,6 +19,7 @@ public class CheckMethod {
     public static final String KICK = "kick";
     public static final String DISMISS = "dismiss";
     public static final String REFRESH = "refresh";
+    public static final String UPDATE = "update";
     public static final String GET_MEMBERS_LIST = "getMemberList";
     public static final String PUSH = "push";
     public static final String SET_TAG = "setTag";

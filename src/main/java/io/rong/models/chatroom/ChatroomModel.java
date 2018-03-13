@@ -22,7 +22,7 @@ public class ChatroomModel {
 	/**
 	 * 聊天室成员。
 	 */
-	String[] memberIds;
+	ChatroomMember[] members;
 	/**
 	 * 聊天室成员数。
 	 */
@@ -43,12 +43,12 @@ public class ChatroomModel {
 	/**
 	 * 聊天室构造函数 全量
 	 * */
-	public ChatroomModel(String id, String name, String time, String[] memberIds,
+	public ChatroomModel(String id, String name, String time, ChatroomMember[] members,
 						 Integer count, Integer order, Integer minute) {
 		this.id = id;
 		this.name = name;
 		this.time = time;
-		this.memberIds = memberIds;
+		this.members = members;
 		this.count = count;
 		this.order = order;
 		this.minute = minute;
@@ -107,21 +107,22 @@ public class ChatroomModel {
 	public String getTime() {
 		return time;
 	}
+
 	/**
 	 * 获取memberIds
 	 *
 	 * @return String
 	 */
-	public String[] getMemberIds() {
-		return this.memberIds;
+	public ChatroomMember[] getMembers() {
+		return this.members;
 	}
 	/**
 	 * 设置memberIds
 	 *
 	 * @return String
 	 */
-	public ChatroomModel setMemberIds(String[] memberIds) {
-		this.memberIds = memberIds;
+	public ChatroomModel setMembers(ChatroomMember[] members) {
+		this.members = members;
 		return this;
 	}
 

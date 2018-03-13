@@ -5,7 +5,6 @@ import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
 import io.rong.models.CommonConstrants;
 import io.rong.models.Result;
-import io.rong.models.message.Message;
 import io.rong.models.message.RecallMessage;
 import io.rong.models.message.TemplateMessage;
 import io.rong.models.response.ResponseResult;

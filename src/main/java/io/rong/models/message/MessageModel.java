@@ -6,7 +6,7 @@ import io.rong.messages.BaseMessage;
  * 发送消息的消息体
  * @author RongCloud
  */
-public class Message {
+public class MessageModel {
 
     private String senderUserId;
     /**
@@ -35,11 +35,11 @@ public class Message {
     private String pushData;
 
 
-    public Message() {
+    public MessageModel() {
     }
 
-    public Message(String senderUserId, String[] targetId, String objectName, BaseMessage content,
-                   String pushContent, String pushData) {
+    public MessageModel(String senderUserId, String[] targetId, String objectName, BaseMessage content,
+                        String pushContent, String pushData) {
         this.senderUserId = senderUserId;
         this.targetId = targetId;
         this.objectName = objectName;
@@ -52,7 +52,7 @@ public class Message {
         return this.targetId;
     }
 
-    public Message setTargetId(String[] targetId) {
+    public MessageModel setTargetId(String[] targetId) {
         this.targetId = targetId;
         return this;
     }
@@ -61,7 +61,7 @@ public class Message {
         return this.objectName;
     }
 
-    public Message setObjectName(String objectName) {
+    public MessageModel setObjectName(String objectName) {
         this.objectName = objectName;
         return this;
     }
@@ -70,7 +70,7 @@ public class Message {
         return this.content;
     }
 
-    public Message setContent(BaseMessage content) {
+    public MessageModel setContent(BaseMessage content) {
         this.content = content;
         return this;
     }
@@ -79,7 +79,7 @@ public class Message {
         return this.pushContent;
     }
 
-    public Message setPushContent(String pushContent) {
+    public MessageModel setPushContent(String pushContent) {
         this.pushContent = pushContent;
         return this;
     }
@@ -88,7 +88,7 @@ public class Message {
         return this.pushData;
     }
 
-    public Message setPushData(String pushData) {
+    public MessageModel setPushData(String pushData) {
         this.pushData = pushData;
         return this;
     }
@@ -97,7 +97,7 @@ public class Message {
         return this.senderUserId;
     }
 
-    public Message setSenderUserId(String senderUserId) {
+    public MessageModel setSenderUserId(String senderUserId) {
         this.senderUserId = senderUserId;
         return this;
     }

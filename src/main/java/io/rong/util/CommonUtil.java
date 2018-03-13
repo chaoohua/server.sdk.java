@@ -2,6 +2,7 @@ package io.rong.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import io.rong.models.response.BlackList;
 import org.apache.commons.lang3.StringUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -375,19 +376,26 @@ public class CommonUtil {
             api = JsonUtil.getJsonObject(path,API_JSON_NAME);
             Set<Map.Entry<String,Object>> keys = api.getJSONObject(method).getJSONObject("response").getJSONObject("fail").entrySet();
             String text = "";
-            for (Map.Entry<String,Object> entry : keys) {
-                if(code.equals(entry.getKey())){
-                    text = entry.getValue().toString();
-                    //text = StringUtils.replace(text,"msg","errorMessage");
-                    return text;
-                }
-            }
             if(code.equals("200")){
                 if(path.contains("chatroom")||path.contains("group")){
                     text = StringUtils.replace(response,"users","members");
+                }else if(path.contains("blacklist") && method.equals("getList")){
+                    BlackList blackList =(BlackList)JSON.parseObject(response,BlackList.class);
+
+                    text = blackList.toString();
+
+                }else{
+                    text = response;
                 }
                 return text;
             }else{
+                for (Map.Entry<String,Object> entry : keys) {
+                    if(code.equals(entry.getKey())){
+                        text = entry.getValue().toString();
+                        //text = StringUtils.replace(text,"msg","errorMessage");
+                        return text;
+                    }
+                }
                 text = StringUtils.replace(response,"errorMessage","msg");
                 return text;
             }

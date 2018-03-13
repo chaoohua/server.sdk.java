@@ -17,7 +17,7 @@ import java.net.URLEncoder;
  * docs: "http://www.rongcloud.cn/docs/server.html#chatroom_user_whitelist"
  *
  * */
-public class WhiteList {
+public class Whitelist {
     private static final String UTF8 = "UTF-8";
     private static final String PATH = "chatroom/whitelist";
     private String appKey;
@@ -30,7 +30,7 @@ public class WhiteList {
     public void setRongCloud(RongCloud rongCloud) {
         this.rongCloud = rongCloud;
     }
-    public WhiteList(String appKey, String appSecret) {
+    public Whitelist(String appKey, String appSecret) {
         this.appKey = appKey;
         this.appSecret = appSecret;
 

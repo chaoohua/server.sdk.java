@@ -4,6 +4,7 @@ import io.rong.RongCloud;
 import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
 import io.rong.models.CommonConstrants;
+import io.rong.models.chatroom.ChatroomMember;
 import io.rong.models.chatroom.ChatroomModel;
 import io.rong.models.response.ListGagChatroomUserResult;
 import io.rong.models.response.ResponseResult;
@@ -50,7 +51,10 @@ public class Ban {
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("&userId=").append(URLEncoder.encode(chatroom.getMemberIds().toString(), UTF8));
+        ChatroomMember[] members = chatroom.getMembers();
+        for(ChatroomMember member : members){
+            sb.append("&userId=").append(URLEncoder.encode(member.getId(), UTF8));
+        }
         sb.append("&minute=").append(URLEncoder.encode(chatroom.getMinute().toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
@@ -94,8 +98,9 @@ public class Ban {
         }
 
         StringBuilder sb = new StringBuilder();
-        for (String memberId: chatroom.getMemberIds()) {
-            sb.append("&userId=").append(URLEncoder.encode(memberId, UTF8));
+        ChatroomMember[] members = chatroom.getMembers();
+        for(ChatroomMember member : members){
+            sb.append("&userId=").append(URLEncoder.encode(member.getId(), UTF8));
         }
         String body = sb.toString();
         if (body.indexOf("&") == 0) {

@@ -5,7 +5,10 @@
 		"params": {
 			"chatroom": {
 				"id": "chatroomId01",
-				"memberIds": ["memberId01", "memberId02"],
+				"members": [
+					{"id":"hjHy78"},
+					{"id":"hjHy79"}
+				],
 				"minute": 10
 			}
 		},

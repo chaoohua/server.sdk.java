@@ -6,7 +6,7 @@ import io.rong.messages.BaseMessage;
  * 系统消息体
  * @author hc
  */
-public class SystemMessage extends Message {
+public class SystemMessage extends MessageModel {
 
     /**
      * 当前版本有新的自定义消息，而老版本没有该自定义消息时，
@@ -37,12 +37,8 @@ public class SystemMessage extends Message {
     }
 
     @Override
-    public String getSenderUserId() {
-        return this.senderUserId;
-    }
-    @Override
     public SystemMessage setSenderUserId(String senderUserId) {
-        this.senderUserId = senderUserId;
+        setSenderUserId(senderUserId);
         return this;
     }
     /**
@@ -51,42 +47,30 @@ public class SystemMessage extends Message {
      */
     @Override
     public String[] getTargetId() {
-        return this.targetId;
+        return getTargetId();
     }
     /**
      * 接收用户Id，提供多个本参数可以实现向多用户发送系统消息，上限为 100 人
      */
     @Override
     public SystemMessage setTargetId(String[] targetId) {
-        this.targetId = targetId;
+        setTargetId(targetId);
         return this;
     }
     @Override
-    public BaseMessage getContent() {
-        return this.content;
-    }
-    @Override
     public SystemMessage setContent(BaseMessage content) {
-        this.content = content;
+        setContent(content);
         return this;
 
     }
     @Override
-    public String getPushContent() {
-        return this.pushContent;
-    }
-    @Override
     public SystemMessage setPushContent(String pushContent) {
-        this.pushContent = pushContent;
+        setPushContent(pushContent);
         return this;
     }
     @Override
-    public String getPushData() {
-        return this.pushData;
-    }
-    @Override
     public SystemMessage setPushData(String pushData) {
-        this.pushData = pushData;
+        setPushData(pushData);
         return this;
     }
 
@@ -117,12 +101,9 @@ public class SystemMessage extends Message {
         return this;
     }
     @Override
-    public String getObjectName() {
-        return this.objectName;
-    }
-    @Override
     public SystemMessage setObjectName(String objectName) {
-        this.objectName = objectName;
+        setObjectName(objectName);
+        setObjectName(objectName);
         return this;
     }
 }

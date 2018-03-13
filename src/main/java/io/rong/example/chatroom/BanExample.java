@@ -2,6 +2,7 @@ package io.rong.example.chatroom;
 
 import io.rong.RongCloud;
 import io.rong.methods.chatroom.ban.Ban;
+import io.rong.models.chatroom.ChatroomMember;
 import io.rong.models.chatroom.ChatroomModel;
 import io.rong.models.response.ListGagChatroomUserResult;
 import io.rong.models.response.ResponseResult;
@@ -25,19 +26,21 @@ public class BanExample {
         Ban ban = rongCloud.chatroom.ban;
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/ban.html#add
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/ban.html#add
          * 添加聊天室全局禁言
          * */
-        String[] memberIds = {"fhgko9i4","qawr34h"};
+        ChatroomMember[] members = {
+                new ChatroomMember().setId("qawr34h"),new ChatroomMember().setId("qawr35h")
+        };
         ChatroomModel chatroom = new ChatroomModel()
-                .setMemberIds(memberIds)
+                .setMembers(members)
                 .setMinute(5);
         ResponseResult result = ban.add(chatroom);
         System.out.println("addGagUser:  " + result.toString());
 
         /**
          *
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/ban.html#getList
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/ban.html#getList
          * 获取聊天时全局禁言列表
          */
 
@@ -46,12 +49,12 @@ public class BanExample {
 
         /**
          *
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/ban.html#remove
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/ban.html#remove
          * 删除聊天时全局禁言
          */
         chatroom = new ChatroomModel()
-                .setMemberIds(memberIds);
+                .setMembers(members);
         ResponseResult removeResult = ban.remove(chatroom);
-        System.out.println("removeBanUser:  " + result.toString());
+        System.out.println("removeBanUser:  " + removeResult.toString());
     }
 }

@@ -2,6 +2,7 @@ package io.rong.methods.chatroom.block;
 
 import io.rong.RongCloud;
 import io.rong.models.*;
+import io.rong.models.chatroom.ChatroomMember;
 import io.rong.models.chatroom.ChatroomModel;
 import io.rong.models.response.ListBlockChatroomUserResult;
 import io.rong.models.response.ResponseResult;
@@ -49,9 +50,9 @@ public class Block {
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
         StringBuilder sb = new StringBuilder();
-        String[] memberIds = chatroom.getMemberIds();
-        for(String memberId : memberIds){
-            sb.append("&userId=").append(URLEncoder.encode(memberId, UTF8));
+        ChatroomMember[] members = chatroom.getMembers();
+        for(ChatroomMember member : members){
+            sb.append("&userId=").append(URLEncoder.encode(member.getId(), UTF8));
         }
         sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
         sb.append("&minute=").append(URLEncoder.encode(chatroom.getMinute().toString(), UTF8));
@@ -106,9 +107,9 @@ public class Block {
         }
 
         StringBuilder sb = new StringBuilder();
-        String[] memberIds = chatroom.getMemberIds();
-        for(String memberId : memberIds){
-            sb.append("&userId=").append(URLEncoder.encode(memberId, UTF8));
+        ChatroomMember[] members = chatroom.getMembers();
+        for(ChatroomMember member : members){
+            sb.append("&userId=").append(URLEncoder.encode(member.getId(), UTF8));
         }
         sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
         String body = sb.toString();

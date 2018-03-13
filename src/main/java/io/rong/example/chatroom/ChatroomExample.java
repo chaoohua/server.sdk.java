@@ -18,14 +18,13 @@ public class ChatroomExample {
     private static final String appSecret = "lmkgpHuXezTjV2";
 
     public static void main(String[] args) throws Exception {
-       /* String appKey = "z3v5yqkbvy9f0";
-        String appSecret = "plhr2PA386a";*/
+
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         Chatroom chatroom = rongCloud.chatroom;
 
         Reader reader = null;
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/chatroom.html#create
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/chatroom.html#create
          *
          * 创建聊天室
          *
@@ -40,7 +39,7 @@ public class ChatroomExample {
 
         /**
          *
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/chatroom.html#destory
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/chatroom.html#destory
          * 销毁聊天室
          *
          * */
@@ -52,7 +51,7 @@ public class ChatroomExample {
 
         /**
          *
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/chatroom.html#get
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/chatroom.html#get
          * 查询聊天室信息demo
          * */
 
@@ -62,7 +61,7 @@ public class ChatroomExample {
 
         /**
          *
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/chatroom.html#getMembers
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/chatroom.html#getMembers
          * 查询聊天室成员demo
          *
          * */
@@ -77,7 +76,7 @@ public class ChatroomExample {
 
         /**
          *
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/chatroom.html#isExist
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/chatroom.html#isExist
          * 查询聊天室成员是否存在
          *
          * */

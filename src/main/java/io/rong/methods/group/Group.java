@@ -60,9 +60,9 @@ public class Group {
 		}
 		StringBuilder sb = new StringBuilder();
 
-	    for (int i = 0 ; i< group.getMerberIds().length; i++) {
-			String child  = group.getMerberIds()[i];
-			sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
+		GroupMember[] members = group.getMembers();
+		for(GroupMember member : members){
+			sb.append("&userId=").append(URLEncoder.encode(member.getId().toString(), UTF8));
 		}
 
 	    sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
@@ -125,8 +125,8 @@ public class Group {
 	 *
 	 * @return ResponseResult
 	 **/
-	public Result refresh(GroupModel group) throws Exception {
-		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.REFRESH);
+	public Result update(GroupModel group) throws Exception {
+		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.UPDATE);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
@@ -156,9 +156,9 @@ public class Group {
 
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0 ; i< group.getMerberIds().length; i++) {
-			String child  = group.getMerberIds()[i];
-			sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
+		GroupMember[] members = group.getMembers();
+		for(GroupMember member : members){
+			sb.append("&userId=").append(URLEncoder.encode(member.getId().toString(), UTF8));
 		}
 
 		sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
@@ -187,10 +187,10 @@ public class Group {
 		}
 
 	    StringBuilder sb = new StringBuilder();
-	    
-	    for (int i = 0 ; i< group.getMerberIds().length; i++) {
-			String child  = group.getMerberIds()[i];
-			sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
+
+		GroupMember[] members = group.getMembers();
+		for(GroupMember member : members){
+			sb.append("&userId=").append(URLEncoder.encode(member.getId().toString(), UTF8));
 		}
 		
 	    sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
@@ -207,13 +207,13 @@ public class Group {
 	}
 	
 	/**
-	 * 查询群成员方法 
+	 * 查询群信息
 	 * 
 	 * @param  group:群组.Id。（必传）
 	 *
 	 * @return GroupUserQueryResult
 	 **/
-	public GroupUserQueryResult getMemberList(GroupModel group) throws Exception {
+	public GroupUserQueryResult get(GroupModel group) throws Exception {
 
 		String errMsg = CommonUtil.checkFiled(group,PATH,CheckMethod.GET_MEMBERS_LIST);
 		if(null != errMsg){
@@ -247,9 +247,9 @@ public class Group {
 		}
 	    StringBuilder sb = new StringBuilder();
 
-	    for (int i = 0 ; i< group.getMerberIds().length; i++) {
-			String child  = group.getMerberIds()[i];
-			sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
+		GroupMember[] members = group.getMembers();
+		for(GroupMember member : members){
+			sb.append("&userId=").append(URLEncoder.encode(member.getId().toString(), UTF8));
 		}
 
 	    sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
@@ -265,59 +265,22 @@ public class Group {
 	}
 
 	/**
-	 * 将群成员移除群组方法（将用户从群中移除，不再接收该群组的消息.）
-	 *
-	 * @param  group:群组.id, memberIds（必传）
-	 *
-	 * @return ResponseResult
-	 **/
-	public Result kick(GroupModel group) throws Exception {
-
-		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.QUIT);
-		if(null != message){
-			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
-		}
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0 ; i< group.getMerberIds().length; i++) {
-			String child  = group.getMerberIds()[i];
-			sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
-		}
-
-		sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
-		String body = sb.toString();
-		if (body.indexOf("&") == 0) {
-			body = body.substring(1, body.length());
-		}
-
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/group/quit.json", "application/x-www-form-urlencoded");
-		HttpUtil.setBodyParameter(body, conn);
-
-		return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.QUIT,HttpUtil.returnResult(conn)), ResponseResult.class);
-	}
-
-	/**
 	 * 解散群组方法。（将该群解散，所有用户都无法再接收该群的消息。） 
 	 * 
-	 * @param  operator:解散群组操作者。（必传）
-	 * @param  groupId:要解散的群 Id。（必传）
+	 * @param  group: id,member。（必传）
 	 *
 	 * @return ResponseResult
 	 **/
-	public Result dismiss(String groupId,String operator) throws Exception {
-		//参数校验
-		String message = CommonUtil.checkParam("id",groupId,PATH,CheckMethod.DISMISS);
-		if(null != message){
-			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
-		}
-		message = CommonUtil.checkParam("operator",operator,PATH,CheckMethod.DISMISS);
+	public Result dismiss(GroupModel group) throws Exception {
+		String message = CommonUtil.checkFiled(group,PATH,CheckMethod.QUIT);
 		if(null != message){
 			return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
 		}
 
 	    StringBuilder sb = new StringBuilder();
-	    sb.append("&userId=").append(URLEncoder.encode(operator.toString(), UTF8));
-	    sb.append("&groupId=").append(URLEncoder.encode(groupId.toString(), UTF8));
+		GroupMember member = group.getMembers()[0];
+		sb.append("&userId=").append(URLEncoder.encode(member.getId().toString(), UTF8));
+	    sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
 		String body = sb.toString();
 	   	if (body.indexOf("&") == 0) {
 	   		body = body.substring(1, body.length());

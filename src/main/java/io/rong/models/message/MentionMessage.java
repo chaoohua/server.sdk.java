@@ -29,7 +29,7 @@ public class MentionMessage {
                           Integer isPersisted, Integer isCounted, Integer isIncludeSender, Integer contentAvailable) {
         this.senderUserId = senderUserId;
         this.targetId = targetId;
-        this.objectName = objectName;
+        setObjectName(objectName);
         this.content = content;
         this.pushContent = pushContent;
         this.pushData = pushData;

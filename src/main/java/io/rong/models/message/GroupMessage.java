@@ -6,7 +6,7 @@ import io.rong.messages.BaseMessage;
  * 群组消息体
  * @author hc
  */
-public class GroupMessage extends Message {
+public class GroupMessage extends MessageModel {
 
     /**
      * 发送者自己是否接收此条消息, 0: 不接收, 1: 接收, 默认: 0
@@ -50,12 +50,8 @@ public class GroupMessage extends Message {
     }
 
     @Override
-    public String getSenderUserId() {
-        return this.senderUserId;
-    }
-    @Override
     public GroupMessage setSenderUserId(String senderUserId) {
-        this.senderUserId = senderUserId;
+        setSenderUserId(senderUserId);
         return this;
     }
 
@@ -66,7 +62,7 @@ public class GroupMessage extends Message {
      */
     @Override
     public String[] getTargetId() {
-        return this.targetId;
+        return getTargetId();
     }
     /**
      * 设置接收群组Id
@@ -75,34 +71,22 @@ public class GroupMessage extends Message {
      */
     @Override
     public GroupMessage setTargetId(String[] targetId) {
-        this.targetId = targetId;
+        setTargetId(targetId);
         return this;
     }
-    @Override
-    public BaseMessage getContent() {
-        return this.content;
-    }
-    @Override
+   @Override
     public GroupMessage setContent(BaseMessage content) {
-        this.content = content;
+         setContent(content);
         return this;
-    }
-    @Override
-    public String getPushContent() {
-        return this.pushContent;
     }
     @Override
     public GroupMessage setPushContent(String pushContent) {
-        this.pushContent = pushContent;
+        setPushContent(pushContent);
         return this;
     }
     @Override
-    public String getPushData() {
-        return this.pushData;
-    }
-    @Override
     public GroupMessage setPushData(String pushData) {
-        this.pushData = pushData;
+        setPushData(pushData);
         return this;
     }
 
@@ -142,12 +126,8 @@ public class GroupMessage extends Message {
         return this;
     }
     @Override
-    public String getObjectName() {
-        return this.objectName;
-    }
-    @Override
     public GroupMessage setObjectName(String objectName) {
-        this.objectName = objectName;
+        setObjectName(objectName);
         return this;
     }
 }

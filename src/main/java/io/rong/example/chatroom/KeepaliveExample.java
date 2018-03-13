@@ -27,7 +27,7 @@ public class KeepaliveExample {
         Keepalive keepalive = rongCloud.chatroom.keepalive;
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/keepalive.html#add
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/keepalive.html#add
          *
          * 添加保活聊天室
          *
@@ -36,7 +36,7 @@ public class KeepaliveExample {
         System.out.println("add keepalive result"+addResult.toString());
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/keepalive.html#remove
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/keepalive.html#remove
          *
          * 删除保活聊天室
          *
@@ -46,7 +46,7 @@ public class KeepaliveExample {
 
         /**
          *
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/chatroom/keepalive.html#getList
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/keepalive.html#getList
          *
          * 获取保活聊天室
          *

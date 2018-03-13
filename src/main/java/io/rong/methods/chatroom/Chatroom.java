@@ -7,7 +7,7 @@ import io.rong.methods.chatroom.distribute.Distribute;
 import io.rong.methods.chatroom.gag.Gag;
 import io.rong.methods.chatroom.keepalive.Keepalive;
 import io.rong.methods.chatroom.demotion.Demotion;
-import io.rong.methods.chatroom.whitelist.WhiteList;
+import io.rong.methods.chatroom.whitelist.Whitelist;
 import io.rong.methods.chatroom.block.Block;
 import io.rong.models.*;
 import io.rong.models.chatroom.*;
@@ -38,7 +38,7 @@ public class Chatroom {
 	public Ban ban;
 	public Keepalive keepalive;
 	public Demotion demotion;
-	public WhiteList whiteList;
+	public Whitelist whiteList;
 	public Distribute distribute;
 	private RongCloud rongCloud;
 
@@ -65,7 +65,7 @@ public class Chatroom {
 		this.gag = new Gag(appKey,appSecret);
 		this.keepalive = new Keepalive(appKey,appSecret);
 		this.demotion = new Demotion(appKey,appSecret);
-		this.whiteList = new WhiteList(appKey,appSecret);
+		this.whiteList = new Whitelist(appKey,appSecret);
 		this.block = new Block(appKey,appSecret);
 		this.distribute = new Distribute(appKey,appSecret);
 		this.ban = new Ban(appKey,appSecret);

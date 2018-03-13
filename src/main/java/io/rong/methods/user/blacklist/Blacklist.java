@@ -16,12 +16,13 @@ import java.net.URLEncoder;
  * 用户黑名单服务
  * docs: "http://www.rongcloud.cn/docs/server.html#black"
  *
+ * @author RongCloud
  * @version
  * */
-public class BlackList {
+public class Blacklist {
 
     private static final String UTF8 = "UTF-8";
-    private static final String PATH = "user/black";
+    private static final String PATH = "user/blacklist";
     private String appKey;
     private String appSecret;
     private RongCloud rongCloud;
@@ -32,7 +33,7 @@ public class BlackList {
     public void setRongCloud(RongCloud rongCloud) {
         this.rongCloud = rongCloud;
     }
-    public BlackList(String appKey, String appSecret) {
+    public Blacklist(String appKey, String appSecret) {
         this.appKey = appKey;
         this.appSecret = appSecret;
 
@@ -97,7 +98,7 @@ public class BlackList {
                 "/user/blacklist/query.json", "application/x-www-form-urlencoded");
         HttpUtil.setBodyParameter(body, conn);
 
-        return (BlackListResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.QUERY,HttpUtil.returnResult(conn)), BlackListResult.class);
+        return (BlackListResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.GETLIST,HttpUtil.returnResult(conn)), BlackListResult.class);
     }
 
     /**

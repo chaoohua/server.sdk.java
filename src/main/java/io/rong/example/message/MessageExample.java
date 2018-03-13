@@ -16,7 +16,6 @@ import io.rong.util.GsonUtil;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import io.rong.models.message.Message;
 
 
 /**
@@ -52,7 +51,7 @@ public class MessageExample {
         History history = rongCloud.message.history;
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/system.html#send
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/system.html#send
          *
          * 发送系统消息
          *
@@ -73,7 +72,7 @@ public class MessageExample {
         System.out.println("send system message:  " + result.toString());
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/system.html#sendTemplate
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/system.html#sendTemplate
          *
          * 发送系统模板消息方法
          *
@@ -93,12 +92,12 @@ public class MessageExample {
         }
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/system.html#sendTemplate
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/system.html#sendTemplate
          *
          * 发送系统模板消息方法
          *
          */
-        Message message = new BroadcastMessage()
+        BroadcastMessage message = new BroadcastMessage()
                 .setSenderUserId("Hji8yh76")
                 .setObjectName(txtMessage.getType())
                 .setContent(txtMessage)
@@ -110,7 +109,7 @@ public class MessageExample {
 
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/private.html#send
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/private.html#send
          *
          * 发送单聊消息
          * */
@@ -130,7 +129,7 @@ public class MessageExample {
         System.out.println("sendPrivate:  " + publishPrivateResult.toString());
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/private.html#sendTemplate
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/private.html#sendTemplate
          *
          * 发送单聊模板消息方法
          */
@@ -149,7 +148,7 @@ public class MessageExample {
             }
         }
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/private.html#recall
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/private.html#recall
          *
          * 撤回单聊消息
          * */
@@ -162,7 +161,7 @@ public class MessageExample {
         System.out.println("recall private:  " + recallPrivateResult.toString());
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/group.html#send
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/group.html#send
          *
          * 群组消息
          * */
@@ -182,7 +181,7 @@ public class MessageExample {
         System.out.println("send Group message:  " + groupResult.toString());
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/group.html#recall
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/group.html#recall
          *
          * 群组撤回消息
          * */
@@ -196,7 +195,7 @@ public class MessageExample {
         System.out.println("send recall message:  " + recallMessageResult.toString());
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/group.html#sendMention
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/group.html#sendMention
          *
          * 群组@消息
          * */
@@ -222,7 +221,7 @@ public class MessageExample {
         System.out.println("group mention result:  " + mentionResult.toString());
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/discussion.html#send
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/discussion.html#send
          *
          * 发送讨论组消息
          * */
@@ -244,7 +243,7 @@ public class MessageExample {
         System.out.println("send Group message:  " + groupResult.toString());
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/discussion.html#recall
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/discussion.html#recall
          *
          * 撤回讨论组消息
          * */
@@ -259,7 +258,7 @@ public class MessageExample {
 
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/chatroom.html#send
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/chatroom.html#send
          *
          * 聊天室消息
          * */
@@ -277,7 +276,7 @@ public class MessageExample {
         System.out.println("send chatroom message:  " + chatroomResult.toString());
         /**
          *
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/chatroom.html#broadcast
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/chatroom.html#broadcast
          *
          * 聊天室广播消息
          *
@@ -295,7 +294,7 @@ public class MessageExample {
 
         /**
          *
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/history.html#get
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/history.html#get
          *
          * 获取历史消息日志文件
          *
@@ -306,7 +305,7 @@ public class MessageExample {
 
         /**
          *
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/message/history.html#get
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/message/history.html#get
          *
          * 删除历史消息日志文件
          *

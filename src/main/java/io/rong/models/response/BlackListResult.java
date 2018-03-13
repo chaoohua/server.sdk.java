@@ -1,36 +1,40 @@
 package io.rong.models.response;
 
 import io.rong.models.Result;
+import io.rong.models.User;
 import io.rong.util.GsonUtil;
 
+/**
+ * @author RongCloud
+ */
 public class BlackListResult extends Result {
-    // 黑名单用户列表。
-    String[] users;
+    /**
+     * 黑名单用户列表
+     */
+    User[] users;
 
     public BlackListResult(Integer code, String errorMessage) {
         super(code, errorMessage);
     }
-    public BlackListResult(Integer code, String[] users, String errorMessage) {
-        super(code, errorMessage);
-        this.code = code;
+
+    public BlackListResult(Integer code, String msg, User[] users) {
+        super(code, msg);
         this.users = users;
-        this.msg = errorMessage;
+    }
+    /**
+     * 获取users
+     *
+     * @return User[]
+     */
+    public User[] getUsers() {
+        return this.users;
     }
     /**
      * 设置users
      *
      */
-    public void setUsers(String[] users) {
+    public void setUsers(User[] users) {
         this.users = users;
-    }
-
-    /**
-     * 获取users
-     *
-     * @return String[]
-     */
-    public String[] getUsers() {
-        return users;
     }
 
     @Override

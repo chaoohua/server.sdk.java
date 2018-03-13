@@ -31,26 +31,26 @@ public class UserExample {
         User User = rongCloud.user;
 
         /**
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/user/user.html#register
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/user/user.html#register
          *
          * 注册用户，生成用户在融云的唯一身份标识 Token
          */
         String appKey = "e0x9wycfx7flq";
         String appSecret = "STCevzDS6Xy18n";
         UserModel user = new UserModel()
-                .setId("userId1")
+                .setId("userxxd1")
                 .setName("username")
                 .setPortrait("http://www.rongcloud.cn/images/logo.png");
-        TokenResult result = User.register(user);
-        System.out.println("getToken:  " + result.toString());
+        //TokenResult result = User.register(user);
+        //System.out.println("getToken:  " + result.toString());
 
         /**
          *
-         * API 文档: http://www.rongcloud.cn/docs/server/sdk/user/user.html#refresh
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/user/user.html#refresh
          *
          * 刷新用户信息方法
          */
-        Result refreshResult = (ResponseResult)User.refresh(user);
+        Result refreshResult = (ResponseResult)User.update(user);
         System.out.println("refresh:  " + refreshResult.toString());
 
     }

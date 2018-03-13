@@ -13,7 +13,7 @@ public class GroupModel {
     /**
      * 群组成员
      **/
-    private String[] merberIds;
+    private GroupMember[] members;
     /**
      * 群组名
      **/
@@ -26,18 +26,18 @@ public class GroupModel {
 
     public GroupModel() {
     }
-
     /**
      * 构造方法
      *
      * @param id 群组id
-     * @param merberIds 群组成员
+     * @param members 群组成员
      * @param name 群名
      */
-    public GroupModel(String id, String[] merberIds, String name) {
-        this.merberIds = merberIds;
+    public GroupModel(String id, GroupMember[] members, String name, Integer munite) {
         this.id = id;
+        this.members = members;
         this.name = name;
+        this.munite = munite;
     }
 
     public String getId() {
@@ -49,15 +49,14 @@ public class GroupModel {
         return this;
     }
 
-    public String[] getMerberIds() {
-        return this.merberIds;
+    public GroupMember[] getMembers() {
+        return this.members;
     }
 
-    public GroupModel setMerberIds(String[] merberIds) {
-        this.merberIds = merberIds;
+    public GroupModel setMembers(GroupMember[] members) {
+        this.members = members;
         return this;
     }
-
 
     public String getName() {
         return this.name;

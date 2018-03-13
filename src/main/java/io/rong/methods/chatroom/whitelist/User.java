@@ -4,6 +4,7 @@ import io.rong.RongCloud;
 import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
 import io.rong.models.CommonConstrants;
+import io.rong.models.chatroom.ChatroomMember;
 import io.rong.models.chatroom.ChatroomModel;
 import io.rong.models.response.ResponseResult;
 import io.rong.util.CommonUtil;
@@ -52,9 +53,9 @@ public class User {
         StringBuilder sb = new StringBuilder();
         sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
 
-        for (int i = 0 ; i< chatroom.getMemberIds().length; i++) {
-            String child  = chatroom.getMemberIds()[i];
-            sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
+        ChatroomMember[] members = chatroom.getMembers();
+        for(ChatroomMember member : members){
+            sb.append("&userId=").append(URLEncoder.encode(member.getId(), UTF8));
         }
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
@@ -86,9 +87,9 @@ public class User {
         StringBuilder sb = new StringBuilder();
         sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
 
-        for (int i = 0 ; i< chatroom.getMemberIds().length; i++) {
-            String child  = chatroom.getMemberIds()[i];
-            sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
+        ChatroomMember[] members = chatroom.getMembers();
+        for(ChatroomMember member : members){
+            sb.append("&userId=").append(URLEncoder.encode(member.getId(), UTF8));
         }
 
         String body = sb.toString();

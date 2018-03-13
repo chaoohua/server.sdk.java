@@ -1,11 +1,9 @@
 package io.rong.methods.message.system;
 
 import io.rong.RongCloud;
-import io.rong.exception.ParamException;
 import io.rong.models.CheckMethod;
-import io.rong.models.CommonConstrants;
 import io.rong.models.message.BroadcastMessage;
-import io.rong.models.message.Message;
+import io.rong.models.message.MessageModel;
 import io.rong.models.message.TemplateMessage;
 import io.rong.models.response.ResponseResult;
 import io.rong.models.Templates;
@@ -54,7 +52,7 @@ public class MsgSystem {
      * @param
      * @return ResponseResult
      **/
-    public ResponseResult send(Message message) throws Exception {
+    public ResponseResult send(MessageModel message) throws Exception {
         SystemMessage systemMessage = (SystemMessage)message;
         String code = CommonUtil.checkFiled(systemMessage,PATH,CheckMethod.PUBLISH);
         if(null != code){

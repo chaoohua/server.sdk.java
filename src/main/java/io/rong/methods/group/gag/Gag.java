@@ -3,6 +3,7 @@ package io.rong.methods.group.gag;
 import io.rong.RongCloud;
 import io.rong.models.Result;
 import io.rong.models.CheckMethod;
+import io.rong.models.group.GroupMember;
 import io.rong.models.group.GroupModel;
 import io.rong.models.response.ListGagGroupUserResult;
 import io.rong.models.response.ResponseResult;
@@ -55,9 +56,9 @@ public class Gag {
         }*/
 
         StringBuilder sb = new StringBuilder();
-        String[] merberIds = group.getMerberIds();
-        for(String merberId : merberIds){
-            sb.append("&userId=").append(URLEncoder.encode(group.getMerberIds().toString(), UTF8));
+        GroupMember[] members = group.getMembers();
+        for(GroupMember member : members){
+            sb.append("&userId=").append(URLEncoder.encode(member.getId().toString(), UTF8));
         }
         sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
         sb.append("&minute=").append(URLEncoder.encode(group.getMunite().toString(), UTF8));
@@ -112,9 +113,9 @@ public class Gag {
         }
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0 ; i< group.getMerberIds().length; i++) {
-            String child  = group.getMerberIds()[i];
-            sb.append("&userId=").append(URLEncoder.encode(child, UTF8));
+        GroupMember[] members = group.getMembers();
+        for(GroupMember member : members){
+            sb.append("&userId=").append(URLEncoder.encode(member.getId().toString(), UTF8));
         }
 
         sb.append("&groupId=").append(URLEncoder.encode(group.getId().toString(), UTF8));
