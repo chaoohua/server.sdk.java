@@ -29,7 +29,7 @@ public class MentionMessage {
                           Integer isPersisted, Integer isCounted, Integer isIncludeSender, Integer contentAvailable) {
         this.senderUserId = senderUserId;
         this.targetId = targetId;
-        setObjectName(objectName);
+        this.objectName = objectName;
         this.content = content;
         this.pushContent = pushContent;
         this.pushData = pushData;
@@ -52,8 +52,9 @@ public class MentionMessage {
         return this.targetId;
     }
 
-    public void setTargetId(String[] targetId) {
+    public MentionMessage setTargetId(String[] targetId) {
         this.targetId = targetId;
+        return this;
     }
 
     public String getObjectName() {

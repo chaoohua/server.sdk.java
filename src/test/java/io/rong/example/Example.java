@@ -86,7 +86,7 @@ public class Example {
 				.setName("username")
 				.setPortrait("http://www.rongcloud.cn/images/logo.png");
 
-		Result result = (ResponseResult)rongCloud.user.refresh(user);
+		Result result = (ResponseResult)rongCloud.user.update(user);
 		System.out.println("refresh:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
@@ -135,7 +135,13 @@ public class Example {
 	@Test
 	public void testAddBlacklist() throws Exception {
 
-		Result result = (Result)rongCloud.user.blackList.add("userId1", "userId2");
+		UserModel blackUser = new UserModel().setId("hdsjGB89");
+		UserModel[] blacklist = {blackUser};
+		UserModel user = new UserModel()
+				.setId("hdsjGB89")
+				.setBlacklist(blacklist);
+
+		Result result = (Result)rongCloud.user.blackList.add(user);
 		System.out.println("addBlacklist:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
@@ -146,8 +152,9 @@ public class Example {
 	 */
 	@Test
 	public void testGetBlacklist() throws Exception {
+		UserModel user = new UserModel().setId("hdsjGB89");
 
-		BlackListResult result = rongCloud.user.blackList.getList("userId1");
+		BlackListResult result = rongCloud.user.blackList.getList(user);
 		System.out.println("queryBlacklist:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
@@ -159,7 +166,12 @@ public class Example {
 	 */
 	@Test
 	public void testRemoveBlacklist() throws Exception {
-		Result result = (Result)rongCloud.user.blackList.remove("userId1", "userId2");
+		UserModel blackUser = new UserModel().setId("hdsjGB89");
+		UserModel[] blacklist = {blackUser};
+		UserModel user = new UserModel()
+				.setId("hdsjGB89")
+				.setBlacklist(blacklist);
+		Result result = (Result)rongCloud.user.blackList.remove(user);
 		System.out.println("removeBlacklist:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
@@ -571,7 +583,7 @@ public class Example {
 				.setId("hiuyr743k")
 				.setMembers(members)
 				.setName("RongCloud");
-		Result result = (Result)rongCloud.group.refresh(group);
+		Result result = (Result)rongCloud.group.update(group);
 		System.out.println("refresh:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
@@ -601,7 +613,7 @@ public class Example {
 
 		GroupModel group = new GroupModel().setId("figk97h");
 
-		GroupUserQueryResult result = rongCloud.group.getMemberList(group);
+		GroupUserQueryResult result = rongCloud.group.get(group);
 		System.out.println("groupQueryUser:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());
@@ -674,7 +686,12 @@ public class Example {
 	 */
 	@Test
 	public void testGroupDismissResult() throws Exception {
-		Result result = (Result)rongCloud.group.dismiss("hjUkjik11", "hjUkjik");
+		GroupMember[] members = new GroupMember[]{new GroupMember().setId("ghJiu7H1")};
+		GroupModel group = new GroupModel()
+				.setId("groupId")
+				.setMembers(members);
+
+		Result result = (Result)rongCloud.group.dismiss(group);
 		System.out.println("groupDismissResult:  " + result.toString());
 
 		assertEquals("200",result.getCode().toString());

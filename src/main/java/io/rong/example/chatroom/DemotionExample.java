@@ -21,7 +21,7 @@ public class DemotionExample {
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/demotion.html#add
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/chatroom/demotion.html#add
          * 添加应用内聊天室降级消息
          *
          * */
@@ -31,7 +31,7 @@ public class DemotionExample {
 
         /**
          *
-         *API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/demotion.html#remove
+         *API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/chatroom/demotion.html#remove
          * 移除应用内聊天室降级消息
          *
          * */
@@ -41,7 +41,7 @@ public class DemotionExample {
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/demotion.html#getList
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/chatroom/demotion.html#getList
          * 添加聊天室消息优先级demo
          *
          * */

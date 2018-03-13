@@ -5,7 +5,9 @@
 		"params": {
 			"user": {
 				"id": "kkfh091",
-				"blackIds": ["ggsk902", "ggsk903"]
+				"blacklist": [{
+					"id": "kkfh091"
+				}]
 			}
 		},
 		"response": {
@@ -43,7 +45,9 @@
 		"params": {
 			"user": {
 				"id": "kkfh091",
-				"blackIds": ["ggsk902", "ggsk903"]
+				"blacklist": [{
+					"id": "kkfh091"
+				}]
 			}
 		},
 		"response": {
@@ -85,7 +89,9 @@
 		},
 		"success": {
 			"code": "200",
-			"msg": "成功返回"
+			"users": [{
+				"id": "kkfh091"
+			}]
 		},
 		"response": {
 			"fail": {

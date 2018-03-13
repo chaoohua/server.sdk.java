@@ -2,6 +2,7 @@ package io.rong.methods.chatroom.keepalive;
 
 import io.rong.RongCloud;
 import io.rong.models.CheckMethod;
+import io.rong.models.chatroom.ChatroomModel;
 import io.rong.models.response.ChatroomKeepaliveResult;
 import io.rong.models.response.ResponseResult;
 import io.rong.util.CommonUtil;
@@ -37,18 +38,18 @@ public class Keepalive {
     /**
      * 添加聊天室保活方法
      *
-     * @param  chatroomId:低优先级的消息类型，每次最多提交 5 个，设置的消息类型最多不超过 20 个。（必传）
+     * @param   chatroom: 聊天室信息，id（必传）
      *
      * @return ResponseResult
      **/
-    public ResponseResult add(String chatroomId) throws Exception {
+    public ResponseResult add(ChatroomModel chatroom) throws Exception {
 
-        String message = CommonUtil.checkParam("id",chatroomId,PATH, CheckMethod.ADD);
+        String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.ADD);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("&chatroomId=").append(URLEncoder.encode(chatroomId, UTF8));
+        sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());
@@ -62,18 +63,17 @@ public class Keepalive {
     /**
      * 删除聊天室保活方法
      *
-     * @param  chatroomId:低优先级的消息类型，每次最多提交 5 个，设置的消息类型最多不超过 20 个。（必传）
+     * @param  chatroom: 聊天室信息，id（必传）
      *
      * @return ResponseResult
      **/
-    public ResponseResult remove(String chatroomId) throws Exception {
-        String message = CommonUtil.checkParam("id",chatroomId,PATH,CheckMethod.REMOVE);
+    public ResponseResult remove(ChatroomModel chatroom) throws Exception {
+        String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.REMOVE);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
-
         StringBuilder sb = new StringBuilder();
-        sb.append("&chatroomId=").append(URLEncoder.encode(chatroomId, UTF8));
+        sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());

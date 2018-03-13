@@ -38,7 +38,7 @@ public class SystemMessage extends MessageModel {
 
     @Override
     public SystemMessage setSenderUserId(String senderUserId) {
-        setSenderUserId(senderUserId);
+        super.setSenderUserId(senderUserId);
         return this;
     }
     /**
@@ -47,30 +47,30 @@ public class SystemMessage extends MessageModel {
      */
     @Override
     public String[] getTargetId() {
-        return getTargetId();
+        return super.getTargetId();
     }
     /**
      * 接收用户Id，提供多个本参数可以实现向多用户发送系统消息，上限为 100 人
      */
     @Override
     public SystemMessage setTargetId(String[] targetId) {
-        setTargetId(targetId);
+        super.setTargetId(targetId);
         return this;
     }
     @Override
     public SystemMessage setContent(BaseMessage content) {
-        setContent(content);
+        super.setContent(content);
         return this;
 
     }
     @Override
     public SystemMessage setPushContent(String pushContent) {
-        setPushContent(pushContent);
+        super.setPushContent(pushContent);
         return this;
     }
     @Override
     public SystemMessage setPushData(String pushData) {
-        setPushData(pushData);
+        super.setPushData(pushData);
         return this;
     }
 
@@ -102,8 +102,7 @@ public class SystemMessage extends MessageModel {
     }
     @Override
     public SystemMessage setObjectName(String objectName) {
-        setObjectName(objectName);
-        setObjectName(objectName);
+        super.setObjectName(objectName);
         return this;
     }
 }

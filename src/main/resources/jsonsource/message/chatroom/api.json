@@ -3,7 +3,7 @@
 		"params": {
 			"message": {
 				"senderId": "2191",
-				"targetIds": "2192",
+				"targetId": "2192",
 				"objectName": "RC:TxtMsg",
 				"content": {
 					"content":"hello"

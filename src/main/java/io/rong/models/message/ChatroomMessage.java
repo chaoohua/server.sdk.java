@@ -18,7 +18,7 @@ public class ChatroomMessage extends MessageModel {
 
    @Override
     public ChatroomMessage setSenderUserId(String senderUserId) {
-        setSenderUserId(senderUserId);
+        super.setSenderUserId(senderUserId);
         return this;
     }
     /**
@@ -28,7 +28,7 @@ public class ChatroomMessage extends MessageModel {
      */
     @Override
     public String[] getTargetId() {
-        return getTargetId();
+        return super.getTargetId();
     }
     /**
      * 设置接受聊天室Id
@@ -37,18 +37,18 @@ public class ChatroomMessage extends MessageModel {
      */
     @Override
     public ChatroomMessage setTargetId(String[] targetId) {
-        setTargetId(targetId);
+        super.setTargetId(targetId);
         return this;
     }
     @Override
     public ChatroomMessage setObjectName(String objectName) {
-        setObjectName(objectName);
+        super.setObjectName(objectName);
         return this;
     }
 
     @Override
     public ChatroomMessage setContent(BaseMessage content) {
-        setContent(content);
+        super.setContent(content);
         return this;
     }
 }

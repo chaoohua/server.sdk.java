@@ -43,7 +43,7 @@ public class DiscussionMessage extends MessageModel {
 
    @Override
     public DiscussionMessage setSenderUserId(String senderUserId) {
-        setSenderUserId(senderUserId);
+        super.setSenderUserId(senderUserId);
         return this;
     }
     /**
@@ -53,7 +53,7 @@ public class DiscussionMessage extends MessageModel {
      */
     @Override
     public String[] getTargetId() {
-        return getTargetId();
+        return super.getTargetId();
     }
     /**
      * 设置接受聊天室Id
@@ -62,23 +62,23 @@ public class DiscussionMessage extends MessageModel {
      */
     @Override
     public DiscussionMessage setTargetId(String[] targetId) {
-        setTargetId(targetId);
+        super.setTargetId(targetId);
         return this;
     }
 
     @Override
     public DiscussionMessage setContent(BaseMessage content) {
-        setContent(content);
+        super.setContent(content);
         return this;
     }
     @Override
     public DiscussionMessage setPushContent(String pushContent) {
-        setPushContent(pushContent);
+        super.setPushContent(pushContent);
         return this;
     }
     @Override
     public DiscussionMessage setPushData(String pushData) {
-        setPushData(pushData);
+        super.setPushData(pushData);
         return this;
     }
 
@@ -102,7 +102,7 @@ public class DiscussionMessage extends MessageModel {
 
     @Override
     public DiscussionMessage setObjectName(String objectName) {
-        setObjectName(objectName);
+        super.setObjectName(objectName);
         return this;
     }
 

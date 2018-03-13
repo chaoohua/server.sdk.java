@@ -49,7 +49,7 @@ public class PrivateMessage extends MessageModel {
 
     @Override
     public PrivateMessage setSenderUserId(String senderUserId) {
-        setSenderUserId(senderUserId);
+        super.setSenderUserId(senderUserId);
         return this;
     }
     /**
@@ -59,31 +59,31 @@ public class PrivateMessage extends MessageModel {
      */
     @Override
     public String[] getTargetId() {
-        return getTargetId();
+        return super.getTargetId();
     }
     /**
      * 设置接受用户id
      */
     @Override
     public PrivateMessage setTargetId(String[] targetId) {
-        setTargetId(targetId);
+        super.setTargetId(targetId);
         return this;
     }
 
     @Override
     public PrivateMessage setContent(BaseMessage content) {
-         setContent(content);
+         super.setContent(content);
         return this;
     }
 
     @Override
     public PrivateMessage setPushContent(String pushContent) {
-        setPushContent(pushContent);
+        super.setPushContent(pushContent);
         return this;
     }
     @Override
     public PrivateMessage setPushData(String pushData) {
-        setPushData(pushData);
+        super.setPushData(pushData);
         return this;
     }
 
@@ -131,7 +131,7 @@ public class PrivateMessage extends MessageModel {
     }
     @Override
     public PrivateMessage setObjectName(String objectName) {
-        setObjectName(objectName);
+        super.setObjectName(objectName);
         return this;
     }
 

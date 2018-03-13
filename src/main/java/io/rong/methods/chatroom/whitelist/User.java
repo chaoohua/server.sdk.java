@@ -109,18 +109,18 @@ public class User {
      *
      * @return ResponseResult
      **/
-    public ResponseResult getList(String chatroomId) throws Exception {
-        if (chatroomId == null) {
-            throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/chatroom/whitelist/user/getList", "Paramer 'chatroomId' is required");
+    public ResponseResult getList(ChatroomModel chatroom) throws Exception {
+        if (chatroom == null) {
+            throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL,"/chatroom/whitelist/user/getList", "Paramer 'chatroom' is required");
         }
 
-        String errMsg = CommonUtil.checkParam("chatroomId",chatroomId,PATH, CheckMethod.GETLIST);
-        if(null != errMsg){
-            return (ResponseResult)GsonUtil.fromJson(errMsg,ResponseResult.class);
+        String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.ADD);
+        if(null != message){
+            return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("&chatroomId=").append(URLEncoder.encode(chatroomId, UTF8));
+        sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
 
         String body = sb.toString();
         if (body.indexOf("&") == 0) {

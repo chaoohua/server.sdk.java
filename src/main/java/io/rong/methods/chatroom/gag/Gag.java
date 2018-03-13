@@ -73,18 +73,17 @@ public class Gag {
     /**
      * 查询聊天室被禁言成员方法
      *
-     * @param  chatroomId:聊天室 Id。（必传）
+     * @param  chatroom:聊天室信息 Id。（必传）
      *
      * @return ListGagChatroomUserResult
      **/
-    public ListGagChatroomUserResult getList(String chatroomId) throws Exception {
-        String message = CommonUtil.checkParam("id",chatroomId,PATH,CheckMethod.GETLIST);
+    public ListGagChatroomUserResult getList(ChatroomModel chatroom) throws Exception {
+        String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.GETLIST);
         if(null != message){
             return (ListGagChatroomUserResult)GsonUtil.fromJson(message,ListGagChatroomUserResult.class);
         }
-
         StringBuilder sb = new StringBuilder();
-        sb.append("&chatroomId=").append(URLEncoder.encode(chatroomId.toString(), UTF8));
+        sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
         String body = sb.toString();
         if (body.indexOf("&") == 0) {
             body = body.substring(1, body.length());

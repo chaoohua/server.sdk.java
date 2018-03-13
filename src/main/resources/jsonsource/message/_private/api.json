@@ -4,7 +4,7 @@
 			"message": {
 				"conversationType": 1,
 				"senderId": "2191",
-				"targetIds": ["2192","jjjj"],
+				"targetId": ["2192","jjjj"],
 				"objectName": "RC:TxtMsg",
 				"content": {
 					"content":"hello"

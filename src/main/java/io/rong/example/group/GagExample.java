@@ -34,7 +34,7 @@ public class GagExample {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         Gag Gag = rongCloud.group.gag;
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/gag.html#add
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/group/gag.html#add
          * 添加禁言群成员方法
          */
         String[] memberIds = {"userId1","userid2","userId3"};
@@ -45,25 +45,25 @@ public class GagExample {
                 .setId("IXQhMs3ny")
                 .setMembers(members)
                 .setMunite(5);
-        Result result = (Result)rongCloud.group.gag.add(group);
+        Result result = Gag.add(group);
         System.out.println("group.gag.add:  " + result.toString());
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/gag.html#getList
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/group/gag.html#getList
          * 查询被禁言群成员
          */
-        ListGagGroupUserResult groupLisGagUserResult = rongCloud.group.gag.getList("25");
+        ListGagGroupUserResult groupLisGagUserResult = Gag.getList("25");
         System.out.println("group.gag.getList:  " + groupLisGagUserResult.toString());
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/gag.html#remove
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/group/gag.html#remove
          * 移除禁言群成员
          */
         group = new GroupModel()
                 .setId("IXQhMs3ny")
                 .setMembers(members);
 
-        Result groupRollBackGagUserResult = (Result)rongCloud.group.gag.remove(group);
+        Result groupRollBackGagUserResult = Gag.remove(group);
         System.out.println("group.gag.remove:  " + groupRollBackGagUserResult.toString());
 
     }

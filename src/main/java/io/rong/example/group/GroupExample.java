@@ -38,7 +38,7 @@ public class GroupExample {
 		Group Group = rongCloud.group;
 
 		/**
-		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#create
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/group/group.html#create
 		 *
 		 * 创建群组方法
 		 *
@@ -54,7 +54,7 @@ public class GroupExample {
 		System.out.println("group create result:  " + groupCreateResult.toString());
 
 		/**
-		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#sync
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/group/group.html#sync
 		 *
 		 * 	同步用户所属群组方法
 		 */
@@ -76,7 +76,7 @@ public class GroupExample {
 
 		/**
 		 *
-		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#refresh
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/group/group.html#refresh
 		 *  刷新群组信息方法
 		 */
 		//GroupMember[] members = {new GroupMember().setId("ghJiu7H1"),new GroupMember().setId("ghJiu7H2")};
@@ -85,11 +85,11 @@ public class GroupExample {
 				.setId("groupId")
 				.setMembers(members)
 				.setName("groupName");
-		Result refreshResult = (Result)Group.refresh(group);
+		Result refreshResult = (Result)Group.update(group);
 		System.out.println("refresh:  " + refreshResult.toString());
 
 		/**
-		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#join
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/group/group.html#join
 		 *
 		 * 邀请用户加入群组
 		 *
@@ -102,7 +102,7 @@ public class GroupExample {
 		System.out.println("invite:  " + groupInviteResult.toString());
 
 		/**
-		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#join
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/group/group.html#join
 		 *
 		 * 用户加入指定群组
 		 *
@@ -111,21 +111,21 @@ public class GroupExample {
 				.setId("groupId")
 				.setMembers(members)
 				.setName("groupName");
-		Result groupJoinResult = (Result)rongCloud.group.join(group);
+		Result groupJoinResult = (Result)Group.join(group);
 		System.out.println("join:  " + groupJoinResult.toString());
 
 		/**
-		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#getMembers
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/group/group.html#getMembers
 		 *
 		 * 查询群成员方法
 		 *
 		 */
 		group = new GroupModel().setId("figk97h");
-		GroupUserQueryResult getMemberesult = rongCloud.group.getMemberList(group);
+		GroupUserQueryResult getMemberesult = Group.get(group);
 		System.out.println("group getMember:  " + getMemberesult.toString());
 
 		/**
-		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#quit
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/group/group.html#quit
 		 *
 		 * 退出群组
 		 *
@@ -134,31 +134,22 @@ public class GroupExample {
 				.setId("groupId")
 				.setMembers(members)
 				.setName("groupName");
-		Result groupQuitResult = (Result)rongCloud.group.quit(group);
+		Result groupQuitResult = (Result)Group.quit(group);
 		System.out.println("quit:  " + groupQuitResult.toString());
 
 		/**
-		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#quit
 		 *
-		 * 移除群组
-		 *
-		 */
-		group = new GroupModel()
-				.setId("groupId")
-				.setMembers(members)
-				.setName("groupName");
-		Result kickResult = (Result)rongCloud.group.kick(group);
-		System.out.println("kick Result:  " + kickResult.toString());
-
-
-		/**
-		 *
-		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/group/group.html#dismiss
+		 * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/group/group.html#dismiss
 		 *
 		 * 解散群组
 		 *
 		 */
-		Result groupDismissResult = (Result)rongCloud.group.dismiss("hjkl876yh", "hjikkjd97y");
+		members = new GroupMember[]{new GroupMember().setId("ghJiu7H1")};
+
+		group = new GroupModel()
+				.setId("groupId")
+				.setMembers(members);
+		Result groupDismissResult = (Result)Group.dismiss(group);
 		System.out.println("dismiss:  " + groupDismissResult.toString());
 
 	 }

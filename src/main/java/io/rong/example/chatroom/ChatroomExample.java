@@ -24,7 +24,7 @@ public class ChatroomExample {
 
         Reader reader = null;
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/chatroom.html#create
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/chatroom/chatroom.html#create
          *
          * 创建聊天室
          *
@@ -39,44 +39,35 @@ public class ChatroomExample {
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/chatroom.html#destory
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/chatroom/chatroom.html#destory
          * 销毁聊天室
          *
          * */
-        String[] chatroomId = {"chatroomId3", "chatroomId2"};
+        ChatroomModel chatroomModel = new ChatroomModel()
+                .setId("d7ec7a8b8d8546c98b0973417209a548");
 
-        ResponseResult chatroomDestroyResult = chatroom.destroy(chatroomId);
+        ResponseResult chatroomDestroyResult = chatroom.destroy(chatroomModel);
         System.out.println("destroy:  " + chatroomDestroyResult.toString());
 
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/chatroom.html#get
-         * 查询聊天室信息demo
-         * */
-
-        String[] queryChatroomId = {"d7ec7a8b8d8546c98b0973417209a548"};
-        ChatroomQueryResult chatroomQueryResult = rongCloud.chatroom.get(queryChatroomId);
-        System.out.println("query:  " + chatroomQueryResult.toString());
-
-        /**
-         *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/chatroom.html#getMembers
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/chatroom/chatroom.html#getMembers
          * 查询聊天室成员demo
          *
          * */
 
-        ChatroomModel quertCatroom = new ChatroomModel()
+        chatroomModel = new ChatroomModel()
                 .setId("d7ec7a8b8d8546c98b0973417209a548")
                 .setCount(500)
                 .setOrder(1);
 
-        ChatroomUserQueryResult chatroomQueryUserResult = chatroom.getMembers(quertCatroom);
+        ChatroomUserQueryResult chatroomQueryUserResult = chatroom.get(chatroomModel);
         System.out.println("queryUser:  " + chatroomQueryUserResult.toString());
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/chatroom.html#isExist
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/chatroom/chatroom.html#isExist
          * 查询聊天室成员是否存在
          *
          * */

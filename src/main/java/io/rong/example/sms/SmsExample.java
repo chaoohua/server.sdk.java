@@ -36,7 +36,7 @@ public class SmsExample {
         SmsModel sms = new SmsModel("13500000000", "dsfdsfd", "86", "1408706337", "1408706337");
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/sms/code.html#getImage
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/sms/code.html#getImage
          *
          * 获取图片验证码方法
          * */
@@ -44,7 +44,7 @@ public class SmsExample {
         System.out.println("getImageCode:  " + sMSGetImageCodeResult.toString());
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/sms/code.html#send
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/sms/code.html#send
          *
          * 发送短信验证码。
          * */
@@ -52,7 +52,7 @@ public class SmsExample {
         System.out.println("sendCode:  " + sMSSendCodeResult.toString());
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/sms/code.html#verify
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/sms/code.html#verify
          *
          * 验证码验证方法。
          * */
@@ -61,7 +61,7 @@ public class SmsExample {
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/sms/notify.html#send
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/sms/notify.html#send
          *
          * 验证码验证方法。
          * */

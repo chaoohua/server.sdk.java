@@ -37,19 +37,19 @@ public class Demotion {
     /**
      * 添加应用内聊天室降级消息
      *
-     * @param  messageType:消息类型，每次最多提交 5 个，设置的消息类型最多不超过 20 个。（必传）
+     * @param  objectName:消息类型，每次最多提交 5 个，设置的消息类型最多不超过 20 个。（必传）
      *
      * @return ResponseResult
      **/
-    public ResponseResult add(String[] messageType) throws Exception {
-        String message = CommonUtil.checkParam("objectNames",messageType,PATH,CheckMethod.ADD);
+    public ResponseResult add(String[] objectName) throws Exception {
+        String message = CommonUtil.checkParam("objectNames",objectName,PATH,CheckMethod.ADD);
         if(null != message){
             return (ResponseResult)GsonUtil.fromJson(message,ResponseResult.class);
         }
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0 ; i< messageType.length; i++) {
-            String child  = messageType[i];
+        for (int i = 0 ; i< objectName.length; i++) {
+            String child  = objectName[i];
             sb.append("&objectName=").append(URLEncoder.encode(child, UTF8));
         }
 

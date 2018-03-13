@@ -26,7 +26,7 @@ public class BanExample {
         Ban ban = rongCloud.chatroom.ban;
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/ban.html#add
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/chatroom/ban.html#add
          * 添加聊天室全局禁言
          * */
         ChatroomMember[] members = {
@@ -40,7 +40,7 @@ public class BanExample {
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/ban.html#getList
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/chatroom/ban.html#getList
          * 获取聊天时全局禁言列表
          */
 
@@ -49,7 +49,7 @@ public class BanExample {
 
         /**
          *
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/chatroom/ban.html#remove
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/chatroom/ban.html#remove
          * 删除聊天时全局禁言
          */
         chatroom = new ChatroomModel()

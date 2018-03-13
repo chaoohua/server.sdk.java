@@ -102,20 +102,17 @@ public class Chatroom {
 	/**
 	 * 销毁聊天室方法
 	 *
-	 * @param  chatroomIds:要销毁的聊天室 Id。（必传）
+	 * @param  chatroom:要销毁的聊天室 Id。（必传）
 	 *
 	 * @return ResponseResult
 	 **/
-	public ResponseResult destroy(String[] chatroomIds) throws Exception {
-		if (chatroomIds == null) {
+	public ResponseResult destroy(ChatroomModel chatroom) throws Exception {
+		if (chatroom == null) {
 			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/chatroom/destroy", "Paramer 'chatroomId' is required");
 		}
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0 ; i< chatroomIds.length; i++) {
-			String child  = chatroomIds[i];
-			sb.append("&chatroomId=").append(URLEncoder.encode(child, UTF8));
-		}
+		sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId(), UTF8));
 
 		String body = sb.toString();
 		if (body.indexOf("&") == 0) {
@@ -129,63 +126,32 @@ public class Chatroom {
 		return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.DESTORY,HttpUtil.returnResult(conn)), ResponseResult.class);
 	}
 	/**
-	 * 查询聊天室信息方法 
-	 * 
-	 * @param  chatroomIds:要查询的聊天室id（必传）
+	 * 查询聊天室内用户方法
 	 *
-	 * @return ChatroomQueryResult
-	 **/
-	public ChatroomQueryResult get(String[] chatroomIds) throws Exception {
-		if (chatroomIds == null) {
-			throw new ParamException(CommonConstrants.RCLOUD_PARAM_NULL, "/chatroom/query", "Paramer 'chatroomIds' is required");
-		}
-	    StringBuilder sb = new StringBuilder();
-	    
-	    for (int i = 0 ; i< chatroomIds.length; i++) {
-			String child  = chatroomIds[i];
-			sb.append("&chatroomId=").append(URLEncoder.encode(child, UTF8));
-		}
-		
-		String body = sb.toString();
-	   	if (body.indexOf("&") == 0) {
-	   		body = body.substring(1, body.length());
-	   	}
-	   	
-		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/query.json", "application/x-www-form-urlencoded");
-		HttpUtil.setBodyParameter(body, conn);
-
-	    return (ChatroomQueryResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.QUERY,HttpUtil.returnResult(conn)), ChatroomQueryResult.class);
-	}
-	
-	/**
-	 * 查询聊天室内用户方法 
-	 * 
-	 * @param  chatroom:聊天室.id。count,order（必传）
+	 * @param  chatroom:聊天室.id,count,order（必传）
 	 *
 	 * @return ChatroomUserQueryResult
 	 **/
-	public ChatroomUserQueryResult getMembers(ChatroomModel chatroom) throws Exception {
-
+	public ChatroomUserQueryResult get(ChatroomModel chatroom) throws Exception {
 		String message = CommonUtil.checkFiled(chatroom,PATH,CheckMethod.GET_MEMBERS);
 		if(null != message){
 			return (ChatroomUserQueryResult)GsonUtil.fromJson(message,ChatroomUserQueryResult.class);
 		}
 
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
-	    sb.append("&count=").append(URLEncoder.encode(chatroom.getCount().toString(), UTF8));
-	    sb.append("&order=").append(URLEncoder.encode(chatroom.getOrder().toString(), UTF8));
+		StringBuilder sb = new StringBuilder();
+		sb.append("&chatroomId=").append(URLEncoder.encode(chatroom.getId().toString(), UTF8));
+		sb.append("&count=").append(URLEncoder.encode(chatroom.getCount().toString(), UTF8));
+		sb.append("&order=").append(URLEncoder.encode(chatroom.getOrder().toString(), UTF8));
 		String body = sb.toString();
-	   	if (body.indexOf("&") == 0) {
-	   		body = body.substring(1, body.length());
-	   	}
-	   	
+		if (body.indexOf("&") == 0) {
+			body = body.substring(1, body.length());
+		}
+
 		HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/chatroom/user/query.json", "application/x-www-form-urlencoded");
 		HttpUtil.setBodyParameter(body, conn);
-	    
-	    return (ChatroomUserQueryResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.GET_MEMBERS,HttpUtil.returnResult(conn)), ChatroomUserQueryResult.class);
+
+		return (ChatroomUserQueryResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.GET_MEMBERS,HttpUtil.returnResult(conn)), ChatroomUserQueryResult.class);
 	}
-	
 	/**
 	 * 查询用户是否存在聊天室
 	 *

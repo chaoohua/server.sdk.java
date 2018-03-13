@@ -1,5 +1,5 @@
 {
-	"publish": {
+	"send": {
 		"urls": {
 			"1": "message/private/publish",
 			"2": "message/system/publish",

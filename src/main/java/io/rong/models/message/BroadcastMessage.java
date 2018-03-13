@@ -20,28 +20,28 @@ public class BroadcastMessage extends MessageModel {
     }
     @Override
     public BroadcastMessage setSenderUserId(String senderUserId) {
-        setSenderUserId(senderUserId);
+        super.setSenderUserId(senderUserId);
         return this;
     }
 
     @Override
     public BroadcastMessage setObjectName(String objectName) {
-        setObjectName(objectName);
+        super.setObjectName(objectName);
         return this;
     }
     @Override
     public BroadcastMessage setContent(BaseMessage content) {
-        setContent(content);
+        super.setContent(content);
         return this;
     }
      @Override
     public BroadcastMessage setPushContent(String pushContent) {
-        setPushContent(pushContent);
+        super.setPushContent(pushContent);
         return this;
     }
     @Override
     public BroadcastMessage setPushData(String pushData) {
-        setPushData(pushData);
+        super.setPushData(pushData);
         return this;
     }
 

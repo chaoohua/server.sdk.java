@@ -380,7 +380,8 @@ public class CommonUtil {
                 if(path.contains("chatroom")||path.contains("group")){
                     text = StringUtils.replace(response,"users","members");
                 }else if(path.contains("blacklist") && method.equals("getList")){
-                    BlackList blackList =(BlackList)JSON.parseObject(response,BlackList.class);
+
+                    BlackList blackList = (BlackList)GsonUtil.fromJson(response,BlackList.class);
 
                     text = blackList.toString();
 

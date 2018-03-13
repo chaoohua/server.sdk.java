@@ -3,8 +3,8 @@
 		"params": {
 			"message": {
 				"conversationType": 1,
-				"from": "2191",
-				"to": "2192",
+				"senderId": "2191",
+				"targetId": "2192",
 				"objectName": "RC:TxtMsg",
 				"content": {
 					"content":"hello"
@@ -17,7 +17,7 @@
 				"verifyBlacklist": 0,
 				"isPersisted": 1,
 				"isCounted": 1,
-				"owner": 0
+				"isIncludeSender": 0
 			}
 		},
 		"response": {

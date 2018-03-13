@@ -37,7 +37,7 @@ public class PushExample {
 
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/push/push.html#setUserTag
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/push/push.html#setUserTag
          *
          * 为用户打标签测试
          **/
@@ -58,7 +58,7 @@ public class PushExample {
 
 
         /**
-         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/push/push.html#push
+         * API 文档: http://rongcloud.github.io/server-sdk-nodejs/docs/v1/push/push.html#push
          *
          * 广播消息方法（fromuserid 和 message为null即为不落地的push）
          */

@@ -94,30 +94,4 @@ public class Conversation {
 
         return (ResponseResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.UNMUTE,HttpUtil.returnResult(conn)), ResponseResult.class);
     }
-
-    /**
-     * 设置用户某会话接收新消息时是否进行消息提醒。
-     * @param conversation
-     *
-     * @return ConversationNotificationResult
-     **/
-    public ConversationNotificationResult get(ConversationModel conversation) throws Exception {
-        String message = CommonUtil.checkFiled(conversation,PATH,CheckMethod.GET);
-        if(null != message){
-            return (ConversationNotificationResult)GsonUtil.fromJson(message,ConversationNotificationResult.class);
-        }
-        StringBuilder sb = new StringBuilder();
-        sb.append("&conversationType=").append(URLEncoder.encode(conversation.type.toString(), UTF8));
-        sb.append("&requestId=").append(URLEncoder.encode(conversation.userId.toString(), UTF8));
-        sb.append("&targetId=").append(URLEncoder.encode(conversation.targetId.toString(), UTF8));
-        String body = sb.toString();
-        if (body.indexOf("&") == 0) {
-            body = body.substring(1, body.length());
-        }
-
-        HttpURLConnection conn = HttpUtil.CreatePostHttpConnection(rongCloud.getApiHostType(), appKey, appSecret, "/conversation/notification/get.json", "application/x-www-form-urlencoded");
-        HttpUtil.setBodyParameter(body, conn);
-
-        return (ConversationNotificationResult) GsonUtil.fromJson(CommonUtil.getResponseByCode(PATH,CheckMethod.GET,HttpUtil.returnResult(conn)), ConversationNotificationResult.class);
-    }
 }

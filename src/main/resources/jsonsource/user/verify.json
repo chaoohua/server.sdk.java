@@ -62,7 +62,7 @@
 				"invalid": "20006"
 			}
 		},
-		"blackIds": {
+		"blacklist": {
 			"require": {
 				"must": true,
 				"invalid": "20005"
